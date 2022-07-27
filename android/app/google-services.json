@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "220263327376",
+    "project_id": "repuffapp-38e31",
+    "storage_bucket": "repuffapp-38e31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220263327376:android:d30fe2ad8acf9b60e9da15",
+        "android_client_info": {
+          "package_name": "repuffapp.jox.repuff"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220263327376-n6cs6rclr74j7emliiel64is8mb72lrm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdoC6D51_PsMYFs6R7LNMNgYIygyRPK1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220263327376-n6cs6rclr74j7emliiel64is8mb72lrm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
