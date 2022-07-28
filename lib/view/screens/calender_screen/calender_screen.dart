@@ -43,12 +43,12 @@ class _CalenderScreenState extends State<CalenderScreen> {
 
   final dateTime = DateTime.now().obs;
 
-  Future<DateTime> showCalender({BuildContext context}) async =>
-      await showDatePicker(
+  Future<DateTime> showCalender({BuildContext context}) async => showDatePicker(
         context: context,
         lastDate: DateTime(2100),
         firstDate: DateTime(1950),
         initialDate: dateTime.value,
+        // locale: Get.deviceLocale,
       );
 
   @override
@@ -61,7 +61,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
             buttonText: "enter_birthDate".tr,
             radius: 50,
             onPressed: () async {
-              final date = await showCalender(context: context);
+              final date = await showCalender(context: Get.context);
               if (date == null) {
                 return null;
               } else {

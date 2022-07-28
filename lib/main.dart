@@ -20,6 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'helper/get_di.dart' as di;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -91,6 +93,10 @@ class MyApp extends StatelessWidget {
           return (GetPlatform.isWeb && splashController.configModel == null)
               ? SizedBox()
               : GetMaterialApp(
+                  localizationsDelegates: [
+                    GlobalMaterialLocalizations.delegate
+                  ],
+                  supportedLocales: [const Locale('en'), const Locale('ar')],
                   title: AppConstants.APP_NAME,
                   debugShowCheckedModeBanner: false,
                   navigatorKey: Get.key,
@@ -108,7 +114,6 @@ class MyApp extends StatelessWidget {
                   initialRoute: GetPlatform.isWeb
                       ? RouteHelper.getInitialRoute()
                       : RouteHelper.getSplashRoute(orderID),
-
                   getPages: RouteHelper.routes,
                   defaultTransition: Transition.topLevel,
                   transitionDuration: Duration(milliseconds: 500),
