@@ -19,7 +19,7 @@ class Stores extends StatelessWidget {
         .getPopularRestaurantList(reload, 'all', false);
     Get.find<RestaurantController>()
         .getLatestRestaurantList(reload, 'all', false);
-     Get.find<RestaurantController>().getRestaurantList('1', reload);
+    Get.find<RestaurantController>().getRestaurantList('1', reload);
     if (Get.find<AuthController>().isLoggedIn()) {
       Get.find<UserController>().getUserInfo();
     }
@@ -74,51 +74,50 @@ class Stores extends StatelessWidget {
               child: Column(
                 children: [
                   Center(
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 15),
-                          child: Container(
-                            height: 40,
-                            width: Dimensions.WEB_MAX_WIDTH,
-                            color: Colors.transparent,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: Dimensions.PADDING_SIZE_SMALL),
-                            child: InkWell(
-                              onTap: () =>
-                                  Get.toNamed(RouteHelper.getSearchRoute()),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: Dimensions.PADDING_SIZE_SMALL),
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).cardColor,
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.RADIUS_EXTRA_LARGE),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors
-                                            .grey[Get.isDarkMode ? 800 : 200],
-                                        spreadRadius: 1,
-                                        blurRadius: 5)
-                                  ],
-                                ),
-                                child: Row(children: [
-                                  Icon(Icons.search,
-                                      size: 25,
-                                      color: Theme.of(context).primaryColor),
-                                  SizedBox(
-                                      width:
-                                          Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                  Expanded(
-                                      child: Text(
-                                          'search_food_or_restaurant'.tr,
-                                          style: robotoRegular.copyWith(
-                                            fontSize: Dimensions.fontSizeSmall,
-                                            color: Theme.of(context).hintColor,
-                                          ))),
-                                ]),
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
+                        child: Container(
+                          height: 40,
+                          width: Dimensions.WEB_MAX_WIDTH,
+                          color: Colors.transparent,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.PADDING_SIZE_SMALL),
+                          child: InkWell(
+                            onTap: () =>
+                                Get.toNamed(RouteHelper.getSearchRoute()),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: Dimensions.PADDING_SIZE_SMALL),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).cardColor,
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.RADIUS_EXTRA_LARGE),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors
+                                          .grey[Get.isDarkMode ? 800 : 200],
+                                      spreadRadius: 1,
+                                      blurRadius: 5)
+                                ],
                               ),
+                              child: Row(children: [
+                                Icon(Icons.search,
+                                    size: 25,
+                                    color: Theme.of(context).primaryColor),
+                                SizedBox(
+                                    width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                                Expanded(
+                                    child: Text('search_food_or_restaurant'.tr,
+                                        style: robotoRegular.copyWith(
+                                          fontSize: Dimensions.fontSizeSmall,
+                                          color: Theme.of(context).hintColor,
+                                        ))),
+                              ]),
                             ),
-                          ))),
+                          ),
+                        )),
+                  ),
                   Center(
                       child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),

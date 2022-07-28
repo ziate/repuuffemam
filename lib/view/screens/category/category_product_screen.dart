@@ -39,7 +39,8 @@ class _CategoryProductScreenState extends State<CategoryProductScreen>
     super.initState();
 
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
-    Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
+    Get.find<CategoryController>().getSubCategoryList(
+        widget.categoryID, Get.find<CategoryController>().shopId);
     scrollController?.addListener(() {
       if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent &&
@@ -57,6 +58,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen>
                         Get.find<CategoryController>().subCategoryIndex]
                     .id
                     .toString(),
+            Get.find<CategoryController>().shopId,
             Get.find<CategoryController>().offset + 1,
             Get.find<CategoryController>().type,
             false,
@@ -138,22 +140,29 @@ class _CategoryProductScreenState extends State<CategoryProductScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Container(
-                              clipBehavior: Clip.antiAlias,
-                              width: 50,
-                              height: 50,
-                              child: Center(
-                                child: Image.asset(
-                                  Images.logopng,
-                                ),
+                            clipBehavior: Clip.antiAlias,
+                            width: 50,
+                            height: 50,
+                            child: Center(
+                              child: Image.asset(
+                                Images.logopng,
                               ),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle, color: Colors.white)),
-                          Text(widget.categoryName.tr,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w200)),
-                          SvgPicture.asset(Images.backSvg),
+                            ),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.white),
+                          ),
+                          Text(
+                            widget.categoryName.tr,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w200),
+                          ),
+                          InkWell(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: SvgPicture.asset(Images.backSvg)),
                         ],
                       ),
                     ),
@@ -298,7 +307,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen>
                                   return InkWell(
                                     onTap: () =>
                                         catController.setSubCategoryIndex(
-                                            index, widget.categoryID),
+                                            index, widget.categoryID, ""),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
@@ -469,6 +478,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen>
                                       .subCategoryList[
                                           catController.subCategoryIndex]
                                       .id,
+                              Get.find<CategoryController>().shopId,
                               1,
                               catController.type,
                               false,

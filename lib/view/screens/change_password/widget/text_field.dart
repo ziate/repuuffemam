@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class FixedTextField extends StatelessWidget {
-  const FixedTextField({Key key, this.onChanged}) : super(key: key);
+  const FixedTextField({Key key, this.onChanged, this.controller})
+      : super(key: key);
   final Function(String) onChanged;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -11,8 +13,10 @@ class FixedTextField extends StatelessWidget {
       child: SizedBox(
         height: 45,
         child: TextField(
+          controller: controller,
           onChanged: onChanged,
           decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(horizontal: 8),
             fillColor: Color(0xFFE1E1E1),
             filled: true,
             focusedBorder: OutlineInputBorder(

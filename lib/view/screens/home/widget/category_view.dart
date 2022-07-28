@@ -42,11 +42,12 @@ class CategoryView extends StatelessWidget {
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () =>
-                        Get.toNamed(RouteHelper.getCategoryProductRoute(
-                      categoryController.categoryList[index].id,
-                      categoryController.categoryList[index].name,
-                    )),
+                    onTap: () => Get.toNamed(
+                      RouteHelper.getCategoryProductRoute(
+                        categoryController.categoryList[index].id,
+                        categoryController.categoryList[index].name,
+                      ),
+                    ),
                     child: Column(children: [
                       Container(
                         clipBehavior: Clip.antiAlias,

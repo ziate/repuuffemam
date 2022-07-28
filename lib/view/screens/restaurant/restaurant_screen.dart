@@ -41,6 +41,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
 
     Get.find<RestaurantController>()
         .getRestaurantDetails(Restaurant(id: widget.restaurant.id));
+    Get.find<CategoryController>().shopId = widget.restaurant.id.toString();
+    // print("حصصصصصصصصصصصصصصصصصصصل");
     if (Get.find<CategoryController>().categoryList == null) {
       Get.find<CategoryController>().getCategoryList(true);
     }

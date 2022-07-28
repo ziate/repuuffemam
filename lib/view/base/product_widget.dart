@@ -20,6 +20,8 @@ import 'package:efood_multivendor/view/screens/restaurant/restaurant_screen.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/category_controller.dart';
+
 class ProductWidget extends StatelessWidget {
   final Product product;
   final Restaurant restaurant;
@@ -68,8 +70,12 @@ class ProductWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (isRestaurant) {
-          Get.toNamed(RouteHelper.getRestaurantRoute(restaurant.id),
-              arguments: RestaurantScreen(restaurant: restaurant));
+          Get.find<CategoryController>().shopId = restaurant.id.toString();
+          // print("حصصصصصصصصصصصصصصصصصصصل");
+          Get.toNamed(
+            RouteHelper.getRestaurantRoute(restaurant.id),
+            arguments: RestaurantScreen(restaurant: restaurant),
+          );
         } else {
           ResponsiveHelper.isMobile(context)
               ? Get.bottomSheet(
