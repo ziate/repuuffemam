@@ -14,18 +14,18 @@ class NetworkInfo {
 
   static void checkConnectivity(BuildContext context) {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      if(Get.find<SplashController>().firstTimeConnectionCheck) {
+      if (Get.find<SplashController>().firstTimeConnectionCheck) {
         Get.find<SplashController>().setFirstTimeConnectionCheck(false);
-      }else {
+      } else {
         bool isNotConnected = result == ConnectivityResult.none;
-        isNotConnected ? SizedBox() : ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        isNotConnected
+            ? SizedBox()
+            : ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: isNotConnected ? Colors.red : Colors.green,
           duration: Duration(seconds: isNotConnected ? 6000 : 3),
-          content: Text(
-            isNotConnected ? 'no_connection' : 'connected',
-            textAlign: TextAlign.center,
-          ),
+          content: Text(isNotConnected ? 'no_connection' : 'connected',
+              textAlign: TextAlign.center),
         ));
       }
     });
