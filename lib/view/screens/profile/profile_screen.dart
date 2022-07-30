@@ -263,8 +263,8 @@ class ProfileScreen extends StatelessWidget {
                                         Get.find<WishListController>()
                                             .removeWishes();
                                         Get.offAllNamed(
-                                            RouteHelper.getSignInRoute(
-                                                RouteHelper.splash));
+                                          RouteHelper.getSelectLoginRoute(),
+                                        );
                                       }),
                                   useSafeArea: false);
                             } else {

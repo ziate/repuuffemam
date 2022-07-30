@@ -8,6 +8,7 @@ import 'package:efood_multivendor/controller/localization_controller.dart';
 import 'package:efood_multivendor/controller/splash_controller.dart';
 import 'package:efood_multivendor/helper/responsive_helper.dart';
 import 'package:efood_multivendor/helper/route_helper.dart';
+import 'package:efood_multivendor/theme/styles.dart';
 import 'package:efood_multivendor/util/app_constants.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
 import 'package:efood_multivendor/util/images.dart';
@@ -20,9 +21,11 @@ import 'package:efood_multivendor/view/screens/auth/sign_up_screen.dart';
 import 'package:efood_multivendor/view/screens/auth/widget/code_picker_widget.dart';
 import 'package:efood_multivendor/view/screens/auth/widget/condition_check_box.dart';
 import 'package:efood_multivendor/view/screens/auth/widget/guest_button.dart';
+import 'package:efood_multivendor/view/screens/auth/widget/powered_by_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:phone_number/phone_number.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
@@ -61,317 +64,233 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (widget.exitFromApp) {
-          if (_canExit) {
-            if (GetPlatform.isAndroid) {
-              SystemNavigator.pop();
-            } else if (GetPlatform.isIOS) {
-              exit(0);
-            } else {
-              Navigator.pushNamed(context, RouteHelper.getInitialRoute());
-            }
-            return Future.value(false);
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('back_press_again_to_exit'.tr,
-                  style: TextStyle(color: Colors.white)),
-              behavior: SnackBarBehavior.floating,
-              backgroundColor: Colors.green,
-              duration: Duration(seconds: 2),
-              margin: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            ));
-            _canExit = true;
-            Timer(Duration(seconds: 2), () {
-              _canExit = false;
-            });
-            return Future.value(false);
-          }
-        } else {
-          return true;
-        }
-      },
-      child: SafeArea(
-        child: Scaffold(
-          appBar: ResponsiveHelper.isDesktop(context)
-              ? WebMenuBar()
-              : PreferredSize(
-                  preferredSize:
-                      Size.fromHeight(60.0), // here the desired height
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: AppBar(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                Dimensions.RADIUS_EXTRA_LARGE)),
-                        automaticallyImplyLeading: false,
-                        title: Container(
-                            clipBehavior: Clip.antiAlias,
-                            width: 50,
-                            height: 50,
-                            child: Center(
-                              child: Image.asset(
-                                Images.logopng,
-                              ),
-                            ),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white)),
-                        centerTitle: true,
-                        // leading: IconButton(
-                        //   onPressed: () => Get.back(),
-                        //   icon: Icon(Icons.arrow_back_ios_rounded,
-                        //       color: Theme.of(context).textTheme.bodyText1.color),
-                        // ),
-                        elevation: 0,
-                        backgroundColor: Theme.of(context).primaryColor),
-                  )),
-          body: SafeArea(
-              child: Center(
-            child: Scrollbar(
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                child: Center(
-                  child: Container(
-                    width: context.width > 700 ? 700 : context.width,
-                    padding: context.width > 700
-                        ? EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT)
-                        : null,
-                    decoration: context.width > 700
-                        ? BoxDecoration(
-                            color: Theme.of(context).cardColor,
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.RADIUS_SMALL),
-                            boxShadow: [
-                              BoxShadow(
-                                  color:
-                                      Colors.grey[Get.isDarkMode ? 700 : 300],
-                                  blurRadius: 5,
-                                  spreadRadius: 1)
-                            ],
-                          )
-                        : null,
-                    child:
-                        GetBuilder<AuthController>(builder: (authController) {
-                      return Column(children: [
-                        // Image.asset(Images.logo, width: 100),
-                        // SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                        // Image.asset(Images.logo_name, width: 100),
-                        // SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        width: context.width > 700 ? 700 : context.width,
+        padding: context.width > 700
+            ? EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT)
+            : null,
+        decoration: context.width > 700
+            ? BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey[Get.isDarkMode ? 700 : 300],
+                      blurRadius: 5,
+                      spreadRadius: 1)
+                ],
+              )
+            : null,
+        child: GetBuilder<AuthController>(builder: (authController) {
+          return Column(children: [
+            // Image.asset(Images.logo, width: 100),
+            // SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+            // Image.asset(Images.logo_name, width: 100),
+            // SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
 
-                        Text('sign_in'.tr.toUpperCase(),
-                            style: robotoBlack.copyWith(fontSize: 30)),
-                        SizedBox(height: 20),
-                        RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text: '${'If_you_do_not_have_an_account'.tr}؟',
-                              style: robotoRegular.copyWith(
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w700,
-                                  color: Theme.of(context).disabledColor)),
-                          TextSpan(
-                              recognizer: new TapGestureRecognizer()
-                                ..onTap = () => {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => SignUpScreen(
-                                                  exitFromApp: false,
-                                                )),
-                                      )
-                                    },
-                              text: 'Create_an_account_now'.tr,
-                              style: robotoMedium.copyWith(
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w700,
-                                  color: Theme.of(context).errorColor)),
-                        ])),
-                        SizedBox(height: 40),
+            // RichText(
+            //     text: TextSpan(children: [
+            //   TextSpan(
+            //       text: '${'If_you_do_not_have_an_account'.tr}؟',
+            //       style: robotoRegular.copyWith(
+            //           fontFamily: 'Roboto',
+            //           fontWeight: FontWeight.w700,
+            //           color: Theme.of(context).disabledColor)),
+            //   TextSpan(
+            //       recognizer: new TapGestureRecognizer()
+            //         ..onTap = () => {
+            //               Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                     builder: (context) => SignUpScreen(
+            //                           exitFromApp: false,
+            //                         )),
+            //               )
+            //             },
+            //       text: 'Create_an_account_now'.tr,
+            //       style: robotoMedium.copyWith(
+            //           fontFamily: 'Roboto',
+            //           fontWeight: FontWeight.w700,
+            //           color: Theme.of(context).errorColor)),
+            // ])),
 
-                        CustomTextField(
-                          border: AppConstants.decorationSignInScreen,
-                          focusBorder: AppConstants.decorationSignInScreen,
-                          hintText: 'email'.tr,
-                          controller: _phoneController,
-                          focusNode: _phoneFocus,
-                          nextFocus: _passwordFocus,
-                          inputType: TextInputType.emailAddress,
-                          divider: false,
-                        ),
-                        SizedBox(height: 25),
-                        CustomTextField(
-                          border: AppConstants.decorationSignInScreen,
-                          focusBorder: AppConstants.decorationSignInScreen,
-                          hintText: 'password'.tr,
-                          controller: _passwordController,
-                          focusNode: _passwordFocus,
-                          inputAction: TextInputAction.done,
-                          inputType: TextInputType.visiblePassword,
-                          // prefixIcon: Images.lock,
-                          isPassword: true,
-                          onSubmit: (text) =>
-                              (GetPlatform.isWeb && authController.acceptTerms)
-                                  ? _login(authController, _countryDialCode)
-                                  : null,
-                        ),
-                        Column(children: [
-                          // Row(children: [
-                          //   CodePickerWidget(
-                          //     onChanged: (CountryCode countryCode) {
-                          //       _countryDialCode = countryCode.dialCode;
-                          //     },
-                          //     initialSelection: _countryDialCode != null
-                          //         ? _countryDialCode
-                          //         : Get.find<LocalizationController>()
-                          //             .locale
-                          //             .countryCode,
-                          //     favorite: [_countryDialCode],
-                          //     showDropDownButton: true,
-                          //     padding: EdgeInsets.zero,
-                          //     showFlagMain: true,
-                          //     flagWidth: 30,
-                          //     dialogBackgroundColor:
-                          //         Theme.of(context).cardColor,
-                          //     textStyle: robotoRegular.copyWith(
-                          //       fontSize: Dimensions.fontSizeLarge,
-                          //       color:
-                          //           Theme.of(context).textTheme.bodyText1.color,
-                          //     ),
-                          //   ),
-                          //   Expanded(
-                          //       flex: 1,
-                          //       child: CustomTextField(
-                          //         hintText: 'phone'.tr,
-                          //         controller: _phoneController,
-                          //         focusNode: _phoneFocus,
-                          //         nextFocus: _passwordFocus,
-                          //         inputType: TextInputType.phone,
-                          //         divider: false,
-                          //       )),
-                          // ]),
-                          // Padding(
-                          //     padding: EdgeInsets.symmetric(
-                          //         horizontal: Dimensions.PADDING_SIZE_LARGE),
-                          //     child: Divider(height: 1)),
-                        ]),
-                        SizedBox(height: 10),
-
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(children: [
-                            Row(
-                              children: [
-                                Text('remember_me'.tr,
-                                    style: TextStyle(
-                                      color: Theme.of(context).errorColor,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: Dimensions.fontSizeDefault,
-                                    )),
-                                Checkbox(
-                                  side: BorderSide(
-                                      color: Theme.of(context).primaryColor,
-                                      width: 1),
-                                  activeColor: Theme.of(context).errorColor,
-                                  value: authController.isActiveRememberMe,
-                                  onChanged: (bool isChecked) =>
-                                      authController.toggleRememberMe(),
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            // Expanded(
-                            //   child: ListTile(
-                            //     onTap: () => authController.toggleRememberMe(),
-                            //     leading: Checkbox(
-                            //       activeColor: Theme.of(context).primaryColor,
-                            //       value: authController.isActiveRememberMe,
-                            //       onChanged: (bool isChecked) =>
-                            //           authController.toggleRememberMe(),
-                            //     ),
-                            //     title: Text('remember_me'.tr),
-                            //     contentPadding: EdgeInsets.zero,
-                            //     dense: true,
-                            //     horizontalTitleGap: 0,
-                            //   ),
-                            // ),
-                            TextButton(
-                              onPressed: () => Get.toNamed(
-                                  RouteHelper.getForgotPassRoute(false, null)),
-                              child: Text('${'forgot_password'.tr}؟',
-                                  style: TextStyle(
-                                    color: Theme.of(context).errorColor,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: Dimensions.fontSizeDefault,
-                                  )),
-                            ),
-                          ]),
-                        ),
-                        SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-
-                        // ConditionCheckBox(authController: authController),
-                        SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-
-                        !authController.isLoading
-                            ? CustomButton(
-                                radius: 25,
-                                width: MediaQuery.of(context).size.width - 80,
-                                buttonText: 'sign_in'.tr,
-                                onPressed: authController.acceptTerms
-                                    ? () =>
-                                        _login(authController, _countryDialCode)
-                                    : null,
-                              )
-                            // ? Row(children: [
-                            //     Expanded(
-                            //         child: CustomButton(
-                            //       buttonText: 'sign_up'.tr,
-                            //       transparent: true,
-                            //       onPressed: () =>
-                            //           Get.toNamed(RouteHelper.getSignUpRoute()),
-                            //     )),
-                            //     Expanded(
-                            //         child: CustomButton(
-                            //       buttonText: 'sign_in'.tr,
-                            //       onPressed: authController.acceptTerms
-                            //           ? () =>
-                            //               _login(authController, _countryDialCode)
-                            //           : null,
-                            //     )),
-                            //   ])
-                            : Center(child: CircularProgressIndicator()),
-                        SizedBox(height: 30),
-                        Text('or_log_in_with'.tr,
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w800,
-                              fontSize: Dimensions.fontSizeDefault,
-                            )),
-                        // SocialLoginWidget(),
-                        SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
-
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 50),
-                          child: SocialLoginButton(
-                            borderRadius: 50,
-                            buttonType: SocialLoginButtonType.google,
-                            onPressed: () {},
-                          ),
-                        )
-                        // GuestButton(),
-                      ]);
-                    }),
-                  ),
-                ),
+            SizedBox(height: 20),
+            SizedBox(
+              child: CustomTextField(
+                border: AppConstants.decorationSignInScreen,
+                focusBorder: AppConstants.decorationSignInScreen,
+                hintText: 'email'.tr,
+                controller: _phoneController,
+                focusNode: _phoneFocus,
+                nextFocus: _passwordFocus,
+                inputType: TextInputType.emailAddress,
+                divider: false,
               ),
             ),
-          )),
-        ),
+            SizedBox(height: 25),
+            SizedBox(
+              // height: 30,
+              child: CustomTextField(
+                border: AppConstants.decorationSignInScreen,
+                focusBorder: AppConstants.decorationSignInScreen,
+                hintText: 'password'.tr,
+                controller: _passwordController,
+                focusNode: _passwordFocus,
+                inputAction: TextInputAction.done,
+                inputType: TextInputType.visiblePassword,
+                // prefixIcon: Images.lock,
+                isPassword: true,
+                onSubmit: (text) =>
+                    (GetPlatform.isWeb && authController.acceptTerms)
+                        ? _login(authController, _countryDialCode)
+                        : null,
+              ),
+            ),
+            Column(children: [
+              // Row(children: [
+              //   CodePickerWidget(
+              //     onChanged: (CountryCode countryCode) {
+              //       _countryDialCode = countryCode.dialCode;
+              //     },
+              //     initialSelection: _countryDialCode != null
+              //         ? _countryDialCode
+              //         : Get.find<LocalizationController>()
+              //             .locale
+              //             .countryCode,
+              //     favorite: [_countryDialCode],
+              //     showDropDownButton: true,
+              //     padding: EdgeInsets.zero,
+              //     showFlagMain: true,
+              //     flagWidth: 30,
+              //     dialogBackgroundColor:
+              //         Theme.of(context).cardColor,
+              //     textStyle: robotoRegular.copyWith(
+              //       fontSize: Dimensions.fontSizeLarge,
+              //       color:
+              //           Theme.of(context).textTheme.bodyText1.color,
+              //     ),
+              //   ),
+              //   Expanded(
+              //       flex: 1,
+              //       child: CustomTextField(
+              //         hintText: 'phone'.tr,
+              //         controller: _phoneController,
+              //         focusNode: _phoneFocus,
+              //         nextFocus: _passwordFocus,
+              //         inputType: TextInputType.phone,
+              //         divider: false,
+              //       )),
+              // ]),
+              // Padding(
+              //     padding: EdgeInsets.symmetric(
+              //         horizontal: Dimensions.PADDING_SIZE_LARGE),
+              //     child: Divider(height: 1)),
+            ]),
+            SizedBox(height: 10),
+
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 15),
+            //   child: Row(children: [
+            //     Row(
+            //       children: [
+            //         Text('remember_me'.tr,
+            //             style: TextStyle(
+            //               color: Theme.of(context).errorColor,
+            //               fontFamily: 'Roboto',
+            //               fontWeight: FontWeight.w800,
+            //               fontSize: Dimensions.fontSizeDefault,
+            //             )),
+            //         Checkbox(
+            //           side: BorderSide(
+            //               color: Theme.of(context).primaryColor, width: 1),
+            //           activeColor: Theme.of(context).errorColor,
+            //           value: authController.isActiveRememberMe,
+            //           onChanged: (bool isChecked) =>
+            //               authController.toggleRememberMe(),
+            //         ),
+            //       ],
+            //     ),
+            //     Spacer(),
+            //     // Expanded(
+            //     //   child: ListTile(
+            //     //     onTap: () => authController.toggleRememberMe(),
+            //     //     leading: Checkbox(
+            //     //       activeColor: Theme.of(context).primaryColor,
+            //     //       value: authController.isActiveRememberMe,
+            //     //       onChanged: (bool isChecked) =>
+            //     //           authController.toggleRememberMe(),
+            //     //     ),
+            //     //     title: Text('remember_me'.tr),
+            //     //     contentPadding: EdgeInsets.zero,
+            //     //     dense: true,
+            //     //     horizontalTitleGap: 0,
+            //     //   ),
+            //     // ),
+            //     TextButton(
+            //       onPressed: () =>
+            //           Get.toNamed(RouteHelper.getForgotPassRoute(false, null)),
+            //       child: Text('${'forgot_password'.tr}؟',
+            //           style: TextStyle(
+            //             color: Theme.of(context).errorColor,
+            //             fontFamily: 'Roboto',
+            //             fontWeight: FontWeight.w800,
+            //             fontSize: Dimensions.fontSizeDefault,
+            //           )),
+            //     ),
+            //   ]),
+            // ),
+            SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
+            // ConditionCheckBox(authController: authController),
+            SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+
+            !authController.isLoading
+                ? CustomButton(
+                    color: Color(0x77E1003C),
+                    radius: 15,
+                    width: MediaQuery.of(context).size.width - 80,
+                    buttonText: 'sign_in'.tr,
+                    onPressed: authController.acceptTerms
+                        ? () => _login(authController, _countryDialCode)
+                        : null,
+                  )
+                : Center(child: CircularProgressIndicator()),
+            TextButton(
+              onPressed: () =>
+                  Get.toNamed(RouteHelper.getForgotPassRoute(false, null)),
+              child: Text('${'forgot_password'.tr}',
+                  style: TextStyle(
+                    color: Theme.of(context).errorColor,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w800,
+                    fontSize: Dimensions.fontSizeDefault,
+                  )),
+            ),
+            // SizedBox(height: 30),
+            // Text('or_log_in_with'.tr,
+            //     style: TextStyle(
+            //       color: Theme.of(context).primaryColor,
+            //       fontFamily: 'Roboto',
+            //       fontWeight: FontWeight.w800,
+            //       fontSize: Dimensions.fontSizeDefault,
+            //     )),
+            // SocialLoginWidget(),
+            // SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 50),
+            //   child: SocialLoginButton(
+            //     borderRadius: 50,
+            //     buttonType: SocialLoginButtonType.google,
+            //     onPressed: () {},
+            //   ),
+            // )
+            // GuestButton(),
+          ]);
+        }),
       ),
     );
   }
@@ -401,9 +320,7 @@ class _SignInScreenState extends State<SignInScreen> {
     } else if (_password.length < 6) {
       showCustomSnackBar('password_should_be'.tr);
     } else {
-      authController
-          .login(_phone, _password)
-          .then((status) async {
+      authController.login(_phone, _password).then((status) async {
         if (status.isSuccess) {
           if (authController.isActiveRememberMe) {
             authController.saveUserNumberAndPassword(

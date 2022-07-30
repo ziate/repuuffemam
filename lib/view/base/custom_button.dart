@@ -12,25 +12,24 @@ class CustomButton extends StatelessWidget {
   final double fontSize;
   final double radius;
   final IconData icon;
-  CustomButton(
-      {this.onPressed,
-      @required this.buttonText,
-      this.transparent = false,
-      this.margin,
-      this.width,
-      this.height,
-      this.fontSize,
-      this.radius = 5,
-      this.icon});
+  final Color color;
+  CustomButton({
+    this.onPressed,
+    @required this.buttonText,
+    this.transparent = false,
+    this.margin,
+    this.width,
+    this.height,
+    this.fontSize,
+    this.radius = 5,
+    this.icon,
+    this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
     final ButtonStyle _flatButtonStyle = TextButton.styleFrom(
-      backgroundColor: onPressed == null
-          ? Theme.of(context).disabledColor
-          : transparent
-              ? Colors.transparent
-              : Theme.of(context).primaryColor,
+      backgroundColor: color ?? Color(0xFF515C6F),
       minimumSize: Size(width != null ? width : Dimensions.WEB_MAX_WIDTH,
           height != null ? height : 50),
       padding: EdgeInsets.zero,

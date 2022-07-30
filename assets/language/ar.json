@@ -17,7 +17,7 @@
   "password": "كلمه السر",
   "confirm_password": "تأكيد كلمة السر",
   "remember_me": "تذكرنى دائما ",
-  "forgot_password": "هل نسيت كلمة السر",
+  "forgot_password": "هل نسيت كلمة السر؟",
   "first_name": "الأسم الأول",
   "last_name": "الأسم الأخير",
   "phone": "الموبايل",
@@ -412,5 +412,11 @@
   "view_orders": "عرض الطلبات",
   "orders": "الطلبات",
   "enter_userName": "ادخل اسم المستخدم",
-  "enter_birthDate": "ادخل تاريخ الميلاد"
+  "enter_birthDate": "ادخل تاريخ الميلاد",
+  "welcom": "مرحبا",
+  "start_page_hint2": "الرجاء التسجيل أولاً",
+  "start_page_hint1": "قبل الاستمتاع بخدماتنا",
+  "creat_account": "إنشاء حساب",
+  "login": "تسجيل الدخول",
+  "powered_by": "مدعوم من"
 }
