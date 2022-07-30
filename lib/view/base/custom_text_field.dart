@@ -76,8 +76,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
               hintText: widget.hintText,
               fillColor: Theme.of(context).cardColor,
               hintStyle: robotoRegular.copyWith(
-                  fontSize: Dimensions.fontSizeLarge,
-                  color: Theme.of(context).hintColor),
+                fontSize: Dimensions.fontSizeLarge,
+                color: Theme.of(context).hintColor,
+              ),
               filled: true,
               prefixIcon: widget.prefixIcon != null
                   ? Padding(

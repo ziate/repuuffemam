@@ -106,7 +106,7 @@ class MyApp extends StatelessWidget {
                       PointerDeviceKind.touch
                     },
                   ),
-                  theme: themeController.darkTheme ? dark : light,
+                  theme: themeController.darkTheme ? dark : dark,
                   locale: localizeController.locale,
                   translations: Messages(languages: languages),
                   fallbackLocale: Locale(AppConstants.languages[0].languageCode,

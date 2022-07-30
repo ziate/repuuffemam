@@ -6,6 +6,7 @@ import 'package:efood_multivendor/controller/splash_controller.dart';
 import 'package:efood_multivendor/data/model/body/signup_body.dart';
 import 'package:efood_multivendor/helper/responsive_helper.dart';
 import 'package:efood_multivendor/helper/route_helper.dart';
+import 'package:efood_multivendor/theme/styles.dart';
 import 'package:efood_multivendor/util/app_constants.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
 import 'package:efood_multivendor/util/images.dart';
@@ -83,476 +84,307 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: ResponsiveHelper.isDesktop(context)
-            ? WebMenuBar()
-            : !widget.exitFromApp
-                ? PreferredSize(
-                    preferredSize:
-                        Size.fromHeight(60.0), // here the desired height
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        child: AppBar(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    Dimensions.RADIUS_EXTRA_LARGE)),
-                            automaticallyImplyLeading: false,
-                            centerTitle: true,
-                            title: Text("register".tr,
-                                style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 25,
-                                )),
-                            leading: IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: Icon(
-                                  Icons.keyboard_double_arrow_left_outlined,
-                                  size: 40),
-                            ),
-                            actions: [
-                              Container(
-                                  clipBehavior: Clip.antiAlias,
-                                  width: 50,
-                                  height: 50,
-                                  child: Center(
-                                    child: Image.asset(
-                                      Images.logopng,
-                                    ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white)),
-                              SizedBox(width: 30),
-                            ],
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+      physics: BouncingScrollPhysics(),
+      child: Center(
+        child: Container(
+          width: context.width > 700 ? 700 : context.width,
+          padding: context.width > 700
+              ? EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT)
+              : null,
+          decoration: context.width > 700
+              ? BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey[Get.isDarkMode ? 700 : 300],
+                        blurRadius: 5,
+                        spreadRadius: 1)
+                  ],
+                )
+              : null,
+          child: GetBuilder<AuthController>(builder: (authController) {
+            return Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom + 8,
+              ),
+              child: Column(children: [
+                // Image.asset(Images.logo, width: 100),
+                // SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                // Image.asset(Images.logo_name, width: 100),
+                // SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
 
-                            // leading: IconButton(
-                            //   onPressed: () => Get.back(),
-                            //   icon: Icon(Icons.arrow_back_ios_rounded,
-                            //       color: Theme.of(context).textTheme.bodyText1.color),
-                            // ),
-                            elevation: 0,
-                            backgroundColor: Theme.of(context).primaryColor)))
-                : null,
-        body: SafeArea(
-            child: Scrollbar(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            physics: BouncingScrollPhysics(),
-            child: Center(
-              child: Container(
-                width: context.width > 700 ? 700 : context.width,
-                padding: context.width > 700
-                    ? EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT)
-                    : null,
-                decoration: context.width > 700
-                    ? BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius:
-                            BorderRadius.circular(Dimensions.RADIUS_SMALL),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey[Get.isDarkMode ? 700 : 300],
-                              blurRadius: 5,
-                              spreadRadius: 1)
-                        ],
-                      )
-                    : null,
-                child: GetBuilder<AuthController>(builder: (authController) {
-                  return Column(children: [
-                    // Image.asset(Images.logo, width: 100),
-                    // SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                    // Image.asset(Images.logo_name, width: 100),
-                    // SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+                // Text('sign_up'.tr.toUpperCase(), style: robotoBlack.copyWith(fontSize: 30)),
+                SizedBox(height: 20),
 
-                    // Text('sign_up'.tr.toUpperCase(), style: robotoBlack.copyWith(fontSize: 30)),
-                    SizedBox(height: 50),
-
-                    Column(children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 100,
-                            child: Text('first_name'.tr,
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: Dimensions.fontSizeLarge,
-                                )),
-                          ),
-                          Expanded(
-                            child: CustomTextField(
-                              border: AppConstants.decorationSignUpScreen,
-                              focusBorder: AppConstants.decorationSignUpScreen,
-                              hintText: 'first_name'.tr,
-                              controller: _firstNameController,
-                              focusNode: _firstNameFocus,
-                              nextFocus: _lastNameFocus,
-                              inputType: TextInputType.name,
-                              capitalization: TextCapitalization.words,
-                              // prefixIcon: Images.user,
-                              divider: true,
-                            ),
-                          ),
-                        ],
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      CustomTextField(
+                        border: AppConstants.decorationSignUpScreen,
+                        focusBorder: AppConstants.decorationSignUpScreen,
+                        hintText: 'first_name'.tr,
+                        controller: _firstNameController,
+                        focusNode: _firstNameFocus,
+                        nextFocus: _lastNameFocus,
+                        inputType: TextInputType.name,
+                        capitalization: TextCapitalization.words,
+                        // prefixIcon: Images.user,
+                        divider: true,
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 100,
-                            child: Text('last_name'.tr,
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: Dimensions.fontSizeLarge,
-                                )),
-                          ),
-                          Expanded(
-                            child: CustomTextField(
-                              border: AppConstants.decorationSignUpScreen,
-                              focusBorder: AppConstants.decorationSignUpScreen,
-                              hintText: 'last_name'.tr,
-                              controller: _lastNameController,
-                              focusNode: _lastNameFocus,
-                              nextFocus: _userFocus,
-                              // inputType: TextInputType.name,
-                              capitalization: TextCapitalization.words,
-                              prefixIcon: Images.user,
-                              divider: true,
-                            ),
-                          ),
-                        ],
+                      CustomTextField(
+                        border: AppConstants.decorationSignUpScreen,
+                        focusBorder: AppConstants.decorationSignUpScreen,
+                        hintText: 'last_name'.tr,
+                        controller: _lastNameController,
+                        focusNode: _lastNameFocus,
+                        nextFocus: _userFocus,
+                        // inputType: TextInputType.name,
+                        capitalization: TextCapitalization.words,
+                        // prefixIcon: Images.user,
+                        divider: true,
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 100,
-                            child: Text('user'.tr,
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: Dimensions.fontSizeLarge,
-                                )),
-                          ),
-                          Expanded(
-                            child: CustomTextField(
-                              border: AppConstants.decorationSignUpScreen,
-                              focusBorder: AppConstants.decorationSignUpScreen,
-                              hintText: 'enter_userName'.tr,
-                              controller: _userNameController,
-                              focusNode: _userFocus,
-                              nextFocus: _emailFocus,
-                              // inputType: TextInputType.name,
-                              capitalization: TextCapitalization.words,
-                              prefixIcon: Images.user,
-                              divider: true,
-                            ),
-                          ),
-                        ],
+                      CustomTextField(
+                        border: AppConstants.decorationSignUpScreen,
+                        focusBorder: AppConstants.decorationSignUpScreen,
+                        hintText: 'enter_userName'.tr,
+                        controller: _userNameController,
+                        focusNode: _userFocus,
+                        nextFocus: _emailFocus,
+                        // inputType: TextInputType.name,
+                        capitalization: TextCapitalization.words,
+                        // prefixIcon: Images.user,
+                        divider: true,
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 100,
-                            child: Text('email'.tr,
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: Dimensions.fontSizeLarge,
-                                )),
-                          ),
-                          Expanded(
-                            child: CustomTextField(
-                              border: AppConstants.decorationSignUpScreen,
-                              focusBorder: AppConstants.decorationSignUpScreen,
-                              hintText: 'email'.tr,
-                              controller: _emailController,
-                              focusNode: _emailFocus,
-                              nextFocus: _phoneFocus,
-                              inputType: TextInputType.emailAddress,
-                              // prefixIcon: Images.mail,
-                              divider: true,
-                            ),
-                          ),
-                        ],
+                      CustomTextField(
+                        border: AppConstants.decorationSignUpScreen,
+                        focusBorder: AppConstants.decorationSignUpScreen,
+                        hintText: 'email'.tr,
+                        controller: _emailController,
+                        focusNode: _emailFocus,
+                        nextFocus: _phoneFocus,
+                        inputType: TextInputType.emailAddress,
+                        // prefixIcon: Images.mail,
+                        divider: true,
                       ),
-                      Row(children: [
-                        CodePickerWidget(
-                          onChanged: (CountryCode countryCode) {
-                            _countryDialCode = countryCode.dialCode;
-                          },
-                          initialSelection: _countryDialCode,
-                          favorite: [_countryDialCode],
-                          showDropDownButton: true,
-                          padding: EdgeInsets.zero,
-                          showFlagMain: true,
-                          dialogBackgroundColor: Theme.of(context).cardColor,
-                          textStyle: robotoRegular.copyWith(
-                            fontSize: Dimensions.fontSizeLarge,
-                            color: Theme.of(context).textTheme.bodyText1.color,
-                          ),
-                        ),
-                        Expanded(
-                            child: CustomTextField(
-                          border: AppConstants.decorationSignInScreen,
-                          focusBorder: AppConstants.decorationSignInScreen,
-                          hintText: 'phone'.tr,
-                          controller: _phoneController,
-                          focusNode: _phoneFocus,
-                          nextFocus: _passwordFocus,
-                          inputType: TextInputType.phone,
-                          divider: true,
-                        )),
-                      ]),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 100,
-                            child: Text("gender".tr,
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: Dimensions.fontSizeLarge,
-                                )),
-                          ),
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.all(10.0),
-                              padding: EdgeInsets.all(5.0),
-                              width: MediaQuery.of(context).size.width * 0.30,
-                              height: 50,
+                      SizedBox(height: 10),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.only(start: 10, end: 5),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
                               decoration: BoxDecoration(
                                   color: Colors.white,
-                                  border:
-                                      Border.all(color: Colors.grey, width: 1),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(
-                                        Dimensions.RADIUS_EXTRA_LARGE),
-                                  )),
-                              child: Center(
-                                child: DropdownButton(
-                                  underline:
-                                      Container(color: Colors.transparent),
-                                  iconDisabledColor: Color(0xFF0F4F80),
-                                  iconSize: 35,
-                                  iconEnabledColor: Color(0xFF0F4F80),
-                                  isExpanded: true,
-
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.RADIUS_EXTRA_LARGE),
-                                  // Initial Value
-                                  value: dropdownvalue,
-
-                                  // Down Arrow Icon
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-
-                                  // Array list of items
-                                  items: items.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                  // After selecting the desired option,it will
-                                  // change button value to selected value
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      dropdownvalue = newValue;
-                                      if (dropdownvalue == 'Male') {
-                                        gender = 0;
-                                        print(gender);
-                                      } else {
-                                        gender = 1;
-                                        print(gender);
-                                      }
-                                    });
-                                  },
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: CodePickerWidget(
+                                backgroundColor: Colors.white,
+                                barrierColor: kBackgroundColor,
+                                onChanged: (CountryCode countryCode) {
+                                  _countryDialCode = countryCode.dialCode;
+                                },
+                                initialSelection: _countryDialCode,
+                                favorite: [_countryDialCode],
+                                showDropDownButton: true,
+                                padding: EdgeInsets.zero,
+                                showFlagMain: true,
+                                dialogBackgroundColor: Colors.white,
+                                textStyle: robotoRegular.copyWith(
+                                  fontSize: Dimensions.fontSizeLarge,
+                                  color: kTextColor,
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                            Expanded(
+                              child: CustomTextField(
+                                border: AppConstants.decorationSignInScreen,
+                                focusBorder:
+                                    AppConstants.decorationSignInScreen,
+                                hintText: 'phone'.tr,
+                                controller: _phoneController,
+                                focusNode: _phoneFocus,
+                                nextFocus: _passwordFocus,
+                                inputType: TextInputType.phone,
+                                divider: true,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      Row(
-                        children: [
-                          Row(
-                            children: [
-                              Text('date_birth'.tr,
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: Dimensions.fontSizeLarge,
-                                  )),
-                              IconButton(
-                                  onPressed: () async {
-                                    final date =
-                                        await showCalender(context: context);
-                                    if (date == null) {
-                                      return null;
-                                    } else {
-                                      print(date.toIso8601String());
-                                      DateFormat dateFormat =
-                                          DateFormat("yyyy-MM-dd");
-                                      dateBirth = dateFormat.format(date);
-                                      _birthController.text = dateBirth;
-                                      print(dateBirth);
-                                    }
-                                  },
-                                  icon: Icon(
-                                    Icons.date_range,
-                                    color: Theme.of(context).primaryColor,
-                                  ))
-                            ],
+                      Container(
+                        margin: EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(5.0),
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey, width: 1),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(Dimensions.RADIUS_EXTRA_LARGE),
                           ),
-                          Expanded(
-                            child: CustomTextField(
-                              border: AppConstants.decorationSignUpScreen,
-                              focusBorder: AppConstants.decorationSignUpScreen,
-                              hintText: authController.birtDate.value.isEmpty
-                                  ? 'date_birth'.tr
-                                  : authController.birtDate.value,
+                        ),
+                        child: DropdownButton(
+                          underline: Container(color: Colors.transparent),
+                          iconDisabledColor: Color(0xFF0F4F80),
+                          iconSize: 35,
+                          iconEnabledColor: Color(0xFF0F4F80),
+                          isExpanded: true,
 
-                              controller: _birthController,
-                              focusNode: _birthFocus,
-                              nextFocus: _passwordFocus,
-                              inputType: TextInputType.text,
-                              // prefixIcon: Images.lock,
-                              isPassword: false,
-                              divider: true,
-                            ),
+                          borderRadius: BorderRadius.circular(
+                            Dimensions.RADIUS_EXTRA_LARGE,
                           ),
-                        ],
+                          // Initial Value
+                          value: dropdownvalue,
+
+                          // Down Arrow Icon
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          // Array list of items
+                          items: items.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(items),
+                            );
+                          }).toList(),
+                          // After selecting the desired option,it will
+                          // change button value to selected value
+                          onChanged: (newValue) {
+                            setState(() {
+                              dropdownvalue = newValue;
+                              if (dropdownvalue == 'Male') {
+                                gender = 0;
+                                print(gender);
+                              } else {
+                                gender = 1;
+                                print(gender);
+                              }
+                            });
+                          },
+                        ),
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 100,
-                            child: Text('password'.tr,
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: Dimensions.fontSizeLarge,
-                                )),
-                          ),
-                          Expanded(
-                            child: CustomTextField(
-                              border: AppConstants.decorationSignUpScreen,
-                              focusBorder: AppConstants.decorationSignUpScreen,
-                              hintText: 'password'.tr,
-                              controller: _passwordController,
-                              focusNode: _passwordFocus,
-                              nextFocus: _confirmPasswordFocus,
-                              inputType: TextInputType.visiblePassword,
-                              // prefixIcon: Images.lock,
-                              isPassword: true,
-                              divider: true,
-                            ),
-                          ),
-                        ],
+                      CustomTextField(
+                        border: AppConstants.decorationSignUpScreen,
+                        focusBorder: AppConstants.decorationSignUpScreen,
+                        hintText: authController.birtDate.value.isEmpty
+                            ? 'date_birth'.tr
+                            : authController.birtDate.value,
+
+                        controller: _birthController,
+                        focusNode: _birthFocus,
+                        nextFocus: _passwordFocus,
+                        inputType: TextInputType.text,
+                        // prefixIcon: Images.lock,
+                        // isPassword: false,
+                        divider: true,
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 100,
-                            child: Text('confirm_password'.tr,
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: Dimensions.fontSizeLarge,
-                                )),
-                          ),
-                          Expanded(
-                            child: CustomTextField(
-                              border: AppConstants.decorationSignUpScreen,
-                              focusBorder: AppConstants.decorationSignUpScreen,
-                              hintText: 'confirm_password'.tr,
-                              controller: _confirmPasswordController,
-                              focusNode: _confirmPasswordFocus,
-                              inputAction: TextInputAction.done,
-                              inputType: TextInputType.visiblePassword,
-                              // prefixIcon: Images.lock,
-                              isPassword: true,
-                              onSubmit: (text) => (GetPlatform.isWeb &&
-                                      authController.acceptTerms)
-                                  ? _register(authController, _countryDialCode)
-                                  : null,
-                            ),
-                          ),
-                        ],
+                      CustomTextField(
+                        border: AppConstants.decorationSignUpScreen,
+                        focusBorder: AppConstants.decorationSignUpScreen,
+                        hintText: 'password'.tr,
+                        controller: _passwordController,
+                        focusNode: _passwordFocus,
+                        nextFocus: _confirmPasswordFocus,
+                        inputType: TextInputType.visiblePassword,
+                        // prefixIcon: Images.lock,
+                        isPassword: true,
+                        divider: true,
+                      ),
+                      CustomTextField(
+                        border: AppConstants.decorationSignUpScreen,
+                        focusBorder: AppConstants.decorationSignUpScreen,
+                        hintText: 'confirm_password'.tr,
+                        controller: _confirmPasswordController,
+                        focusNode: _confirmPasswordFocus,
+                        inputAction: TextInputAction.done,
+                        inputType: TextInputType.visiblePassword,
+                        // prefixIcon: Images.lock,
+                        isPassword: true,
+                        onSubmit: (text) =>
+                            (GetPlatform.isWeb && authController.acceptTerms)
+                                ? _register(authController, _countryDialCode)
+                                : null,
                       ),
                     ]),
-                    SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-                    Text("By_creating_an_account_you_agree_to_our".tr,
-                        style: robotoMedium, textAlign: TextAlign.center),
-                    SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-
-                    Text(
-                      "Terms_of_Service_and_Privace_Policey".tr,
-                      style: robotoMedium.copyWith(
-                          color: Color(0xffFF0000),
-                          decoration: TextDecoration.underline),
-                      textAlign: TextAlign.center,
+                SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+                Text("By_creating_an_account_you_agree_to_our".tr,
+                    style: robotoMedium.copyWith(
+                      color: Color(0xffF5F6F8),
                     ),
-                    // ConditionCheckBox(authController: authController),
-                    SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+                    textAlign: TextAlign.center),
+                // SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+                Text(
+                  "Terms_of_Service_and_Privace_Policey".tr,
+                  style: robotoMedium.copyWith(
+                    color: Color(0xffE1003C),
+                    decoration: TextDecoration.underline,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                // ConditionCheckBox(authController: authController),
+                SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
-                    !authController.isLoading
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                                // Expanded(
-                                //     child: CustomButton(
-                                //   buttonText: 'sign_in'.tr,
-                                //   transparent: true,
-                                //   onPressed: () => Get.toNamed(
-                                //       RouteHelper.getSignInRoute(RouteHelper.signUp)),
-                                // )),
-                                SizedBox(
-                                  width: 250,
-                                  child: CustomButton(
-                                    radius: 50,
-                                    buttonText: 'sign_up'.tr,
-                                    onPressed: authController.acceptTerms
-                                        ? () => _register(
-                                            authController, _countryDialCode)
-                                        : null,
-                                  ),
-                                ),
-                              ])
-                        : Center(child: CircularProgressIndicator()),
-                    SizedBox(height: 30),
-                    Row(children: <Widget>[
-                      Expanded(
-                          child: Divider(
-                        color: Color(0xffFF0000).withOpacity(0.5),
-                      )),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text("or".tr),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Divider(
-                        color: Color(0xffFF0000).withOpacity(0.5),
-                      )),
-                    ]),
-                    SizedBox(height: 30),
+                !authController.isLoading
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                            // Expanded(
+                            //     child: CustomButton(
+                            //   buttonText: 'sign_in'.tr,
+                            //   transparent: true,
+                            //   onPressed: () => Get.toNamed(
+                            //       RouteHelper.getSignInRoute(RouteHelper.signUp)),
+                            // )),
+                            SizedBox(
+                              width: 250,
+                              child: CustomButton(
+                                color: Color(0xffE1003C),
+                                radius: 50,
+                                buttonText: 'sign_up'.tr,
+                                onPressed: authController.acceptTerms
+                                    ? () => _register(
+                                        authController, _countryDialCode)
+                                    : null,
+                              ),
+                            ),
+                          ])
+                    : Center(child: CircularProgressIndicator()),
+                SizedBox(height: 30),
+                Row(children: <Widget>[
+                  Expanded(
+                      child: Divider(
+                    color: Color(0xffFF0000).withOpacity(0.5),
+                  )),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("or".tr),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      child: Divider(
+                    color: Color(0xffFF0000).withOpacity(0.5),
+                  )),
+                ]),
+                SizedBox(height: 30),
 
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      child: SocialLoginButton(
-                        borderRadius: 50,
-                        buttonType: SocialLoginButtonType.google,
-                        onPressed: () {},
-                      ),
-                    )
-                    // SocialLoginWidget(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  child: SocialLoginButton(
+                    borderRadius: 50,
+                    buttonType: SocialLoginButtonType.google,
+                    onPressed: () {},
+                  ),
+                )
+                // SocialLoginWidget(),
 
-                    // GuestButton(),
-                  ]);
-                }),
-              ),
-            ),
-          ),
-        )),
+                // GuestButton(),
+              ]),
+            );
+          }),
+        ),
       ),
     );
   }
