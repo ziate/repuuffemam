@@ -11,7 +11,6 @@ import 'package:efood_multivendor/view/base/cart_widget.dart';
 import 'package:efood_multivendor/view/base/custom_image.dart';
 import 'package:efood_multivendor/view/screens/cart/cart_screen.dart';
 import 'package:efood_multivendor/view/screens/dashboard/widget/bottom_nav_item.dart';
-import 'package:efood_multivendor/view/screens/dashboard/widget/nav_bar_test.dart';
 import 'package:efood_multivendor/view/screens/event/event_screen.dart';
 import 'package:efood_multivendor/view/screens/favourite/favourite_screen.dart';
 import 'package:efood_multivendor/view/screens/home/home.dart';
