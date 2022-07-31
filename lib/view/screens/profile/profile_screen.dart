@@ -12,6 +12,7 @@ import 'package:efood_multivendor/view/base/custom_button.dart';
 import 'package:efood_multivendor/view/base/custom_image.dart';
 import 'package:efood_multivendor/view/base/web_menu_bar.dart';
 import 'package:efood_multivendor/view/screens/order/order_screen.dart';
+import 'package:efood_multivendor/view/screens/select_login/select_login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -262,9 +263,7 @@ class ProfileScreen extends StatelessWidget {
                                             .clearCartList();
                                         Get.find<WishListController>()
                                             .removeWishes();
-                                        Get.offAllNamed(
-                                          RouteHelper.getSelectLoginRoute(),
-                                        );
+                                        Get.offAll(SelectLogin());
                                       }),
                                   useSafeArea: false);
                             } else {

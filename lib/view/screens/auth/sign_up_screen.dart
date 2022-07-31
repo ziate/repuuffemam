@@ -201,6 +201,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             Expanded(
                               child: CustomTextField(
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 12,
+                                ),
                                 border: AppConstants.decorationSignInScreen,
                                 focusBorder:
                                     AppConstants.decorationSignInScreen,

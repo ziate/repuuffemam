@@ -6,6 +6,7 @@ import 'package:country_code_picker/country_code.dart';
 import 'package:efood_multivendor/controller/auth_controller.dart';
 import 'package:efood_multivendor/controller/localization_controller.dart';
 import 'package:efood_multivendor/controller/splash_controller.dart';
+import 'package:efood_multivendor/data/model/body/social_log_in_body.dart';
 import 'package:efood_multivendor/helper/responsive_helper.dart';
 import 'package:efood_multivendor/helper/route_helper.dart';
 import 'package:efood_multivendor/theme/styles.dart';
@@ -22,6 +23,7 @@ import 'package:efood_multivendor/view/screens/auth/widget/code_picker_widget.da
 import 'package:efood_multivendor/view/screens/auth/widget/condition_check_box.dart';
 import 'package:efood_multivendor/view/screens/auth/widget/guest_button.dart';
 import 'package:efood_multivendor/view/screens/auth/widget/powered_by_widget.dart';
+import 'package:efood_multivendor/view/screens/forget/forget_pass_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,6 +31,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:phone_number/phone_number.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
+
+import '../select_login/auth_widget.dart';
 
 class SignInScreen extends StatefulWidget {
   final bool exitFromApp;
@@ -258,17 +262,14 @@ class _SignInScreenState extends State<SignInScreen> {
                         : null,
                   )
                 : Center(child: CircularProgressIndicator()),
-            TextButton(
-              onPressed: () =>
-                  Get.toNamed(RouteHelper.getForgotPassRoute(false, null)),
-              child: Text('${'forgot_password'.tr}',
-                  style: TextStyle(
-                    color: Theme.of(context).errorColor,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w800,
-                    fontSize: Dimensions.fontSizeDefault,
-                  )),
-            ),
+            Builder(builder: (context) {
+              return TextButton(
+                  onPressed: () => onForgetPressed(context),
+                  child: Text(
+                    '${'forgot_password'.tr}',
+                    style: kTextStyleBold16.copyWith(color: Color(0xffE1003C)),
+                  ));
+            }),
             // SizedBox(height: 30),
             // Text('or_log_in_with'.tr,
             //     style: TextStyle(
@@ -291,6 +292,25 @@ class _SignInScreenState extends State<SignInScreen> {
             // GuestButton(),
           ]);
         }),
+      ),
+    );
+  }
+
+  void onForgetPressed(BuildContext context) {
+    Get.back();
+    showModalBottomSheet(
+      backgroundColor: kPrimaryColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => ForgetPassScreen(
+        fromSocialLogin: false,
+        socialLogInBody: SocialLogInBody(),
       ),
     );
   }

@@ -70,7 +70,8 @@ class ChooseLanguageScreen extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: localizationController.languages.length,
                             itemBuilder: (context, index) => Padding(
-                              padding: const EdgeInsets.all(8),
+                              padding:
+                                  const EdgeInsets.all(8).copyWith(bottom: 20),
                               child: LanguageWidget(
                                 color: localizationController.check == index
                                     ? Color(0xFF0F4F80)

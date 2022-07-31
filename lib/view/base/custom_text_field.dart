@@ -20,24 +20,27 @@ class CustomTextField extends StatefulWidget {
   final bool divider;
   final OutlineInputBorder border;
   final OutlineInputBorder focusBorder;
+  final EdgeInsetsGeometry contentPadding;
 
-  CustomTextField(
-      {this.hintText = 'Write something...',
-      this.controller,
-      this.focusNode,
-      this.nextFocus,
-      this.focusBorder,
-      this.border,
-      this.isEnabled = true,
-      this.inputType = TextInputType.text,
-      this.inputAction = TextInputAction.next,
-      this.maxLines = 1,
-      this.onSubmit,
-      this.onChanged,
-      this.prefixIcon,
-      this.capitalization = TextCapitalization.none,
-      this.isPassword = false,
-      this.divider = false});
+  CustomTextField({
+    this.hintText = 'Write something...',
+    this.controller,
+    this.focusNode,
+    this.nextFocus,
+    this.focusBorder,
+    this.border,
+    this.isEnabled = true,
+    this.inputType = TextInputType.text,
+    this.inputAction = TextInputAction.next,
+    this.maxLines = 1,
+    this.onSubmit,
+    this.onChanged,
+    this.prefixIcon,
+    this.capitalization = TextCapitalization.none,
+    this.isPassword = false,
+    this.divider = false,
+    this.contentPadding,
+  });
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -70,6 +73,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   ]
                 : null,
             decoration: InputDecoration(
+              contentPadding: widget.contentPadding,
               focusedBorder: widget.focusBorder,
               border: widget.border,
               isDense: true,
