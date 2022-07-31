@@ -2,6 +2,7 @@ import 'package:efood_multivendor/controller/localization_controller.dart';
 import 'package:efood_multivendor/data/model/response/language_model.dart';
 import 'package:efood_multivendor/util/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ChangeLanguageWidget extends StatelessWidget {
   final LanguageModel languageModel;
@@ -34,17 +35,17 @@ class ChangeLanguageWidget extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
-                    color: Theme.of(context).primaryColor,
+                    color: Colors.white,
                     fontSize: 18,
                   )),
             ),
             Checkbox(
-              value: true,
+              value: languageModel.languageCode == Get.locale.languageCode,
               onChanged: (value) {},
               activeColor: Colors.grey[200],
               checkColor: Colors.red,
             ),
-            Expanded(child: SizedBox())
+            // Expanded(child: SizedBox())
           ],
         ),
       ),

@@ -20,7 +20,7 @@ class FixedTextField extends StatelessWidget {
             fillColor: Color(0xFFE1E1E1),
             filled: true,
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
                 borderSide: BorderSide(
                   color: Theme.of(context).primaryColor,
                 )),
@@ -28,7 +28,7 @@ class FixedTextField extends StatelessWidget {
               borderSide: BorderSide(
                 color: Theme.of(context).primaryColor,
               ),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(15),
             ),
           ),
         ),

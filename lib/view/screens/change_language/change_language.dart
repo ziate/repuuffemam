@@ -18,79 +18,88 @@ class ChangeLanguage extends StatelessWidget {
     if (_isLoggedIn && Get.find<UserController>().userInfoModel == null) {
       Get.find<UserController>().getUserInfo();
     }
-    return Scaffold(
-      backgroundColor: Theme.of(context).cardColor,
-      body: GetBuilder<UserController>(builder: (userController) {
-        return (_isLoggedIn && userController.userInfoModel == null)
-            ? Center(child: CircularProgressIndicator())
-            : SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(height: 50),
-                    Center(
-                      child: ClipOval(
-                          child: CustomImage(
-                        image:
-                            '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
-                            '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      )),
+    return GetBuilder<UserController>(builder: (userController) {
+      return (_isLoggedIn && userController.userInfoModel == null)
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: 20),
+                  // Center(
+                  //   child: ClipOval(
+                  //       child: CustomImage(
+                  //     image:
+                  //         '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
+                  //         '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
+                  //     height: 100,
+                  //     width: 100,
+                  //     fit: BoxFit.cover,
+                  //   )),
+                  // ),
+                  // SizedBox(height: 20),
+                  Container(
+                    width: double.infinity,
+                    height: 50,
+                    color: Theme.of(context).primaryColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "change_language".tr,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        // GestureDetector(
+                        //     onTap: () {
+                        //       Navigator.pop(context);
+                        //     },
+                        //     child: SvgPicture.asset(Images.backSvg)),
+                      ],
                     ),
-                    SizedBox(height: 20),
-                    Container(
-                      width: double.infinity,
-                      height: 50,
-                      color: Theme.of(context).primaryColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text("change_language".tr,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w200)),
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: SvgPicture.asset(Images.backSvg)),
-                        ],
+                  ),
+                  // SizedBox(height: 3),
+                  Container(
+                    width: 50,
+                    height: 2,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(30.0)),
+                      color: Color(0xffE1003C),
+                    ),
+                  ),
+                  GetBuilder<LocalizationController>(
+                    builder: (localizationController) => ListView.builder(
+                      physics: ClampingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: localizationController.languages.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          children: [
+                            ChangeLanguageWidget(
+                              image: localizationController.images[index],
+                              languageModel:
+                                  localizationController.languages[index],
+                              localizationController: localizationController,
+                              index: index,
+                            ),
+                            Divider(
+                                color: Colors.grey[300],
+                                thickness: 2,
+                                endIndent: 20,
+                                indent: 20),
+                          ],
+                        ),
                       ),
                     ),
-                    GetBuilder<LocalizationController>(
-                        builder: (localizationController) => ListView.builder(
-                              physics: ClampingScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount:
-                                  localizationController.languages.length,
-                              itemBuilder: (context, index) => Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Column(
-                                  children: [
-                                    ChangeLanguageWidget(
-                                      image:
-                                          localizationController.images[index],
-                                      languageModel: localizationController
-                                          .languages[index],
-                                      localizationController:
-                                          localizationController,
-                                      index: index,
-                                    ),
-                                    Divider(
-                                        color: Colors.grey[300],
-                                        thickness: 2,
-                                        endIndent: 20,
-                                        indent: 20),
-                                  ],
-                                ),
-                              ),
-                            )),
-                  ],
-                ),
-              );
-      }),
-    );
+                  ),
+                  SizedBox(height: 30),
+                ],
+              ),
+            );
+    });
   }
 }

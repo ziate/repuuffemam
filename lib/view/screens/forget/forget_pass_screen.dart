@@ -18,14 +18,21 @@ import 'package:phone_number/phone_number.dart';
 import '../../../theme/styles.dart';
 import '../../../util/app_constants.dart';
 
-class ForgetPassScreen extends StatelessWidget {
+class ForgetPassScreen extends StatefulWidget {
   final bool fromSocialLogin;
   final SocialLogInBody socialLogInBody;
   ForgetPassScreen(
       {@required this.fromSocialLogin, @required this.socialLogInBody});
 
+  @override
+  State<ForgetPassScreen> createState() => _ForgetPassScreenState();
+}
+
+class _ForgetPassScreenState extends State<ForgetPassScreen> {
   final TextEditingController _numberController = TextEditingController();
+
   final FocusNode _phoneFocus = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     String _countryDialCode = CountryCode.fromCountryCode(
@@ -38,22 +45,9 @@ class ForgetPassScreen extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-          // decoration: BoxDecoration(
-          //   color: kPrimaryColor,
-          //   borderRadius: const BorderRadius.only(
-          //     topRight: Radius.circular(30.0),
-          //     topLeft: Radius.circular(30.0),
-          //   ),
-          // ),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              // Image.asset(Images.forgot, height: 220),
-              // Padding(
-              //   padding: EdgeInsets.all(30),
-              //   child: Text('please_enter_mobile'.tr,
-              //       style: robotoRegular, textAlign: TextAlign.center),
-              // ),
               SizedBox(height: 10),
               Container(
                 width: 48,
@@ -84,7 +78,6 @@ class ForgetPassScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      // height: 59,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -105,54 +98,29 @@ class ForgetPassScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(width: 7),
                     Expanded(
-                      child: CustomTextField(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 12,
+                      child: TextField(
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 12,
+                          ),
+                          border: AppConstants.decorationSignInScreen,
+                          focusedBorder: AppConstants.decorationSignInScreen,
+                          hintText: 'phone'.tr,
+                          filled: true,
+                          fillColor: Colors.white,
                         ),
-                        border: AppConstants.decorationSignInScreen,
-                        focusBorder: AppConstants.decorationSignInScreen,
-                        hintText: 'phone'.tr,
                         controller: _numberController,
-                        inputType: TextInputType.phone,
-                        inputAction: TextInputAction.done,
                         focusNode: _phoneFocus,
-                        onSubmit: (text) => GetPlatform.isWeb
-                            ? _forgetPass(_countryDialCode)
-                            : null,
                       ),
                     ),
                   ],
                 ),
               ),
-              // Row(children: [
-              //   CodePickerWidget(
-              //     onChanged: (CountryCode countryCode) {
-              //       _countryDialCode = countryCode.dialCode;
-              //     },
-              //     initialSelection: _countryDialCode,
-              //     favorite: [_countryDialCode],
-              //     showDropDownButton: true,
-              //     padding: EdgeInsets.zero,
-              //     showFlagMain: true,
-              //     dialogBackgroundColor: Theme.of(context).cardColor,
-              //     textStyle: robotoRegular.copyWith(
-              //       fontSize: Dimensions.fontSizeLarge,
-              //       color: Theme.of(context).textTheme.bodyText1.color,
-              //     ),
-              //   ),
-              //   Expanded(
-              //       child: CustomTextField(
-              //     controller: _numberController,
-              //     inputType: TextInputType.phone,
-              //     inputAction: TextInputAction.done,
-              //     hintText: 'phone'.tr,
-              //     onSubmit: (text) =>
-              //         GetPlatform.isWeb ? _forgetPass(_countryDialCode) : null,
-              //   )),
-              // ]),
-              SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+              SizedBox(height: 40),
               GetBuilder<AuthController>(
                 builder: (authController) {
                   return !authController.isLoading
@@ -193,9 +161,10 @@ class ForgetPassScreen extends StatelessWidget {
     } else if (!_isValid) {
       showCustomSnackBar('invalid_phone_number'.tr);
     } else {
-      if (fromSocialLogin) {
-        socialLogInBody.phone = _numberWithCountryCode;
-        Get.find<AuthController>().registerWithSocialMedia(socialLogInBody);
+      if (widget.fromSocialLogin) {
+        widget.socialLogInBody.phone = _numberWithCountryCode;
+        Get.find<AuthController>()
+            .registerWithSocialMedia(widget.socialLogInBody);
       } else {
         Get.find<AuthController>()
             .forgetPassword(_numberWithCountryCode)

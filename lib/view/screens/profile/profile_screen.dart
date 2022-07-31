@@ -5,19 +5,31 @@ import 'package:efood_multivendor/controller/user_controller.dart';
 import 'package:efood_multivendor/controller/wishlist_controller.dart';
 import 'package:efood_multivendor/helper/responsive_helper.dart';
 import 'package:efood_multivendor/helper/route_helper.dart';
+import 'package:efood_multivendor/theme/styles.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
 import 'package:efood_multivendor/util/images.dart';
 import 'package:efood_multivendor/view/base/confirmation_dialog.dart';
 import 'package:efood_multivendor/view/base/custom_button.dart';
 import 'package:efood_multivendor/view/base/custom_image.dart';
 import 'package:efood_multivendor/view/base/web_menu_bar.dart';
+import 'package:efood_multivendor/view/screens/change_language/change_language.dart';
 import 'package:efood_multivendor/view/screens/order/order_screen.dart';
+import 'package:efood_multivendor/view/screens/profile/update_profile_screen.dart';
 import 'package:efood_multivendor/view/screens/select_login/select_login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final Color iconColor = const Color(0xff727C8E);
+  final TextStyle fontStyle = kTextStyleBold18.copyWith(
+    color: Colors.white,
+    fontSize: 20,
+  );
+  final TextStyle desFontStyle = kTextStyleReg14.copyWith(
+    color: Color(0xff727C8E),
+    fontSize: 15,
+  );
   @override
   Widget build(BuildContext context) {
     bool _isLoggedIn = Get.find<AuthController>().isLoggedIn();
@@ -47,11 +59,9 @@ class ProfileScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: ResponsiveHelper.isDesktop(context) ? WebMenuBar() : null,
-      backgroundColor: Theme.of(context).cardColor,
-      body: Scaffold(
-        backgroundColor: Theme.of(context).cardColor,
-        body: GetBuilder<UserController>(builder: (userController) {
+      // backgroundColor: Theme.of(context).cardColor,
+      body: SafeArea(
+        child: GetBuilder<UserController>(builder: (userController) {
           return (_isLoggedIn && userController.userInfoModel == null)
               ? Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
@@ -70,128 +80,128 @@ class ProfileScreen extends StatelessWidget {
                         )),
                       ),
                       SizedBox(height: 10),
-                      Container(
-                        width: context.width - 25,
-                        height: context.height * 0.3,
-                        decoration: BoxDecoration(
-                            color: Color(0xFFE1E1E1),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Row(
-                                children: [
-                                  Text("name".tr,
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: Dimensions.fontSizeLarge,
-                                      )),
-                                  Text(
-                                    ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.fName : ''}' +
-                                        ' ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.lName : ''}',
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text("email".tr,
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: Dimensions.fontSizeLarge,
-                                      )),
-                                  Text(
-                                      ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.email : ''}'),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text("user".tr,
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: Dimensions.fontSizeLarge,
-                                      )),
-                                  Text(
-                                      ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.user_name : ''}'),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text("phone".tr,
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: Dimensions.fontSizeLarge,
-                                      )),
-                                  Text(
-                                      ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.phone : ''}'),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text("Country".tr,
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: Dimensions.fontSizeLarge,
-                                      )),
-                                  Flexible(
-                                    child: Text(
-                                      ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.country : ''}',
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text("address".tr,
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: Dimensions.fontSizeLarge,
-                                      )),
-                                  Flexible(
-                                    child: Text(
-                                      ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.address : ''}',
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text("City".tr,
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: Dimensions.fontSizeLarge,
-                                      )),
-                                  Flexible(
-                                    child: Text(
-                                      ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.city : ''}',
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text("date_birth".tr,
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: Dimensions.fontSizeLarge,
-                                      )),
-                                  Flexible(
-                                    child: Text(
-                                      ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.date_of_birth : ''}',
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   width: context.width - 25,
+                      //   height: context.height * 0.3,
+                      //   decoration: BoxDecoration(
+                      //       color: Color(0xFFE1E1E1),
+                      //       borderRadius: BorderRadius.circular(10)),
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(8.0),
+                      //     child: Column(
+                      //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //       children: [
+                      //         Row(
+                      //           children: [
+                      //             Text("name".tr,
+                      //                 style: TextStyle(
+                      //                   color: Theme.of(context).primaryColor,
+                      //                   fontSize: Dimensions.fontSizeLarge,
+                      //                 )),
+                      //             Text(
+                      //               ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.fName : ''}' +
+                      //                   ' ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.lName : ''}',
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         Row(
+                      //           children: [
+                      //             Text("email".tr,
+                      //                 style: TextStyle(
+                      //                   color: Theme.of(context).primaryColor,
+                      //                   fontSize: Dimensions.fontSizeLarge,
+                      //                 )),
+                      //             Text(
+                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.email : ''}'),
+                      //           ],
+                      //         ),
+                      //         Row(
+                      //           children: [
+                      //             Text("user".tr,
+                      //                 style: TextStyle(
+                      //                   color: Theme.of(context).primaryColor,
+                      //                   fontSize: Dimensions.fontSizeLarge,
+                      //                 )),
+                      //             Text(
+                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.user_name : ''}'),
+                      //           ],
+                      //         ),
+                      //         Row(
+                      //           children: [
+                      //             Text("phone".tr,
+                      //                 style: TextStyle(
+                      //                   color: Theme.of(context).primaryColor,
+                      //                   fontSize: Dimensions.fontSizeLarge,
+                      //                 )),
+                      //             Text(
+                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.phone : ''}'),
+                      //           ],
+                      //         ),
+                      //         Row(
+                      //           children: [
+                      //             Text("Country".tr,
+                      //                 style: TextStyle(
+                      //                   color: Theme.of(context).primaryColor,
+                      //                   fontSize: Dimensions.fontSizeLarge,
+                      //                 )),
+                      //             Flexible(
+                      //               child: Text(
+                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.country : ''}',
+                      //                 overflow: TextOverflow.ellipsis,
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         Row(
+                      //           children: [
+                      //             Text("address".tr,
+                      //                 style: TextStyle(
+                      //                   color: Theme.of(context).primaryColor,
+                      //                   fontSize: Dimensions.fontSizeLarge,
+                      //                 )),
+                      //             Flexible(
+                      //               child: Text(
+                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.address : ''}',
+                      //                 overflow: TextOverflow.ellipsis,
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         Row(
+                      //           children: [
+                      //             Text("City".tr,
+                      //                 style: TextStyle(
+                      //                   color: Theme.of(context).primaryColor,
+                      //                   fontSize: Dimensions.fontSizeLarge,
+                      //                 )),
+                      //             Flexible(
+                      //               child: Text(
+                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.city : ''}',
+                      //                 overflow: TextOverflow.ellipsis,
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         Row(
+                      //           children: [
+                      //             Text("date_birth".tr,
+                      //                 style: TextStyle(
+                      //                   color: Theme.of(context).primaryColor,
+                      //                   fontSize: Dimensions.fontSizeLarge,
+                      //                 )),
+                      //             Flexible(
+                      //               child: Text(
+                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.date_of_birth : ''}',
+                      //                 overflow: TextOverflow.ellipsis,
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(height: 10),
                       Divider(
                           color: Colors.grey,
@@ -209,11 +219,19 @@ class ProfileScreen extends StatelessWidget {
                                     ListTile(
                                       onTap: () {
                                         if (index == 0) {
-                                          Get.toNamed(
-                                              RouteHelper.updateProfile);
+                                          showModelSheet(
+                                            context,
+                                            UpdateProfileScreen(),
+                                          );
+                                          // Get.toNamed(
+                                          //     RouteHelper.updateProfile);
                                         } else if (index == 1) {
-                                          Get.toNamed(
-                                              RouteHelper.changeLanguage);
+                                          showModelSheet(
+                                            context,
+                                            ChangeLanguage(),
+                                          );
+                                          // Get.toNamed(
+                                          //     RouteHelper.changeLanguage);
                                         } else if (index == 2) {
                                           Get.toNamed(RouteHelper.address);
                                         } else if (index == 3) {
@@ -222,19 +240,19 @@ class ProfileScreen extends StatelessWidget {
                                           Get.toNamed(RouteHelper.setting);
                                         }
                                       },
-                                      leading: SvgPicture.asset(images[index]),
+                                      leading: SvgPicture.asset(
+                                        images[index],
+                                        color: kPrimaryColor,
+                                      ),
                                       trailing: Icon(Icons.arrow_forward_ios),
-                                      title: Text(titles[index].tr,
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize: Dimensions.fontSizeLarge,
-                                          )),
-                                      subtitle: Text(subTitles[index].tr,
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: Dimensions.fontSizeSmall,
-                                          )),
+                                      title: Text(
+                                        titles[index].tr,
+                                        style: fontStyle,
+                                      ),
+                                      subtitle: Text(
+                                        subTitles[index].tr,
+                                        style: desFontStyle,
+                                      ),
                                     ),
                                     Divider(
                                         color: Colors.grey,
@@ -246,6 +264,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       CustomButton(
+                          color: kPrimaryColor,
                           radius: 25,
                           width: MediaQuery.of(context).size.width - 80,
                           buttonText: _isLoggedIn ? 'logout'.tr : 'sign_in'.tr,
@@ -347,6 +366,21 @@ class ProfileScreen extends StatelessWidget {
           // );
         }),
       ),
+    );
+  }
+
+  void showModelSheet(BuildContext context, Widget content) {
+    showModalBottomSheet(
+      backgroundColor: kPrimaryColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => content,
     );
   }
 }
