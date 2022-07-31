@@ -418,5 +418,13 @@
   "start_page_hint1": "Before Enjoying our Services",
   "creat_account": "Creat Account",
   "login": "Login",
-  "powered_by": "Powered by"
+  "powered_by": "Powered by",
+  "explore_by_category":"Explore By Category",
+  "flash_sale":"Flash Sale",
+  "used_markets":"USED MARKET",
+  "events":"EVENTS",
+  "stores":"STORES"
+
+
+
 }

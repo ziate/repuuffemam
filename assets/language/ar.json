@@ -418,5 +418,10 @@
   "start_page_hint1": "قبل الاستمتاع بخدماتنا",
   "creat_account": "إنشاء حساب",
   "login": "تسجيل الدخول",
-  "powered_by": "مدعوم من"
+  "powered_by": "مدعوم من",
+  "explore_by_category":"تصفح الأقسام",
+  "flash_sale":"بيع مفاجئ",
+  "used_markets":"سوق المستعمل",
+  "events":"المناسبات",
+  "stores":"المتاجر"
 }

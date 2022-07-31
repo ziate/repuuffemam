@@ -4,14 +4,14 @@ class Images {
   static const String logo = 'assets/image/logo.gif';
   static const String logoSvg = 'assets/image/logo.svg';
   static const String backSvg = 'assets/image/back.svg';
-  static const String eventsSvg = 'assets/image/events.jpg';
+  static const String eventsSvg = 'assets/image/events.png';
   static const String orderSvg = 'assets/image/order32.svg';
   static const String onlineSvg = 'assets/image/online.png';
   static const String chatSvg = 'assets/image/chat.svg';
   static const String cartSvg = 'assets/image/shoppingcart.svg';
   static const String storespng = 'assets/image/stores.png';
-  static const String used_marketSvg = 'assets/image/used_market.jpg';
-  static const String logopng = 'assets/image/logo_repuff.png';
+  static const String used_marketSvg = 'assets/image/used_market.png';
+  static const String logopng = 'assets/image/logo.png';
   static const String home_icon = 'assets/image/home.svg';
   static const String shopping_icon = 'assets/image/shopping-cart.svg';
   static const String fav_icon = 'assets/image/heart-line.svg';
@@ -75,4 +75,10 @@ class Images {
   static const String facebook = 'assets/image/facebook.png';
   static const String restaurant_join = 'assets/image/restaurant_join.png';
   static const String delivery_man_join = 'assets/image/delivery_man_join.png';
+  static const String search_icon = 'assets/image/search_icon.png';
+  static const String stores_home = 'assets/image/stores_home.png';
+  static const String home = 'assets/image/home_icon.svg';
+  static const String cart = 'assets/image/cart_icon.svg';
+  static const String inbox = 'assets/image/inbox.svg';
+  static const String favorite = 'assets/image/Favorite.svg';
 }

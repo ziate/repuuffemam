@@ -1,14 +1,13 @@
 import 'package:efood_multivendor/controller/banner_controller.dart';
 import 'package:efood_multivendor/controller/location_controller.dart';
-import 'package:efood_multivendor/helper/responsive_helper.dart';
+import 'package:efood_multivendor/helper/get_substring.dart';
 import 'package:efood_multivendor/helper/route_helper.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
 import 'package:efood_multivendor/util/images.dart';
 import 'package:efood_multivendor/util/styles.dart';
-import 'package:efood_multivendor/view/screens/home/home_screen.dart';
 import 'package:efood_multivendor/view/screens/home/widget/banner_view.dart';
+import 'package:efood_multivendor/view/screens/home/widget/divider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
@@ -20,224 +19,270 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
+
     loadData(false);
     List<String> images = [
-      Images.storespng,
-      Images.used_marketSvg,
+      Images.stores_home,
       Images.eventsSvg,
+      Images.used_marketSvg,
     ];
     List<String> labels = [
-      "STORES",
-      "USED MARKET",
-      "EVENTS",
+      "stores".tr,
+      "events".tr,
+      "used_markets".tr,
     ];
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
-        child: Container(
-          width: double.infinity,
-          height: 60,
-          color: Theme.of(context).primaryColor,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(150),
+          child: Column(
             children: [
-              Container(
-                  clipBehavior: Clip.antiAlias,
-                  width: 50,
-                  height: 50,
-                  child: Center(
-                    child: Image.asset(
-                      Images.logopng,
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      //height: 100,
+                      //  width: 100,
+                      child: Stack(children: [
+                        Image(
+                          image: AssetImage(Images.location),
+                        ),
+                        GetBuilder<LocationController>(
+                          builder: (locationController) => Row(
+                            children: [
+                              Center(
+                                child: Text(
+                                  getSubString(locationController
+                                      .getUserAddress()
+                                      .address),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 12),
+                                ),
+                              ),
+                              Icon(
+                                Icons.location_on,
+                                color: Colors.white,
+                                size: 25,
+                              )
+                            ],
+                          ),
+                        )
+                      ]),
                     ),
                   ),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.white)),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Expanded(
+                    child: Container(
+                      //width: 100,
+                      child: Image(
+                        image: AssetImage(Images.logopng),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Center(
+                  child: Container(
+                height: 20,
+                width: Dimensions.WEB_MAX_WIDTH,
+                color: Colors.transparent,
+                // padding: EdgeInsets.symmetric(
+                //     horizontal: Dimensions.PADDING_SIZE_SMALL),
+                child: InkWell(
+                  onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_SMALL),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius:
+                          BorderRadius.circular(Dimensions.RADIUS_EXTRA_LARGE),
+                    ),
+                    child: Row(
+                      children: [
+                        Image(
+                          height: 15,
+                          image: AssetImage(Images.search_icon),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            'search_food_or_restaurant'.tr,
+                            style: robotoRegular.copyWith(
+                              fontSize: Dimensions.fontSizeSmall,
+                              color: Theme.of(context).hintColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )),
             ],
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Center(
-                child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 15),
-                    child: Container(
-                      height: 40,
-                      width: Dimensions.WEB_MAX_WIDTH,
-                      color: Colors.transparent,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: Dimensions.PADDING_SIZE_SMALL),
-                      child: InkWell(
-                        onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: Dimensions.PADDING_SIZE_SMALL),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).cardColor,
-                            borderRadius: BorderRadius.circular(
-                                Dimensions.RADIUS_EXTRA_LARGE),
-                            boxShadow: [
-                              BoxShadow(
-                                  color:
-                                      Colors.grey[Get.isDarkMode ? 800 : 200],
-                                  spreadRadius: 1,
-                                  blurRadius: 5)
-                            ],
-                          ),
-                          child: Row(children: [
-                            Icon(Icons.search,
-                                size: 25,
-                                color: Theme.of(context).primaryColor),
-                            SizedBox(
-                                width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                            Expanded(
-                                child: Text('search_food_or_restaurant'.tr,
-                                    style: robotoRegular.copyWith(
-                                      fontSize: Dimensions.fontSizeSmall,
-                                      color: Theme.of(context).hintColor,
-                                    ))),
-                          ]),
-                        ),
-                      ),
-                    ))),
-            Center(
-                child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                width: Dimensions.WEB_MAX_WIDTH,
-                height: 50,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).backgroundColor,
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.RADIUS_EXTRA_LARGE)),
-                child: Row(children: [
-                  Expanded(
-                      child: InkWell(
-                    onTap: () =>
-                        Get.toNamed(RouteHelper.getAccessLocationRoute('home')),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: Dimensions.PADDING_SIZE_SMALL,
-                        horizontal: ResponsiveHelper.isDesktop(context)
-                            ? Dimensions.PADDING_SIZE_SMALL
-                            : 0,
-                      ),
-                      child: GetBuilder<LocationController>(
-                          builder: (locationController) {
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              locationController.getUserAddress().addressType ==
-                                      'home'
-                                  ? Icons.home_filled
-                                  : locationController
-                                              .getUserAddress()
-                                              .addressType ==
-                                          'office'
-                                      ? Icons.work
-                                      : Icons.location_on,
-                              size: 20,
-                              color:
-                                  Theme.of(context).textTheme.bodyText1.color,
-                            ),
-                            SizedBox(width: 10),
-                            Flexible(
-                              child: Text(
-                                locationController.getUserAddress().address,
-                                style: robotoRegular.copyWith(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      .color,
-                                  fontSize: Dimensions.fontSizeSmall,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        );
-                      }),
-                    ),
-                  )),
-                  Icon(Icons.arrow_forward_ios_outlined)
-                ]),
-              ),
-            )),
-            Center(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              //---------------------------------------------------------------------------------
+
+              Center(
                 child: SizedBox(
-                    width: Dimensions.WEB_MAX_WIDTH,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GetBuilder<BannerController>(
-                              builder: (bannerController) {
-                            return bannerController.bannerImageList == null
-                                ? BannerView(bannerController: bannerController)
-                                : bannerController.bannerImageList.length == 0
-                                    ? SizedBox()
-                                    : BannerView(
-                                        bannerController: bannerController);
-                          }),
-                        ]))),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: images.length,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 2 / 2,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20),
-                  itemBuilder: (ctx, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        if (index == 0) {
-                          Get.toNamed(RouteHelper.storesScreen);
-                        } else if (index == 1) {
-                          Get.toNamed(RouteHelper.usedMarket);
-                        } else if (index == 2) {
-                          Get.toNamed(RouteHelper.eventScreen);
-                        }
-                      },
-                      child: Column(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Material(
-                              elevation: 2,
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.RADIUS_EXTRA_LARGE),
-                              child: Container(
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          Dimensions.RADIUS_EXTRA_LARGE),
-                                      color: Colors.white),
-                                  child: Image.asset(
-                                    images[index],
-                                    fit: BoxFit.cover,
-                                  )),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(labels[index],
-                              style: robotoRegular.copyWith(
-                                  fontSize: Dimensions.fontSizeExtraLarge,
-                                  color: Theme.of(context).primaryColor)),
-                        ],
+                  width: Dimensions.WEB_MAX_WIDTH,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GetBuilder<BannerController>(
+                        builder: (bannerController) {
+                          return bannerController.bannerImageList == null
+                              ? BannerView(bannerController: bannerController)
+                              : bannerController.bannerImageList.length == 0
+                                  ? SizedBox()
+                                  : BannerView(
+                                      bannerController: bannerController);
+                        },
                       ),
-                    );
-                  }),
-            ),
-          ],
+                    ],
+                  ),
+                ),
+              ),
+              //---------------------------------------------------------------------------------
+
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    customDivider(context),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "explore_by_category".tr,
+                      style: robotoRegular.copyWith(
+                          color: Colors.white,
+                          fontSize: Dimensions.fontSizeExtraSmall,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: _height / 8,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: images.length,
+                        itemBuilder: (ctx, index) {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Container(
+                              height: _height / 8,
+                              width: _width / 4,
+                              child: Stack(children: [
+                                Image.asset(
+                                  images[index],
+                                  fit: BoxFit.cover,
+                                ),
+                                Center(
+                                  child: Container(
+                                    width: _width / 6,
+                                    child: Center(
+                                      child: Text(
+                                        labels[index],
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ]),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    //-----------------------------------------------------------------------
+                    SizedBox(
+                      height: 20,
+                    ),
+                    customDivider(context),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "flash_sale".tr,
+                      style: robotoRegular.copyWith(
+                          color: Colors.white,
+                          fontSize: Dimensions.fontSizeExtraSmall,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: _height / 8,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: images.length,
+                        itemBuilder: (ctx, index) {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Container(
+                              height: _height / 8,
+                              width: _width / 4,
+                              child: Stack(children: [
+                                Image.asset(
+                                  images[index],
+                                  fit: BoxFit.cover,
+                                ),
+                                Center(
+                                  child: Container(
+                                    width: _width / 6,
+                                    child: Center(
+                                      child: Text(
+                                        labels[index],
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ]),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
