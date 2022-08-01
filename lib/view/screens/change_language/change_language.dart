@@ -1,12 +1,8 @@
 import 'package:efood_multivendor/controller/auth_controller.dart';
 import 'package:efood_multivendor/controller/localization_controller.dart';
-import 'package:efood_multivendor/controller/splash_controller.dart';
 import 'package:efood_multivendor/controller/user_controller.dart';
-import 'package:efood_multivendor/util/images.dart';
-import 'package:efood_multivendor/view/base/custom_image.dart';
 import 'package:efood_multivendor/view/screens/change_language/widget/language_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ChangeLanguage extends StatelessWidget {

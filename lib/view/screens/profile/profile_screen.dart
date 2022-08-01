@@ -244,7 +244,10 @@ class ProfileScreen extends StatelessWidget {
                                         images[index],
                                         color: kPrimaryColor,
                                       ),
-                                      trailing: Icon(Icons.arrow_forward_ios),
+                                      trailing: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Colors.white,
+                                      ),
                                       title: Text(
                                         titles[index].tr,
                                         style: fontStyle,
