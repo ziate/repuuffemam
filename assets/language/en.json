@@ -423,7 +423,10 @@
   "flash_sale":"Flash Sale",
   "used_markets":"USED MARKET",
   "events":"EVENTS",
-  "stores":"STORES"
+  "stores":"STORES",
+  "house_number":"Apartment / House number",
+  "address_special_instructions":"Address Special Instructions"
+
 
 
 

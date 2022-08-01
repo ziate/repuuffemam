@@ -47,12 +47,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     _screens = [
       Home(),
+      FavouriteScreen(),
+      ProfileScreen(),
       CartScreen(fromNav: true),
       // FavouriteScreen(),
-      ProfileScreen(),
+
       // CartScreen(fromNav: true),
       EventScreen(),
-      FavouriteScreen()
+
       // Container(),
     ];
 
@@ -231,14 +233,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       ),
                                       alignment: Alignment.center,
                                       child: ClipOval(
-                                          child: CustomImage(
-                                        image:
-                                            '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
-                                            '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
-                                        height: 75,
-                                        width: 75,
-                                        fit: BoxFit.cover,
-                                      )));
+                                        child: CustomImage(
+                                          image:
+                                              '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
+                                              '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
+                                          height: 75,
+                                          width: 75,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    );
                             }),
                           ],
                         ),

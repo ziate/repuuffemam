@@ -423,5 +423,7 @@
   "flash_sale":"بيع مفاجئ",
   "used_markets":"سوق المستعمل",
   "events":"المناسبات",
-  "stores":"المتاجر"
+  "stores":"المتاجر",
+  "house_number":"رقم المنزل",
+  "address_special_instructions":"تعليمات خاصة بالعنوان"
 }

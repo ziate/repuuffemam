@@ -5,8 +5,11 @@ import 'package:efood_multivendor/helper/route_helper.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
 import 'package:efood_multivendor/util/images.dart';
 import 'package:efood_multivendor/util/styles.dart';
+import 'package:efood_multivendor/view/screens/event/event_screen.dart';
 import 'package:efood_multivendor/view/screens/home/widget/banner_view.dart';
 import 'package:efood_multivendor/view/screens/home/widget/divider.dart';
+import 'package:efood_multivendor/view/screens/stores/stores.dart';
+import 'package:efood_multivendor/view/screens/used_market/used_market_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,6 +36,8 @@ class Home extends StatelessWidget {
       "events".tr,
       "used_markets".tr,
     ];
+
+    List screens = [Stores(), EventScreen(), UsedMarketScreen()];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Scaffold(
@@ -185,34 +190,39 @@ class Home extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemCount: images.length,
                         itemBuilder: (ctx, index) {
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Container(
-                              height: _height / 8,
-                              width: _width / 4,
-                              child: Stack(children: [
-                                Image.asset(
-                                  images[index],
-                                  fit: BoxFit.cover,
-                                ),
-                                Center(
-                                  child: Container(
-                                    width: _width / 6,
-                                    child: Center(
-                                      child: Text(
-                                        labels[index],
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12,
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(screens[index]);
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Container(
+                                height: _height / 8,
+                                width: _width / 4,
+                                child: Stack(children: [
+                                  Image.asset(
+                                    images[index],
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      width: _width / 6,
+                                      child: Center(
+                                        child: Text(
+                                          labels[index],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                          ),
+                                          textAlign: TextAlign.center,
                                         ),
-                                        textAlign: TextAlign.center,
                                       ),
                                     ),
-                                  ),
-                                )
-                              ]),
+                                  )
+                                ]),
+                              ),
                             ),
                           );
                         },
