@@ -3,6 +3,7 @@ import 'package:efood_multivendor/controller/localization_controller.dart';
 import 'package:efood_multivendor/controller/splash_controller.dart';
 import 'package:efood_multivendor/controller/user_controller.dart';
 import 'package:efood_multivendor/helper/route_helper.dart';
+import 'package:efood_multivendor/theme/styles.dart';
 import 'package:efood_multivendor/util/images.dart';
 import 'package:efood_multivendor/view/base/custom_button.dart';
 import 'package:efood_multivendor/view/base/custom_image.dart';
@@ -19,27 +20,29 @@ class ChangePassword extends StatelessWidget {
     if (_isLoggedIn && Get.find<UserController>().userInfoModel == null) {
       Get.find<UserController>().getUserInfo();
     }
-    return Scaffold(
-      backgroundColor: Theme.of(context).cardColor,
-      body: GetBuilder<UserController>(builder: (userController) {
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom + 8,
+      ),
+      child: GetBuilder<UserController>(builder: (userController) {
         return (_isLoggedIn && userController.userInfoModel == null)
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: 50),
-                    Center(
-                      child: ClipOval(
-                          child: CustomImage(
-                        image:
-                            '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
-                            '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      )),
-                    ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 30),
+                    // Center(
+                    //   child: ClipOval(
+                    //       child: CustomImage(
+                    //     image:
+                    //         '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
+                    //         '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
+                    //     height: 100,
+                    //     width: 100,
+                    //     fit: BoxFit.cover,
+                    //   )),
+                    // ),
+                    // SizedBox(height: 20),
                     Container(
                       width: double.infinity,
                       height: 50,
@@ -47,30 +50,35 @@ class ChangePassword extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text("change_password".tr,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w200)),
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: SvgPicture.asset(Images.backSvg)),
+                          Text(
+                            "change_password".tr,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          // GestureDetector(
+                          //     onTap: () {
+                          //       Navigator.pop(context);
+                          //     },
+                          //     child: SvgPicture.asset(Images.backSvg)),
                         ],
                       ),
                     ),
-                    SizedBox(height: 20),
+                    // SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: Text("old_password".tr,
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w100)),
+                        child: Text(
+                          "old_password".tr,
+                          style: TextStyle(
+                            color: kTextColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w100,
+                          ),
+                        ),
                       ),
                     ),
                     FixedTextField(
@@ -81,11 +89,13 @@ class ChangePassword extends StatelessWidget {
                           horizontal: 20, vertical: 10),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: Text("new_password".tr,
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w100)),
+                        child: Text(
+                          "new_password".tr,
+                          style: TextStyle(
+                              color: kTextColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w100),
+                        ),
                       ),
                     ),
                     FixedTextField(
@@ -96,22 +106,28 @@ class ChangePassword extends StatelessWidget {
                           horizontal: 20, vertical: 10),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: Text("confirm_password".tr,
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w100)),
+                        child: Text(
+                          "confirm_password".tr,
+                          style: TextStyle(
+                            color: kTextColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w100,
+                          ),
+                        ),
                       ),
                     ),
                     FixedTextField(
                       onChanged: (v) {},
                     ),
-                    SizedBox(height: 80),
+                    SizedBox(height: 40),
                     CustomButton(
-                        radius: 25,
-                        width: MediaQuery.of(context).size.width - 100,
-                        buttonText: 'change'.tr,
-                        onPressed: () {}),
+                      color: Color(0xff20242A),
+                      radius: 25,
+                      width: MediaQuery.of(context).size.width - 100,
+                      buttonText: 'change'.tr,
+                      onPressed: () {},
+                    ),
+                    SizedBox(height: 40),
                   ],
                 ),
               );

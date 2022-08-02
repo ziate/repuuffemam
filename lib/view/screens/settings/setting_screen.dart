@@ -7,6 +7,7 @@ import 'package:efood_multivendor/util/images.dart';
 import 'package:efood_multivendor/view/base/custom_app_bar.dart';
 import 'package:efood_multivendor/view/base/custom_image.dart';
 import 'package:efood_multivendor/view/screens/change_language/widget/language_widget.dart';
+import 'package:efood_multivendor/view/screens/change_password/change_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -80,7 +81,8 @@ class SettingScreen extends StatelessWidget {
                                 ListTile(
                                   onTap: () {
                                     if (index == 0) {
-                                      Get.toNamed(RouteHelper.changePassword);
+                                      showModelSheet(context, ChangePassword());
+                                      // Get.toNamed(RouteHelper.changePassword);
                                     } else {
                                       Get.toNamed('/contact_us');
                                     }
@@ -108,6 +110,21 @@ class SettingScreen extends StatelessWidget {
                 ),
               );
       }),
+    );
+  }
+
+  void showModelSheet(BuildContext context, Widget content) {
+    showModalBottomSheet(
+      backgroundColor: kPrimaryColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => content,
     );
   }
 }
