@@ -17,15 +17,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function onBackPressed;
   final bool showCart;
   final Color appBarColor;
+  final bool isSmallAppBar;
 
-  CustomAppBar({
-    @required this.title,
-    this.isBackButtonExist = true,
-    this.onBackPressed,
-    this.showCart = false,
-    this.titleWidget,
-    this.appBarColor,
-  });
+  CustomAppBar(
+      {@required this.title,
+      this.isBackButtonExist = true,
+      this.onBackPressed,
+      this.showCart = false,
+      this.titleWidget,
+      this.appBarColor,
+      this.isSmallAppBar = false});
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +68,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize =>
-      Size(Dimensions.WEB_MAX_WIDTH, GetPlatform.isDesktop ? 70 : 75);
+  Size get preferredSize => Size(Dimensions.WEB_MAX_WIDTH,
+      GetPlatform.isDesktop ? 70 : (isSmallAppBar ? 60 : 75));
 }

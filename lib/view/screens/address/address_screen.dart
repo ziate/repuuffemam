@@ -198,42 +198,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                                           !response.isSuccess);
                                                 });
                                               }));
-                                        }
-
-                                        // if (Get.isSnackbarOpen) {
-                                        //   Get.back();
-
-                                        // }
-                                        //   Get.dialog(
-
-                                        //     ConfirmationDialog(
-                                        //       icon: Images.warning,
-                                        //       description:
-                                        // 'are_you_sure_want_to_delete_address'
-                                        //     .tr,
-                                        //       onYesPressed: () {
-                                        //         Get.back();
-                                        //         Get.dialog(CustomLoader(),
-                                        //             barrierDismissible: false);
-                                        //         locationController
-                                        //             .deleteUserAddressByID(
-                                        //                 locationController
-                                        //                     .addressList[index]
-                                        //                     .id,
-                                        //                 index)
-                                        //             .then((response) {
-                                        //           Get.back();
-                                        //           showCustomSnackBar(
-                                        //               response.message,
-                                        //               isError:
-                                        //                   !response.isSuccess);
-                                        //         });
-
-                                        //             }
-
-                                        //         ),);)
-
-                                        )
+                                        })
                                   ],
                                 ),
                               ),

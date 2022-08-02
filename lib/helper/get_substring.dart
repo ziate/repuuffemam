@@ -4,6 +4,8 @@ String getSubString(String text) {
     for (int i = 0; i < 16; i++) {
       displayedString += text[i];
     }
+  } else {
+    displayedString = text;
   }
   return displayedString;
 }

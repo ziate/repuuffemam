@@ -425,7 +425,9 @@
   "events":"EVENTS",
   "stores":"STORES",
   "house_number":"Apartment / House number",
-  "address_special_instructions":"Address Special Instructions"
+  "address_special_instructions":"Address Special Instructions",
+  "you_currently_have_no_orders":"you currently have no orders",
+  "Best_get_shopping_now":"Best get shopping now"
 
 
 

@@ -2,15 +2,14 @@ import 'package:efood_multivendor/controller/auth_controller.dart';
 import 'package:efood_multivendor/controller/location_controller.dart';
 import 'package:efood_multivendor/controller/restaurant_controller.dart';
 import 'package:efood_multivendor/controller/user_controller.dart';
-import 'package:efood_multivendor/helper/responsive_helper.dart';
+import 'package:efood_multivendor/helper/get_substring.dart';
 import 'package:efood_multivendor/helper/route_helper.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
 import 'package:efood_multivendor/util/images.dart';
 import 'package:efood_multivendor/util/styles.dart';
-import 'package:efood_multivendor/view/base/web_menu_bar.dart';
-import 'package:efood_multivendor/view/screens/home/widget/restaurant_view.dart';
+import 'package:efood_multivendor/view/screens/category/category_screen.dart';
+import 'package:efood_multivendor/view/screens/stores/widgets/store_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class Stores extends StatelessWidget {
@@ -19,6 +18,7 @@ class Stores extends StatelessWidget {
         .getPopularRestaurantList(reload, 'all', false);
     Get.find<RestaurantController>()
         .getLatestRestaurantList(reload, 'all', false);
+
     Get.find<RestaurantController>().getRestaurantList('1', reload);
     if (Get.find<AuthController>().isLoggedIn()) {
       Get.find<UserController>().getUserInfo();
@@ -32,175 +32,159 @@ class Stores extends StatelessWidget {
     loadData(false);
     final ScrollController _scrollController = ScrollController();
 
-    return SafeArea(
-        child: Scaffold(
-            appBar: ResponsiveHelper.isDesktop(context)
-                ? WebMenuBar()
-                : PreferredSize(
-                    preferredSize: Size.fromHeight(70),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(150),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
                     child: Container(
-                      width: double.infinity,
-                      height: 60,
-                      color: Theme.of(context).primaryColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                              clipBehavior: Clip.antiAlias,
-                              width: 50,
-                              height: 50,
-                              child: Center(
-                                child: Image.asset(
-                                  Images.logopng,
+                      //height: 100,
+                      //  width: 100,
+                      child: Stack(children: [
+                        Image(
+                          image: AssetImage(Images.location),
+                        ),
+                        GetBuilder<LocationController>(
+                          builder: (locationController) => Row(
+                            children: [
+                              Center(
+                                child: Text(
+                                  getSubString(locationController
+                                      .getUserAddress()
+                                      .address),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 12),
                                 ),
                               ),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle, color: Colors.white)),
-                          Text("store".tr,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w200)),
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: SvgPicture.asset(Images.backSvg)),
-                        ],
+                              Icon(
+                                Icons.location_on,
+                                color: Colors.white,
+                                size: 25,
+                              )
+                            ],
+                          ),
+                        )
+                      ]),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Expanded(
+                    child: Container(
+                      //width: 100,
+                      child: Image(
+                        image: AssetImage(Images.logopng),
                       ),
                     ),
                   ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Center(
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 15),
-                        child: Container(
-                          height: 40,
-                          width: Dimensions.WEB_MAX_WIDTH,
-                          color: Colors.transparent,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: Dimensions.PADDING_SIZE_SMALL),
-                          child: InkWell(
-                            onTap: () =>
-                                Get.toNamed(RouteHelper.getSearchRoute()),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: Dimensions.PADDING_SIZE_SMALL),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).cardColor,
-                                borderRadius: BorderRadius.circular(
-                                    Dimensions.RADIUS_EXTRA_LARGE),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors
-                                          .grey[Get.isDarkMode ? 800 : 200],
-                                      spreadRadius: 1,
-                                      blurRadius: 5)
-                                ],
-                              ),
-                              child: Row(children: [
-                                Icon(Icons.search,
-                                    size: 25,
-                                    color: Theme.of(context).primaryColor),
-                                SizedBox(
-                                    width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                Expanded(
-                                    child: Text('search_food_or_restaurant'.tr,
-                                        style: robotoRegular.copyWith(
-                                          fontSize: Dimensions.fontSizeSmall,
-                                          color: Theme.of(context).hintColor,
-                                        ))),
-                              ]),
-                            ),
-                          ),
-                        )),
-                  ),
-                  Center(
-                      child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      width: Dimensions.WEB_MAX_WIDTH,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).backgroundColor,
-                          borderRadius: BorderRadius.circular(
-                              Dimensions.RADIUS_EXTRA_LARGE)),
-                      child: Row(children: [
-                        Expanded(
-                            child: InkWell(
-                          onTap: () => Get.toNamed(
-                              RouteHelper.getAccessLocationRoute('home')),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: Dimensions.PADDING_SIZE_SMALL,
-                              horizontal: ResponsiveHelper.isDesktop(context)
-                                  ? Dimensions.PADDING_SIZE_SMALL
-                                  : 0,
-                            ),
-                            child: GetBuilder<LocationController>(
-                                builder: (locationController) {
-                              return Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    locationController
-                                                .getUserAddress()
-                                                .addressType ==
-                                            'home'
-                                        ? Icons.home_filled
-                                        : locationController
-                                                    .getUserAddress()
-                                                    .addressType ==
-                                                'office'
-                                            ? Icons.work
-                                            : Icons.location_on,
-                                    size: 20,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        .color,
-                                  ),
-                                  SizedBox(width: 10),
-                                  Flexible(
-                                    child: Text(
-                                      locationController
-                                          .getUserAddress()
-                                          .address,
-                                      style: robotoRegular.copyWith(
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            .color,
-                                        fontSize: Dimensions.fontSizeSmall,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }),
-                          ),
-                        )),
-                        Icon(Icons.arrow_forward_ios_outlined)
-                      ]),
-                    ),
-                  )),
-                  RestaurantView(scrollController: _scrollController),
-                  // ListView.builder(
-                  //     shrinkWrap: true,
-                  //     itemCount: 3,
-                  //     physics: ClampingScrollPhysics(),
-                  //     itemBuilder: (ctx, index) {
-                  //       return CardStore();
-                  //     }),
                 ],
               ),
-            )));
+              Center(
+                  child: Container(
+                height: 20,
+                width: Dimensions.WEB_MAX_WIDTH,
+                color: Colors.transparent,
+                // padding: EdgeInsets.symmetric(
+                //     horizontal: Dimensions.PADDING_SIZE_SMALL),
+                child: InkWell(
+                  onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_SMALL),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius:
+                          BorderRadius.circular(Dimensions.RADIUS_EXTRA_LARGE),
+                    ),
+                    child: Row(
+                      children: [
+                        Image(
+                          height: 15,
+                          image: AssetImage(Images.search_icon),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            'search_food_or_restaurant'.tr,
+                            style: robotoRegular.copyWith(
+                              fontSize: Dimensions.fontSizeSmall,
+                              color: Theme.of(context).hintColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )),
+            ],
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Container(
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'stores'.tr,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 15),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                GetBuilder<RestaurantController>(
+                  builder: (restaurantController) => ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount:
+                        restaurantController.popularRestaurantList.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Get.to(CategoryScreen(
+                            name: restaurantController
+                                .popularRestaurantList[index].name,
+                          ));
+                        },
+                        child: StoreItemBuilder(
+                          imageUrl: Images.eventsSvg,
+                          // imageUrl: restaurantController
+                          //             .popularRestaurantList[index].coverPhoto ==
+                          //         ''
+                          //     ? Images.logopng
+                          //     : restaurantController
+                          //         .popularRestaurantList[index].coverPhoto,
+                          rate: restaurantController
+                              .popularRestaurantList[index].ratingCount,
+                          storeName: restaurantController
+                              .popularRestaurantList[index].name,
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

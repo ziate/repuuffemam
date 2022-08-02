@@ -7,9 +7,7 @@ import 'package:efood_multivendor/helper/route_helper.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
 import 'package:efood_multivendor/util/images.dart';
 import 'package:efood_multivendor/util/styles.dart';
-import 'package:efood_multivendor/view/base/cart_widget.dart';
-import 'package:efood_multivendor/view/base/product_view.dart';
-import 'package:efood_multivendor/view/base/veg_filter_widget.dart';
+import 'package:efood_multivendor/view/base/custom_app_bar.dart';
 import 'package:efood_multivendor/view/base/web_menu_bar.dart';
 import 'package:efood_multivendor/view/screens/category/widget/category_card_view.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +18,10 @@ class CategoryProductScreen extends StatefulWidget {
   final String categoryID;
   final String categoryName;
 
-  CategoryProductScreen(
-      {@required this.categoryID, @required this.categoryName});
+  CategoryProductScreen({
+    @required this.categoryID,
+    @required this.categoryName,
+  });
 
   @override
   _CategoryProductScreenState createState() => _CategoryProductScreenState();
@@ -127,93 +127,53 @@ class _CategoryProductScreenState extends State<CategoryProductScreen>
         },
         child: SafeArea(
           child: Scaffold(
-            backgroundColor: Color(0xFFE1E1E1),
-            appBar: ResponsiveHelper.isDesktop(context)
-                ? WebMenuBar()
-                : PreferredSize(
-                    preferredSize: Size.fromHeight(70),
-                    child: Container(
-                      width: double.infinity,
-                      height: 60,
-                      color: Theme.of(context).primaryColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                            clipBehavior: Clip.antiAlias,
-                            width: 50,
-                            height: 50,
-                            child: Center(
-                              child: Image.asset(
-                                Images.logopng,
-                              ),
-                            ),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white),
-                          ),
-                          Text(
-                            widget.categoryName.tr,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w200),
-                          ),
-                          InkWell(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: SvgPicture.asset(Images.backSvg)),
-                        ],
-                      ),
-                    ),
-                  ),
-            // appBar: ResponsiveHelper.isDesktop(context) ? WebMenuBar() : AppBar(
-            //   title:
-            //   catController.isSearching ?
-            //   TextField(
-            //     autofocus: true,
-            //     textInputAction: TextInputAction.search,
-            //     decoration: InputDecoration(
-            //       hintText: 'Search...',
-            //       border: InputBorder.none,
-            //     ),
-            //     style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeLarge),
-            //     onSubmitted: (String query) => catController.searchData(
-            //       query, catController.subCategoryIndex == 0 ? widget.categoryID
-            //         : catController.subCategoryList[catController.subCategoryIndex].id,
-            //       catController.type,
-            //     ),
-            //   ) : Text(widget.categoryName, style: robotoRegular.copyWith(
-            //     fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyText1.color,
-            //   )),
-            //   centerTitle: true,
-            //   leading: IconButton(
-            //     icon: Icon(Icons.arrow_back_ios),
-            //     color: Theme.of(context).textTheme.bodyText1.color,
-            //     onPressed: () {
-            //       if(catController.isSearching) {
-            //         catController.toggleSearch();
-            //       }else {
-            //         Get.back();
-            //       }
-            //     },
-            //   ),
-            //   backgroundColor: Theme.of(context).cardColor,
-            //   elevation: 0,
-            //   actions: [
-            //     IconButton(
-            //       onPressed: () => catController.toggleSearch(),
-            //       icon: Icon(
-            //         catController.isSearching ? Icons.close_sharp : Icons.search,
-            //         color: Theme.of(context).textTheme.bodyText1.color,
+            appBar: CustomAppBar(
+              title: '',
+              titleWidget: Text(
+                widget.categoryName,
+                style: TextStyle(color: Colors.white),
+              ),
+              isSmallAppBar: true,
+            ),
+            // appBar: ResponsiveHelper.isDesktop(context)
+            //     ? WebMenuBar()
+            //     : PreferredSize(
+            //         preferredSize: Size.fromHeight(70),
+            //         child: Container(
+            //           width: double.infinity,
+            //           height: 60,
+            //           color: Theme.of(context).primaryColor,
+            //           child: Row(
+            //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //             children: [
+            //               Container(
+            //                 clipBehavior: Clip.antiAlias,
+            //                 width: 50,
+            //                 height: 50,
+            //                 child: Center(
+            //                   child: Image.asset(
+            //                     Images.logopng,
+            //                   ),
+            //                 ),
+            //                 decoration: BoxDecoration(
+            //                     shape: BoxShape.circle, color: Colors.white),
+            //               ),
+            //               Text(
+            //                 widget.categoryName.tr,
+            //                 style: TextStyle(
+            //                     color: Colors.white,
+            //                     fontSize: 20,
+            //                     fontWeight: FontWeight.w200),
+            //               ),
+            //               InkWell(
+            //                   onTap: () {
+            //                     Get.back();
+            //                   },
+            //                   child: SvgPicture.asset(Images.backSvg)),
+            //             ],
+            //           ),
+            //         ),
             //       ),
-            //     ),
-            //     IconButton(
-            //       onPressed: () => Get.toNamed(RouteHelper.getCartRoute()),
-            //       icon: CartWidget(color: Theme.of(context).textTheme.bodyText1.color, size: 25),
-            //     ),
-            //   ],
-            // ),
             body: Center(
                 child: SizedBox(
               width: Dimensions.WEB_MAX_WIDTH,
@@ -222,75 +182,117 @@ class _CategoryProductScreenState extends State<CategoryProductScreen>
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SizedBox(
-                              height: 40,
-                              child: TextField(
-                                autofocus: false,
-                                textInputAction: TextInputAction.search,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                      color: Colors.white,
+                      Center(
+                        child: Container(
+                          height: 20,
+                          width: Dimensions.WEB_MAX_WIDTH,
+                          color: Colors.transparent,
+                          // padding: EdgeInsets.symmetric(
+                          //     horizontal: Dimensions.PADDING_SIZE_SMALL),
+                          child: InkWell(
+                            onTap: () =>
+                                Get.toNamed(RouteHelper.getSearchRoute()),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: Dimensions.PADDING_SIZE_SMALL),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).cardColor,
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.RADIUS_EXTRA_LARGE),
+                              ),
+                              child: Row(
+                                children: [
+                                  Image(
+                                    height: 15,
+                                    image: AssetImage(Images.search_icon),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Center(
+                                    child: Text(
+                                      'search_food_or_restaurant'.tr,
+                                      style: robotoRegular.copyWith(
+                                        fontSize: Dimensions.fontSizeSmall,
+                                        color: Theme.of(context).hintColor,
+                                      ),
                                     ),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  prefixIcon: Icon(Icons.search),
-                                  hintText: 'Search...',
-                                  border: InputBorder.none,
-                                ),
-                                style: robotoRegular.copyWith(
-                                    fontSize: Dimensions.fontSizeLarge),
-                                onSubmitted: (String query) =>
-                                    catController.searchData(
-                                  query,
-                                  catController.subCategoryIndex == 0
-                                      ? widget.categoryID
-                                      : catController
-                                          .subCategoryList[
-                                              catController.subCategoryIndex]
-                                          .id,
-                                  catController.type,
-                                ),
+                                ],
                               ),
                             ),
                           ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Theme.of(context).primaryColor,
-                                width: 2,
-                              ),
-                            ),
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.shopping_cart_outlined,
-                                size: 50,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              onPressed: () =>
-                                  Get.toNamed(RouteHelper.getCartRoute()),
-                            ),
-                          )
-                        ],
+                        ),
                       ),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: SizedBox(
+                      //         height: 40,
+                      //         child: TextField(
+                      //           autofocus: false,
+                      //           textInputAction: TextInputAction.search,
+                      //           decoration: InputDecoration(
+                      //             filled: true,
+                      //             fillColor: Colors.white,
+                      //             enabledBorder: OutlineInputBorder(
+                      //               borderRadius: BorderRadius.circular(10),
+                      //               borderSide: BorderSide(
+                      //                 color: Colors.white,
+                      //               ),
+                      //             ),
+                      //             focusedBorder: OutlineInputBorder(
+                      //               borderRadius: BorderRadius.circular(10),
+                      //               borderSide: BorderSide(
+                      //                 color: Colors.white,
+                      //               ),
+                      //             ),
+                      //             prefixIcon: Icon(Icons.search),
+                      //             hintText: 'Search...',
+                      //             border: InputBorder.none,
+                      //           ),
+                      //           style: robotoRegular.copyWith(
+                      //               fontSize: Dimensions.fontSizeLarge),
+                      //           onSubmitted: (String query) =>
+                      //               catController.searchData(
+                      //             query,
+                      //             catController.subCategoryIndex == 0
+                      //                 ? widget.categoryID
+                      //                 : catController
+                      //                     .subCategoryList[
+                      //                         catController.subCategoryIndex]
+                      //                     .id,
+                      //             catController.type,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     Container(
+                      //       width: 80,
+                      //       height: 80,
+                      //       decoration: BoxDecoration(
+                      //         color: Colors.white,
+                      //         shape: BoxShape.circle,
+                      //         border: Border.all(
+                      //           color: Theme.of(context).primaryColor,
+                      //           width: 2,
+                      //         ),
+                      //       ),
+                      //       child: IconButton(
+                      //         icon: Icon(
+                      //           Icons.shopping_cart_outlined,
+                      //           size: 50,
+                      //           color: Theme.of(context).primaryColor,
+                      //         ),
+                      //         onPressed: () =>
+                      //             Get.toNamed(RouteHelper.getCartRoute()),
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
                       (catController.subCategoryList != null &&
                               !catController.isSearching)
                           ? Center(
@@ -322,44 +324,53 @@ class _CategoryProductScreenState extends State<CategoryProductScreen>
                                                     ? Theme.of(context)
                                                         .primaryColor
                                                     : Colors.white,
-                                                width: 1),
+                                                width: 0.25),
                                             color: catController
                                                         .subCategoryIndex ==
                                                     index
-                                                ? Colors.white
+                                                ? Color(0xffe1003c)
                                                 : Theme.of(context)
                                                     .primaryColor),
-                                        child: Column(children: [
-                                          SizedBox(height: 3),
-                                          Text(
-                                            catController
-                                                .subCategoryList[index].name,
-                                            style: index ==
-                                                    catController
-                                                        .subCategoryIndex
-                                                ? robotoMedium.copyWith(
-                                                    fontSize: Dimensions
-                                                        .fontSizeSmall,
-                                                    color: Theme.of(context)
-                                                        .primaryColor)
-                                                : robotoRegular.copyWith(
-                                                    fontSize: Dimensions
-                                                        .fontSizeSmall,
-                                                    color: Theme.of(context)
-                                                        .disabledColor),
-                                          ),
-                                          index ==
-                                                  catController.subCategoryIndex
-                                              ? Container(
-                                                  height: 5,
-                                                  width: 5,
-                                                  decoration: BoxDecoration(
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      shape: BoxShape.circle),
-                                                )
-                                              : SizedBox(height: 5, width: 5),
-                                        ]),
+                                        child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              //  SizedBox(height: 3),
+                                              Text(
+                                                  catController
+                                                      .subCategoryList[index]
+                                                      .name,
+                                                  style: TextStyle(
+                                                      color: Colors.white)
+
+                                                  //  index ==
+                                                  //         catController
+                                                  //             .subCategoryIndex
+                                                  //     ? robotoMedium.copyWith(
+                                                  //         fontSize: Dimensions
+                                                  //             .fontSizeSmall,
+                                                  //         color: Theme.of(context)
+                                                  //             .primaryColor)
+                                                  //     : robotoRegular.copyWith(
+                                                  //         fontSize: Dimensions
+                                                  //             .fontSizeSmall,
+                                                  //         color: Theme.of(context)
+                                                  //             .disabledColor),
+                                                  ),
+
+                                              //------------------------------------------------------------
+                                              // index ==
+                                              //         catController.subCategoryIndex
+                                              //     ? Container(
+                                              //         height: 5,
+                                              //         width: 5,
+                                              //         decoration: BoxDecoration(
+                                              //             color: Theme.of(context)
+                                              //                 .primaryColor,
+                                              //             shape: BoxShape.circle),
+                                              //       )
+                                              //     : SizedBox(height: 5, width: 5),
+                                            ]),
                                       ),
                                     ),
                                   );
@@ -370,73 +381,6 @@ class _CategoryProductScreenState extends State<CategoryProductScreen>
                     ],
                   ),
                 ),
-                // Center(
-                //     child: Container(
-                //   width: Dimensions.WEB_MAX_WIDTH,
-                //   color: Theme.of(context).cardColor,
-                //   child: TabBar(
-                //     controller: _tabController,
-                //     indicatorColor: Theme.of(context).primaryColor,
-                //     indicatorWeight: 3,
-                //     labelColor: Theme.of(context).primaryColor,
-                //     unselectedLabelColor: Theme.of(context).disabledColor,
-                //     unselectedLabelStyle: robotoRegular.copyWith(
-                //         color: Theme.of(context).disabledColor,
-                //         fontSize: Dimensions.fontSizeSmall),
-                //     labelStyle: robotoBold.copyWith(
-                //         fontSize: Dimensions.fontSizeSmall,
-                //         color: Theme.of(context).primaryColor),
-                //     tabs: [
-                //       Tab(text: 'food'.tr),
-                //       Tab(text: 'restaurants'.tr),
-                //     ],
-                //   ),
-                // )),
-                // VegFilterWidget(
-                //     type: catController.type,
-                //     onSelected: (String type) {
-                //       if (catController.isSearching) {
-                //         catController.searchData(
-                //           catController.subCategoryIndex == 0
-                //               ? widget.categoryID
-                //               : catController
-                //                   .subCategoryList[
-                //                       catController.subCategoryIndex]
-                //                   .id
-                //                   .toString(),
-                //           '1',
-                //           type,
-                //         );
-                //       } else {
-                //         if (catController.isRestaurant) {
-                //           catController.getCategoryRestaurantList(
-                //             catController.subCategoryIndex == 0
-                //                 ? widget.categoryID
-                //                 : catController
-                //                     .subCategoryList[
-                //                         catController.subCategoryIndex]
-                //                     .id
-                //                     .toString(),
-                //             1,
-                //             type,
-                //             true,
-                //           );
-                //         } else {
-                //           catController.getCategoryProductList(
-                //             catController.subCategoryIndex == 0
-                //                 ? widget.categoryID
-                //                 : catController
-                //                     .subCategoryList[
-                //                         catController.subCategoryIndex]
-                //                     .id
-                //                     .toString(),
-                //             1,
-                //             type,
-                //             true,
-                //           );
-                //         }
-                //       }
-                //     }),
                 Expanded(
                     child: NotificationListener(
                   onNotification: (scrollNotification) {
@@ -498,29 +442,6 @@ class _CategoryProductScreenState extends State<CategoryProductScreen>
                       noDataText: 'no_category_food_found'.tr,
                     ),
                   ),
-                  // TabBarView(
-                  //   controller: _tabController,
-                  //   children: [
-                  //     SingleChildScrollView(
-                  //       controller: scrollController,
-                  //       child: ProductView(
-                  //         isRestaurant: false,
-                  //         products: _products,
-                  //         restaurants: null,
-                  //         noDataText: 'no_category_food_found'.tr,
-                  //       ),
-                  //     ),
-                  //     SingleChildScrollView(
-                  //       controller: restaurantScrollController,
-                  //       child: ProductView(
-                  //         isRestaurant: true,
-                  //         products: null,
-                  //         restaurants: _restaurants,
-                  //         noDataText: 'no_category_restaurant_found'.tr,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                 )),
                 catController.isLoading
                     ? Center(

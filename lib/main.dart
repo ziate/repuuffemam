@@ -10,7 +10,6 @@ import 'package:efood_multivendor/helper/notification_helper.dart';
 import 'package:efood_multivendor/helper/responsive_helper.dart';
 import 'package:efood_multivendor/helper/route_helper.dart';
 import 'package:efood_multivendor/theme/dark_theme.dart';
-import 'package:efood_multivendor/theme/light_theme.dart';
 import 'package:efood_multivendor/util/app_constants.dart';
 import 'package:efood_multivendor/util/messages.dart';
 import 'package:firebase_core/firebase_core.dart';
