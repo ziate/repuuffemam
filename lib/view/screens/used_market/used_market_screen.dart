@@ -5,13 +5,17 @@ import 'package:efood_multivendor/controller/used_market_controller.dart';
 import 'package:efood_multivendor/helper/responsive_helper.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
 import 'package:efood_multivendor/util/images.dart';
+import 'package:efood_multivendor/view/base/custom_app_bar.dart';
 import 'package:efood_multivendor/view/base/custom_button.dart';
 import 'package:efood_multivendor/view/base/custom_image.dart';
 import 'package:efood_multivendor/view/base/web_menu_bar.dart';
 import 'package:efood_multivendor/view/screens/change_password/widget/text_field.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import '../../../theme/styles.dart';
 
 class UsedMarketScreen extends StatefulWidget {
   const UsedMarketScreen({Key key}) : super(key: key);
@@ -34,38 +38,12 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
         child: Scaffold(
       appBar: ResponsiveHelper.isDesktop(context)
           ? WebMenuBar()
-          : PreferredSize(
-              preferredSize: Size.fromHeight(70),
-              child: Container(
-                width: double.infinity,
-                height: 60,
-                color: Theme.of(context).primaryColor,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                        clipBehavior: Clip.antiAlias,
-                        width: 50,
-                        height: 50,
-                        child: Center(
-                          child: Image.asset(
-                            Images.logopng,
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Colors.white)),
-                    Text("add_product".tr,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w200)),
-                    GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: SvgPicture.asset(Images.backSvg)),
-                  ],
-                ),
+          : CustomAppBar(
+              isSmallAppBar: true,
+              title: "add_product".tr,
+              titleWidget: Text(
+                'add_product'.tr,
+                style: kTextStyleBold18,
               ),
             ),
       body: GetBuilder<UsedMarketController>(builder: (usedmarketcontroller) {
@@ -108,7 +86,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
                     onTap: () => usedmarketcontroller.pickImage(),
                     child: Icon(
                       Icons.camera_alt,
-                      color: Theme.of(context).primaryColor,
+                      color: Colors.white,
                       size: 30,
                     ),
                   ),
@@ -124,8 +102,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
                     flex: 2,
                     child: Text(
                       "name_product".tr + ":",
-                      style: TextStyle(
-                          fontSize: 16, color: Theme.of(context).primaryColor),
+                      style: TextStyle(fontSize: 16, color: kTextColor),
                     ),
                   ),
                   Expanded(
@@ -145,8 +122,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
                     flex: 2,
                     child: Text(
                       "description_product".tr + ":",
-                      style: TextStyle(
-                          fontSize: 16, color: Theme.of(context).primaryColor),
+                      style: TextStyle(fontSize: 16, color: kTextColor),
                     ),
                   ),
                   Expanded(
@@ -166,8 +142,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
                     flex: 2,
                     child: Text(
                       "price_product".tr + ":",
-                      style: TextStyle(
-                          fontSize: 16, color: Theme.of(context).primaryColor),
+                      style: TextStyle(fontSize: 16, color: kTextColor),
                     ),
                   ),
                   Expanded(
@@ -187,8 +162,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
                     flex: 2,
                     child: Text(
                       "address".tr + ":",
-                      style: TextStyle(
-                          fontSize: 16, color: Theme.of(context).primaryColor),
+                      style: TextStyle(fontSize: 16, color: kTextColor),
                     ),
                   ),
                   Expanded(
@@ -208,8 +182,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
                     flex: 2,
                     child: Text(
                       "phone".tr + ":",
-                      style: TextStyle(
-                          fontSize: 16, color: Theme.of(context).primaryColor),
+                      style: TextStyle(fontSize: 16, color: kTextColor),
                     ),
                   ),
                   Expanded(
@@ -224,6 +197,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
             SizedBox(height: 50),
             !usedmarketcontroller.isLoading
                 ? CustomButton(
+                    color: kPrimaryColor,
                     width: MediaQuery.of(context).size.width - 100,
                     radius: 25,
                     onPressed: () {},
