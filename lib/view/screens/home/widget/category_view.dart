@@ -54,9 +54,9 @@ class CategoryView extends StatelessWidget {
                         height: 100,
                         width: 100,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                           border: Border.all(
-                            color: Theme.of(context).primaryColor,
+                            //  color: Theme.of(context).primaryColor,
                             width: 1,
                           ),
                         ),
@@ -77,8 +77,7 @@ class CategoryView extends StatelessWidget {
                         child: Text(
                           categoryController.categoryList[index].name,
                           style: robotoMedium.copyWith(
-                              fontSize: 14,
-                              color: Theme.of(context).primaryColor),
+                              fontSize: 14, color: Colors.white),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,

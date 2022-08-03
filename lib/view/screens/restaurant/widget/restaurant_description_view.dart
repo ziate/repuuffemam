@@ -52,7 +52,7 @@ class RestaurantDescriptionView extends StatelessWidget {
         Text(
           restaurant.name,
           style: robotoMedium.copyWith(
-              fontSize: Dimensions.fontSizeLarge, color: Colors.red),
+              fontSize: Dimensions.fontSizeExtraLarge, color: Colors.white),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
@@ -62,8 +62,7 @@ class RestaurantDescriptionView extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: robotoRegular.copyWith(
-              fontSize: Dimensions.fontSizeSmall,
-              color: Theme.of(context).primaryColor),
+              fontSize: Dimensions.fontSizeDefault, color: Color(0xff727c8e)),
         ),
         SizedBox(
             height: ResponsiveHelper.isDesktop(context)
@@ -91,12 +90,12 @@ class RestaurantDescriptionView extends StatelessWidget {
               onPressed: () {},
               icon: Icon(
                 Icons.chat,
-                color: Theme.of(context).primaryColor,
+                color: Colors.white,
               )),
           Text("Story Chat",
               style: robotoMedium.copyWith(
                   fontSize: Dimensions.fontSizeExtraSmall,
-                  color: Theme.of(context).errorColor)),
+                  color: Color(0xff727c8e))),
           SizedBox(height: 10),
           InkWell(
             onTap: () => Get.toNamed(
@@ -109,14 +108,15 @@ class RestaurantDescriptionView extends StatelessWidget {
                 Text(
                   restaurant.avgRating.toStringAsFixed(1),
                   style: robotoMedium.copyWith(
-                      fontSize: Dimensions.fontSizeSmall, color: _textColor),
+                      fontSize: Dimensions.fontSizeSmall, color: Colors.white),
                 ),
               ]),
               SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
               Text(
                 '${restaurant.ratingCount} ${'ratings'.tr}',
                 style: robotoRegular.copyWith(
-                    fontSize: Dimensions.fontSizeSmall, color: _textColor),
+                    fontSize: Dimensions.fontSizeSmall,
+                    color: Color(0xff727c8e)),
               ),
             ]),
           ),
