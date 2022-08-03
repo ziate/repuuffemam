@@ -44,8 +44,7 @@ class RatingBar extends StatelessWidget {
             padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: Text('($ratingCount)',
                 style: robotoRegular.copyWith(
-                    fontSize: size * 0.8,
-                    color: Theme.of(context).primaryColor)),
+                    fontSize: size * 0.8, color: Colors.white)),
           ))
         : SizedBox();
 

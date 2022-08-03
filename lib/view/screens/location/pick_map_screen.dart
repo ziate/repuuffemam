@@ -2,6 +2,7 @@ import 'package:efood_multivendor/controller/location_controller.dart';
 import 'package:efood_multivendor/controller/splash_controller.dart';
 import 'package:efood_multivendor/data/model/response/address_model.dart';
 import 'package:efood_multivendor/helper/responsive_helper.dart';
+import 'package:efood_multivendor/theme/styles.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
 import 'package:efood_multivendor/util/images.dart';
 import 'package:efood_multivendor/util/styles.dart';
@@ -208,6 +209,7 @@ class _PickMapScreenState extends State<PickMapScreen> {
                           SizedBox(width: 15),
                           Expanded(
                             child: CustomButton(
+                              color: kPrimaryColor,
                               radius: 50,
                               buttonText: locationController.inZone
                                   ? widget.fromAddAddress

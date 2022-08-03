@@ -23,6 +23,7 @@ const kDeepGeryColor = Color(0xff7A7D80);
 const kDisabledButtonColor = Color.fromARGB(255, 165, 163, 163);
 const kGreyLightColor = Color(0xFFF7F7F7);
 const kGreenColor = Color(0xFF48BB78);
+const Color kIconColor = const Color(0xff727C8E);
 //Text Styles
 
 //First: Regular styles
