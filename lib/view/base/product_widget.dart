@@ -104,9 +104,7 @@ class ProductWidget extends StatelessWidget {
               : null,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.RADIUS_LARGE),
-            color: ResponsiveHelper.isDesktop(context)
-                ? Theme.of(context).primaryColor
-                : null,
+            color: Theme.of(context).primaryColor,
             boxShadow: ResponsiveHelper.isDesktop(context)
                 ? [
                     BoxShadow(
@@ -129,7 +127,7 @@ class ProductWidget extends StatelessWidget {
                         '/${isRestaurant ? restaurant.logo : product.image}',
                     width: MediaQuery.of(context).size.width,
                     // height: MediaQuery.of(context).size.height * 0.19,
-                    height: 120,
+                    height: 105,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -152,7 +150,7 @@ class ProductWidget extends StatelessWidget {
                           Text(
                             isRestaurant ? restaurant.name : product.name,
                             style: robotoMedium.copyWith(
-                                color: Theme.of(context).primaryColor,
+                                color: Colors.white,
                                 fontSize: Dimensions.fontSizeLarge),
                             maxLines: _desktop ? 2 : 1,
                             overflow: TextOverflow.ellipsis,
@@ -164,7 +162,7 @@ class ProductWidget extends StatelessWidget {
                                   : product.restaurantName ?? '',
                               style: robotoRegular.copyWith(
                                 fontSize: Dimensions.fontSizeSmall,
-                                color: Theme.of(context).primaryColor,
+                                color: Colors.white,
                               ),
                               maxLines: 1,
                             ),
@@ -191,19 +189,21 @@ class ProductWidget extends StatelessWidget {
                                   : 'not_available_now_break'.tr,
                               textAlign: TextAlign.center,
                               style: robotoRegular.copyWith(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 15),
+                                  color: Colors.white, fontSize: 15),
                             ),
                           ),
                     SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
-                    RatingBar(
-                      rating: isRestaurant
-                          ? restaurant.avgRating
-                          : product.avgRating,
-                      size: _desktop ? 15 : 15,
-                      ratingCount: isRestaurant
-                          ? restaurant.ratingCount
-                          : product.ratingCount,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: RatingBar(
+                        rating: isRestaurant
+                            ? restaurant.avgRating
+                            : product.avgRating,
+                        size: _desktop ? 15 : 15,
+                        ratingCount: isRestaurant
+                            ? restaurant.ratingCount
+                            : product.ratingCount,
+                      ),
                     ),
                   ],
                 )
