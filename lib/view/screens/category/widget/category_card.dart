@@ -97,8 +97,8 @@ class CategoryWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(Dimensions.RADIUS_LARGE),
         color: ResponsiveHelper.isDesktop(context)
-            ? Theme.of(context).cardColor
-            : Theme.of(context).cardColor,
+            ? Theme.of(context).primaryColor
+            : Theme.of(context).primaryColor,
         boxShadow: ResponsiveHelper.isDesktop(context)
             ? [
                 BoxShadow(
@@ -115,50 +115,56 @@ class CategoryWidget extends StatelessWidget {
           bool _isWished = isRestaurant
               ? wishController.wishRestIdList.contains(restaurant.id)
               : wishController.wishProductIdList.contains(product.id);
-          return InkWell(
-            onTap: () {
-              if (Get.find<AuthController>().isLoggedIn()) {
-                _isWished
-                    ? wishController.removeFromWishList(
-                        isRestaurant ? restaurant.id : product.id, isRestaurant)
-                    : wishController.addToWishList(
-                        product, restaurant, isRestaurant);
-              } else {
-                showCustomSnackBar('you_are_not_logged_in'.tr);
-              }
-            },
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: EdgeInsets.all(4),
-                child: Icon(
-                  _isWished ? Icons.favorite : Icons.favorite_border,
-                  size: _desktop ? 30 : 25,
-                  color: _isWished
-                      ? Theme.of(context).primaryColor
-                      : Theme.of(context).primaryColor,
+          return Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
+                child: CustomImage(
+                  image: '/${product.image}',
+                  height: 120,
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
+              InkWell(
+                onTap: () {
+                  if (Get.find<AuthController>().isLoggedIn()) {
+                    _isWished
+                        ? wishController.removeFromWishList(
+                            isRestaurant ? restaurant.id : product.id,
+                            isRestaurant)
+                        : wishController.addToWishList(
+                            product, restaurant, isRestaurant);
+                  } else {
+                    showCustomSnackBar('you_are_not_logged_in'.tr);
+                  }
+                },
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(4),
+                    child: Icon(
+                      _isWished ? Icons.favorite : Icons.favorite_border,
+                      size: _desktop ? 30 : 25,
+                      color: _isWished
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           );
         }),
 
-        ClipRRect(
-          borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL),
-          child: CustomImage(
-            image: '/${product.image}',
-            height: _desktop ? 120 : 65,
-            width: _desktop ? 120 : 80,
-            fit: BoxFit.cover,
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.all(4),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
               isRestaurant ? restaurant.name : product.name,
-              style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
+              style: robotoMedium.copyWith(
+                  fontSize: Dimensions.fontSizeLarge, color: Colors.white),
               maxLines: _desktop ? 2 : 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -174,8 +180,8 @@ class CategoryWidget extends StatelessWidget {
                   ? Text(
                       PriceConverter.convertPrice(product.discount),
                       style: robotoMedium.copyWith(
-                        fontSize: Dimensions.fontSizeExtraSmall,
-                        color: Colors.black,
+                        fontSize: Dimensions.fontSizeDefault,
+                        color: Colors.white,
                         decoration: TextDecoration.lineThrough,
                       ),
                     )
@@ -183,8 +189,8 @@ class CategoryWidget extends StatelessWidget {
               Text(
                 PriceConverter.convertPrice(product.price),
                 style: robotoMedium.copyWith(
-                  fontSize: Dimensions.fontSizeExtraSmall,
-                  color: Colors.black,
+                  fontSize: Dimensions.fontSizeDefault,
+                  color: Colors.white,
                 ),
               ),
             ],
@@ -225,7 +231,7 @@ class CategoryWidget extends StatelessWidget {
                   )),
             ),
             style: TextButton.styleFrom(
-                backgroundColor: Colors.red,
+                backgroundColor: Color(0xff727c8e),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15))),
           ),

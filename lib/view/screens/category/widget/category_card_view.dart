@@ -66,8 +66,8 @@ class CategoryView extends StatelessWidget {
                         ? Dimensions.PADDING_SIZE_LARGE
                         : 0.01,
                     childAspectRatio:
-                        ResponsiveHelper.isDesktop(context) ? 3 : 2.2 / 4,
-                    crossAxisCount: ResponsiveHelper.isMobile(context) ? 3 : 2,
+                        ResponsiveHelper.isDesktop(context) ? 3 : 1 / 1.35,
+                    crossAxisCount: ResponsiveHelper.isMobile(context) ? 2 : 1,
                   ),
                   physics: isScrollable
                       ? BouncingScrollPhysics()

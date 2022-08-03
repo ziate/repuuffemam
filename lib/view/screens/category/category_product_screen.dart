@@ -224,6 +224,10 @@ class _CategoryProductScreenState extends State<CategoryProductScreen>
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+
                       // Row(
                       //   children: [
                       //     Expanded(
