@@ -105,7 +105,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                                     Text('history'.tr,
                                                         style: robotoMedium.copyWith(
                                                             fontSize: Dimensions
-                                                                .fontSizeLarge)),
+                                                                .fontSizeLarge,
+                                                            color:
+                                                                Colors.white)),
                                                     InkWell(
                                                       onTap: () => searchController
                                                           .clearSearchAddress(),
@@ -122,7 +124,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                   .fontSizeSmall,
                                                               color: Theme.of(
                                                                       context)
-                                                                  .disabledColor,
+                                                                  .primaryColor,
                                                             )),
                                                       ),
                                                     ),
@@ -153,9 +155,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                             .historyList[index],
                                                         style: robotoRegular
                                                             .copyWith(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .disabledColor),
+                                                                color: Colors
+                                                                    .white),
                                                         maxLines: 1,
                                                         overflow: TextOverflow
                                                             .ellipsis,
@@ -172,7 +173,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                             .PADDING_SIZE_EXTRA_SMALL),
                                                     child: Icon(Icons.close,
                                                         color: Theme.of(context)
-                                                            .disabledColor,
+                                                            .primaryColor,
                                                         size: 20),
                                                   ),
                                                 )
@@ -198,7 +199,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 'suggestions'.tr,
                                                 style: robotoMedium.copyWith(
                                                     fontSize: Dimensions
-                                                        .fontSizeLarge),
+                                                        .fontSizeLarge,
+                                                    color: Colors.white),
                                               )
                                             : SizedBox(),
                                         SizedBox(
@@ -221,7 +223,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                               ? 2
                                                               : 4,
                                                       childAspectRatio:
-                                                          (1 / 0.4),
+                                                          (1 / 1.1),
                                                       mainAxisSpacing: Dimensions
                                                           .PADDING_SIZE_SMALL,
                                                       crossAxisSpacing: Dimensions
@@ -269,7 +271,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                     Dimensions
                                                                         .RADIUS_SMALL),
                                                           ),
-                                                          child: Row(children: [
+                                                          child:
+                                                              Column(children: [
                                                             SizedBox(
                                                                 width: Dimensions
                                                                     .PADDING_SIZE_SMALL),
@@ -283,25 +286,30 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                 image:
                                                                     '${Get.find<SplashController>().configModel.baseUrls.productImageUrl}'
                                                                     '/${searchController.suggestedFoodList[index].image}',
-                                                                width: 45,
-                                                                height: 45,
+                                                                width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width,
+                                                                height: 150,
                                                                 fit: BoxFit
                                                                     .cover,
                                                               ),
                                                             ),
                                                             SizedBox(
-                                                                width: Dimensions
+                                                                height: Dimensions
                                                                     .PADDING_SIZE_SMALL),
                                                             Text(
                                                               searchController
                                                                   .suggestedFoodList[
                                                                       index]
                                                                   .name,
-                                                              style: robotoMedium
-                                                                  .copyWith(
-                                                                      fontSize:
-                                                                          Dimensions
-                                                                              .fontSizeSmall),
+                                                              style: robotoMedium.copyWith(
+                                                                  fontSize:
+                                                                      Dimensions
+                                                                          .fontSizeLarge,
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .primaryColor),
                                                               maxLines: 2,
                                                               overflow:
                                                                   TextOverflow
