@@ -65,8 +65,8 @@ class ProductView extends StatelessWidget {
                         ? Dimensions.PADDING_SIZE_LARGE
                         : 0.01,
                     childAspectRatio:
-                        ResponsiveHelper.isDesktop(context) ? 3 : 1.6,
-                    crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : 2,
+                        ResponsiveHelper.isDesktop(context) ? 1 : 0.9,
+                    crossAxisCount: ResponsiveHelper.isMobile(context) ? 2 : 4,
                   ),
                   physics: isScrollable
                       ? BouncingScrollPhysics()

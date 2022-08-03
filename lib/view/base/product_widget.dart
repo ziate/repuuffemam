@@ -105,7 +105,7 @@ class ProductWidget extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.RADIUS_LARGE),
             color: ResponsiveHelper.isDesktop(context)
-                ? Theme.of(context).cardColor
+                ? Theme.of(context).primaryColor
                 : null,
             boxShadow: ResponsiveHelper.isDesktop(context)
                 ? [
@@ -122,13 +122,14 @@ class ProductWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(Dimensions.RADIUS_LARGE),
+                  borderRadius: BorderRadius.circular(10),
                   child: CustomImage(
                     image:
                         '${isCampaign ? _baseUrls.campaignImageUrl : isRestaurant ? _baseUrls.restaurantImageUrl : _baseUrls.productImageUrl}'
                         '/${isRestaurant ? restaurant.logo : product.image}',
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.19,
+                    width: MediaQuery.of(context).size.width,
+                    // height: MediaQuery.of(context).size.height * 0.19,
+                    height: 120,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -151,7 +152,7 @@ class ProductWidget extends StatelessWidget {
                           Text(
                             isRestaurant ? restaurant.name : product.name,
                             style: robotoMedium.copyWith(
-                                color: Colors.red,
+                                color: Theme.of(context).primaryColor,
                                 fontSize: Dimensions.fontSizeLarge),
                             maxLines: _desktop ? 2 : 1,
                             overflow: TextOverflow.ellipsis,
@@ -162,21 +163,21 @@ class ProductWidget extends StatelessWidget {
                                   ? restaurant.address
                                   : product.restaurantName ?? '',
                               style: robotoRegular.copyWith(
-                                fontSize: Dimensions.fontSizeExtraSmall,
+                                fontSize: Dimensions.fontSizeSmall,
                                 color: Theme.of(context).primaryColor,
                               ),
                               maxLines: 1,
                             ),
                           ),
-                          RatingBar(
-                            rating: isRestaurant
-                                ? restaurant.avgRating
-                                : product.avgRating,
-                            size: _desktop ? 15 : 15,
-                            ratingCount: isRestaurant
-                                ? restaurant.ratingCount
-                                : product.ratingCount,
-                          ),
+                          // RatingBar(
+                          //   rating: isRestaurant
+                          //       ? restaurant.avgRating
+                          //       : product.avgRating,
+                          //   size: _desktop ? 15 : 15,
+                          //   ratingCount: isRestaurant
+                          //       ? restaurant.ratingCount
+                          //       : product.ratingCount,
+                          // ),
                         ],
                       ),
                     ),
@@ -195,6 +196,15 @@ class ProductWidget extends StatelessWidget {
                             ),
                           ),
                     SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
+                    RatingBar(
+                      rating: isRestaurant
+                          ? restaurant.avgRating
+                          : product.avgRating,
+                      size: _desktop ? 15 : 15,
+                      ratingCount: isRestaurant
+                          ? restaurant.ratingCount
+                          : product.ratingCount,
+                    ),
                   ],
                 )
                 // Expanded(
