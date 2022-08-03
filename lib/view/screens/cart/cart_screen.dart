@@ -10,8 +10,10 @@ import 'package:efood_multivendor/util/styles.dart';
 import 'package:efood_multivendor/view/base/custom_app_bar.dart';
 import 'package:efood_multivendor/view/base/custom_button.dart';
 import 'package:efood_multivendor/view/base/custom_snackbar.dart';
+import 'package:efood_multivendor/view/base/my_text_field.dart';
 import 'package:efood_multivendor/view/base/no_data_screen.dart';
 import 'package:efood_multivendor/view/screens/cart/widget/cart_product_widget.dart';
+import 'package:efood_multivendor/view/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,6 +32,9 @@ class CartScreen extends StatelessWidget {
         ),
         isBackButtonExist: (ResponsiveHelper.isDesktop(context) || !fromNav),
         isSmallAppBar: true,
+        onBackPressed: () {
+          Get.to(DashboardScreen(pageIndex: 0));
+        },
       ),
       body: GetBuilder<CartController>(
         builder: (cartController) {
@@ -61,6 +66,8 @@ class CartScreen extends StatelessWidget {
             _itemPrice = _itemPrice + (cartModel.price * cartModel.quantity);
           });
           double _subTotal = _itemPrice + _addOns;
+          double _delivery = 10;
+          double _total = _delivery + _subTotal;
 
           return cartController.cartList.length > 0
               ? Column(
@@ -75,73 +82,136 @@ class CartScreen extends StatelessWidget {
                             child: SizedBox(
                               width: Dimensions.WEB_MAX_WIDTH,
                               child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Product
-                                    ListView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: cartController.cartList.length,
-                                      itemBuilder: (context, index) {
-                                        return CartProductWidget(
-                                            cart:
-                                                cartController.cartList[index],
-                                            cartIndex: index,
-                                            addOns: _addOnsList[index],
-                                            isAvailable: _availableList[index]);
-                                      },
-                                    ),
-                                    SizedBox(
-                                        height: Dimensions.PADDING_SIZE_SMALL),
-
-                                    // Total
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
                                         children: [
-                                          Text('item_price'.tr,
-                                              style: robotoRegular),
-                                          Text(
-                                              PriceConverter.convertPrice(
-                                                  _itemPrice),
-                                              style: robotoRegular),
-                                        ]),
-                                    SizedBox(height: 10),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.shopping_cart,
+                                                color: Color(0xff727c8e),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                'order_summary'.tr,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      TextButton(
+                                          onPressed: (() {
+                                            cartController.clearCartList();
+                                          }),
+                                          child: Text(
+                                            'remove_all'.tr,
+                                            style: TextStyle(
+                                                color: Color(0xff727c8e),
+                                                fontSize: 12),
+                                          ))
+                                    ],
+                                  ),
+                                  // Product
+                                  ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: cartController.cartList.length,
+                                    itemBuilder: (context, index) {
+                                      return CartProductWidget(
+                                          cart: cartController.cartList[index],
+                                          cartIndex: index,
+                                          addOns: _addOnsList[index],
+                                          isAvailable: _availableList[index]);
+                                    },
+                                  ),
+                                  SizedBox(
+                                      height: Dimensions.PADDING_SIZE_SMALL),
+                                  Text(
+                                    'Do_you_have_any_discount_code'.tr,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    height: 25,
+                                    child: MyTextField(),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.66,
+                                  ),
+                                  // Total
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('subtotal'.tr,
+                                            style: TextStyle(
+                                              color: Color(0xff727c8e),
+                                            )),
+                                        Text(
+                                            PriceConverter.convertPrice(
+                                                _subTotal),
+                                            style: TextStyle(
+                                              color: Color(0xff727c8e),
+                                            )),
+                                      ]),
+                                  SizedBox(height: 10),
 
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text('addons'.tr,
-                                              style: robotoRegular),
-                                          Text(
-                                              '(+) ${PriceConverter.convertPrice(_addOns)}',
-                                              style: robotoRegular),
-                                        ]),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('delivery_charge'.tr,
+                                            style: TextStyle(
+                                              color: Color(0xff727c8e),
+                                            )),
+                                        Text(
+                                            '(+) ${PriceConverter.convertPrice(_delivery)}',
+                                            style: TextStyle(
+                                              color: Color(0xff727c8e),
+                                            )),
+                                      ]),
+                                  SizedBox(height: 10),
 
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical:
-                                              Dimensions.PADDING_SIZE_SMALL),
-                                      child: Divider(
-                                          thickness: 1,
-                                          color: Theme.of(context)
-                                              .hintColor
-                                              .withOpacity(0.5)),
-                                    ),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('total_price'.tr,
+                                            style: TextStyle(
+                                                color: Color(0xff727c8e),
+                                                fontSize: 15)),
+                                        Text(
+                                          ' ${PriceConverter.convertPrice(_total)}',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ]),
 
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text('subtotal'.tr,
-                                              style: robotoMedium),
-                                          Text(
-                                              PriceConverter.convertPrice(
-                                                  _subTotal),
-                                              style: robotoMedium),
-                                        ]),
-                                  ]),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical:
+                                            Dimensions.PADDING_SIZE_SMALL),
+                                    child: Divider(
+                                        thickness: 1,
+                                        color: Theme.of(context)
+                                            .hintColor
+                                            .withOpacity(0.5)),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

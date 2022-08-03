@@ -427,5 +427,10 @@
   "house_number":"رقم المنزل",
   "address_special_instructions":"تعليمات خاصة بالعنوان",
   "you_currently_have_no_orders":"لا يوجد طلبات لديك الآن",
-  "Best_get_shopping_now":"من الأفضل التسوق الآن"
+  "Best_get_shopping_now":"من الأفضل التسوق الآن",
+  "remove_all":"احذف الكل",
+  "order_summary":"ملخص الطلبات",
+  "Do_you_have_any_discount_code":"هل لديك كوبون خصم؟",
+  "total_price":"السعر الكلي"
+  
 }

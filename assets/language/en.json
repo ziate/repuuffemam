@@ -427,7 +427,12 @@
   "house_number":"Apartment / House number",
   "address_special_instructions":"Address Special Instructions",
   "you_currently_have_no_orders":"you currently have no orders",
-  "Best_get_shopping_now":"Best get shopping now"
+  "Best_get_shopping_now":"Best get shopping now",
+  "remove_all":"Remove All",
+  "order_summary":"Order Summary",
+  "Do_you_have_any_discount_code":"Do you have any discount code?",
+  "total_price":"Total Price"
+
 
 
 
