@@ -104,9 +104,7 @@ class ProductWidget extends StatelessWidget {
               : null,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.RADIUS_LARGE),
-            color: ResponsiveHelper.isDesktop(context)
-                ? Theme.of(context).cardColor
-                : null,
+            color: Theme.of(context).primaryColor,
             boxShadow: ResponsiveHelper.isDesktop(context)
                 ? [
                     BoxShadow(
@@ -122,13 +120,14 @@ class ProductWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(Dimensions.RADIUS_LARGE),
+                  borderRadius: BorderRadius.circular(10),
                   child: CustomImage(
                     image:
                         '${isCampaign ? _baseUrls.campaignImageUrl : isRestaurant ? _baseUrls.restaurantImageUrl : _baseUrls.productImageUrl}'
                         '/${isRestaurant ? restaurant.logo : product.image}',
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.19,
+                    width: MediaQuery.of(context).size.width,
+                    // height: MediaQuery.of(context).size.height * 0.19,
+                    height: 105,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -151,7 +150,7 @@ class ProductWidget extends StatelessWidget {
                           Text(
                             isRestaurant ? restaurant.name : product.name,
                             style: robotoMedium.copyWith(
-                                color: Colors.red,
+                                color: Colors.white,
                                 fontSize: Dimensions.fontSizeLarge),
                             maxLines: _desktop ? 2 : 1,
                             overflow: TextOverflow.ellipsis,
@@ -162,21 +161,21 @@ class ProductWidget extends StatelessWidget {
                                   ? restaurant.address
                                   : product.restaurantName ?? '',
                               style: robotoRegular.copyWith(
-                                fontSize: Dimensions.fontSizeExtraSmall,
-                                color: Theme.of(context).primaryColor,
+                                fontSize: Dimensions.fontSizeSmall,
+                                color: Colors.white,
                               ),
                               maxLines: 1,
                             ),
                           ),
-                          RatingBar(
-                            rating: isRestaurant
-                                ? restaurant.avgRating
-                                : product.avgRating,
-                            size: _desktop ? 15 : 15,
-                            ratingCount: isRestaurant
-                                ? restaurant.ratingCount
-                                : product.ratingCount,
-                          ),
+                          // RatingBar(
+                          //   rating: isRestaurant
+                          //       ? restaurant.avgRating
+                          //       : product.avgRating,
+                          //   size: _desktop ? 15 : 15,
+                          //   ratingCount: isRestaurant
+                          //       ? restaurant.ratingCount
+                          //       : product.ratingCount,
+                          // ),
                         ],
                       ),
                     ),
@@ -190,11 +189,22 @@ class ProductWidget extends StatelessWidget {
                                   : 'not_available_now_break'.tr,
                               textAlign: TextAlign.center,
                               style: robotoRegular.copyWith(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 15),
+                                  color: Colors.white, fontSize: 15),
                             ),
                           ),
                     SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: RatingBar(
+                        rating: isRestaurant
+                            ? restaurant.avgRating
+                            : product.avgRating,
+                        size: _desktop ? 15 : 15,
+                        ratingCount: isRestaurant
+                            ? restaurant.ratingCount
+                            : product.ratingCount,
+                      ),
+                    ),
                   ],
                 )
                 // Expanded(

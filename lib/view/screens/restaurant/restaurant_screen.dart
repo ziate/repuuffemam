@@ -13,9 +13,11 @@ import 'package:efood_multivendor/util/dimensions.dart';
 import 'package:efood_multivendor/util/images.dart';
 import 'package:efood_multivendor/util/styles.dart';
 import 'package:efood_multivendor/view/base/cart_widget.dart';
+import 'package:efood_multivendor/view/base/custom_app_bar.dart';
 import 'package:efood_multivendor/view/base/custom_image.dart';
 import 'package:efood_multivendor/view/base/product_view.dart';
 import 'package:efood_multivendor/view/base/web_menu_bar.dart';
+import 'package:efood_multivendor/view/screens/dashboard/dashboard_screen.dart';
 import 'package:efood_multivendor/view/screens/home/widget/category_view.dart';
 import 'package:efood_multivendor/view/screens/restaurant/widget/restaurant_description_view.dart';
 import 'package:flutter/material.dart';
@@ -82,43 +84,55 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: ResponsiveHelper.isDesktop(context)
-            ? WebMenuBar()
-            : PreferredSize(
-                preferredSize: Size.fromHeight(70),
-                child: Container(
-                  width: double.infinity,
-                  height: 60,
-                  color: Theme.of(context).primaryColor,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                          clipBehavior: Clip.antiAlias,
-                          width: 50,
-                          height: 50,
-                          child: Center(
-                            child: Image.asset(
-                              Images.logopng,
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white)),
-                      Text(widget.restaurant.name,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w200)),
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: SvgPicture.asset(Images.backSvg)),
-                    ],
-                  ),
-                ),
-              ),
-        backgroundColor: Color(0xFFE1E1E1),
+        appBar: CustomAppBar(
+          title: '',
+          titleWidget: Text(
+            "my_cart".tr,
+            style: TextStyle(color: Colors.white),
+          ),
+          isBackButtonExist: true,
+          isSmallAppBar: true,
+          onBackPressed: () {
+            Get.back();
+          },
+        ),
+        // appBar: ResponsiveHelper.isDesktop(context)
+        //     ? WebMenuBar()
+        //     : PreferredSize(
+        //         preferredSize: Size.fromHeight(70),
+        //         child: Container(
+        //           width: double.infinity,
+        //           height: 60,
+        //           color: Theme.of(context).primaryColor,
+        //           child: Row(
+        //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //             children: [
+        //               Container(
+        //                   clipBehavior: Clip.antiAlias,
+        //                   width: 50,
+        //                   height: 50,
+        //                   child: Center(
+        //                     child: Image.asset(
+        //                       Images.logopng,
+        //                     ),
+        //                   ),
+        //                   decoration: BoxDecoration(
+        //                       shape: BoxShape.circle, color: Colors.white)),
+        //               Text(widget.restaurant.name,
+        //                   style: TextStyle(
+        //                       color: Colors.white,
+        //                       fontSize: 20,
+        //                       fontWeight: FontWeight.w200)),
+        //               GestureDetector(
+        //                   onTap: () {
+        //                     Navigator.pop(context);
+        //                   },
+        //                   child: SvgPicture.asset(Images.backSvg)),
+        //             ],
+        //           ),
+        //         ),
+        //       ),
+        backgroundColor: Color(0xff2b3038),
         body: GetBuilder<RestaurantController>(builder: (restController) {
           return GetBuilder<CategoryController>(builder: (categoryController) {
             Restaurant _restaurant;
@@ -140,7 +154,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                           width: Dimensions.WEB_MAX_WIDTH,
                           padding:
                               EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                          color: Color(0xFFE1E1E1),
+                          //   color: Color(0xFFE1E1E1),
                           child: Column(children: [
                             ResponsiveHelper.isDesktop(context)
                                 ? SizedBox()
@@ -171,7 +185,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                                 fontSize:
                                                     Dimensions.fontSizeLarge,
                                                 color: Theme.of(context)
-                                                    .cardColor),
+                                                    .primaryColor),
                                           ),
                                           Text(
                                             _restaurant.discount.discountType ==
@@ -228,57 +242,102 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                 : SizedBox(),
                           ]),
                         )),
+
                         Center(
                             child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 15),
-                                child: Container(
-                                  height: 40,
-                                  width: Dimensions.WEB_MAX_WIDTH,
-                                  color: Colors.transparent,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          Dimensions.PADDING_SIZE_SMALL),
-                                  child: InkWell(
-                                    onTap: () => Get.toNamed(
-                                        RouteHelper.getSearchRoute()),
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              Dimensions.PADDING_SIZE_SMALL),
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).cardColor,
-                                        borderRadius: BorderRadius.circular(
-                                            Dimensions.RADIUS_EXTRA_LARGE),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Colors.grey[
-                                                  Get.isDarkMode ? 800 : 200],
-                                              spreadRadius: 1,
-                                              blurRadius: 5)
-                                        ],
-                                      ),
-                                      child: Row(children: [
-                                        Icon(Icons.search,
-                                            size: 25,
-                                            color:
-                                                Theme.of(context).primaryColor),
-                                        SizedBox(
-                                            width: Dimensions
-                                                .PADDING_SIZE_EXTRA_SMALL),
-                                        Expanded(
-                                            child: Text(
-                                                'search_food_or_restaurant'.tr,
-                                                style: robotoRegular.copyWith(
-                                                  fontSize:
-                                                      Dimensions.fontSizeSmall,
-                                                  color: Theme.of(context)
-                                                      .hintColor,
-                                                ))),
-                                      ]),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 20,
+                            width: Dimensions.WEB_MAX_WIDTH,
+                            color: Colors.transparent,
+                            // padding: EdgeInsets.symmetric(
+                            //     horizontal: Dimensions.PADDING_SIZE_SMALL),
+                            child: InkWell(
+                              onTap: () =>
+                                  Get.toNamed(RouteHelper.getSearchRoute()),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: Dimensions.PADDING_SIZE_SMALL),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).cardColor,
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.RADIUS_EXTRA_LARGE),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Image(
+                                      height: 15,
+                                      image: AssetImage(Images.search_icon),
                                     ),
-                                  ),
-                                ))),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        'search_food_or_restaurant'.tr,
+                                        style: robotoRegular.copyWith(
+                                          fontSize: Dimensions.fontSizeSmall,
+                                          color: Theme.of(context).hintColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )),
+                        // Center(
+                        //     child: Padding(
+                        //         padding: const EdgeInsets.symmetric(
+                        //             horizontal: 10, vertical: 15),
+                        //         child: Container(
+                        //           height: 40,
+                        //           width: Dimensions.WEB_MAX_WIDTH,
+                        //           color: Colors.transparent,
+                        //           padding: EdgeInsets.symmetric(
+                        //               horizontal:
+                        //                   Dimensions.PADDING_SIZE_SMALL),
+                        //           child: InkWell(
+                        //             onTap: () => Get.toNamed(
+                        //                 RouteHelper.getSearchRoute()),
+                        //             child: Container(
+                        //               padding: EdgeInsets.symmetric(
+                        //                   horizontal:
+                        //                       Dimensions.PADDING_SIZE_SMALL),
+                        //               decoration: BoxDecoration(
+                        //                 color: Theme.of(context).cardColor,
+                        //                 borderRadius: BorderRadius.circular(
+                        //                     Dimensions.RADIUS_EXTRA_LARGE),
+                        //                 boxShadow: [
+                        //                   BoxShadow(
+                        //                       color: Colors.grey[
+                        //                           Get.isDarkMode ? 800 : 200],
+                        //                       spreadRadius: 1,
+                        //                       blurRadius: 5)
+                        //                 ],
+                        //               ),
+                        //               child: Row(children: [
+                        //                 Icon(Icons.search,
+                        //                     size: 25,
+                        //                     color:
+                        //                         Theme.of(context).primaryColor),
+                        //                 SizedBox(
+                        //                     width: Dimensions
+                        //                         .PADDING_SIZE_EXTRA_SMALL),
+                        //                 Expanded(
+                        //                     child: Text(
+                        //                         'search_food_or_restaurant'.tr,
+                        //                         style: robotoRegular.copyWith(
+                        //                           fontSize:
+                        //                               Dimensions.fontSizeSmall,
+                        //                           color: Theme.of(context)
+                        //                               .hintColor,
+                        //                         ))),
+                        //               ]),
+                        //             ),
+                        //           ),
+                        //         ))),
                         GetBuilder<CategoryController>(
                             builder: (categoryController) {
                           return categoryController.categoryList == null
