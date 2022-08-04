@@ -280,6 +280,8 @@ class ProfileScreen extends StatelessWidget {
                                       isLogOut: true,
                                       onYesPressed: () {
                                         Get.find<AuthController>()
+                                            .birthDate("");
+                                        Get.find<AuthController>()
                                             .clearSharedData();
                                         Get.find<CartController>()
                                             .clearCartList();

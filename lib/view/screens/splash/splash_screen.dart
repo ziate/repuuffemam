@@ -8,6 +8,7 @@ import 'package:efood_multivendor/controller/splash_controller.dart';
 import 'package:efood_multivendor/controller/wishlist_controller.dart';
 import 'package:efood_multivendor/helper/route_helper.dart';
 import 'package:efood_multivendor/util/app_constants.dart';
+import 'package:efood_multivendor/view/screens/select_login/select_login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -100,12 +101,12 @@ class _SplashScreenState extends State<SplashScreen> {
               } else {
                 if (Get.find<SplashController>().showIntro()) {
                   if (AppConstants.languages.length > 1) {
-                    Get.offNamed(RouteHelper.getLanguageRoute('splash'));
+                    Get.offNamed(RouteHelper.selectLogin);
                   } else {
                     Get.offNamed(RouteHelper.getOnBoardingRoute());
                   }
                 } else {
-                  Get.offNamed(RouteHelper.getSignInRoute(RouteHelper.splash));
+                  Get.off(SelectLogin());
                 }
               }
             }
