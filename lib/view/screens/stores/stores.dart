@@ -89,7 +89,7 @@ class Stores extends StatelessWidget {
               ),
               Center(
                   child: Container(
-                height: 20,
+                height: 30,
                 width: Dimensions.WEB_MAX_WIDTH,
                 color: Colors.transparent,
                 // padding: EdgeInsets.symmetric(
@@ -166,7 +166,8 @@ class Stores extends StatelessWidget {
                         child: StoreItemBuilder(
                           imageUrl: Images.eventsSvg,
                           // imageUrl: restaurantController
-                          //             .popularRestaurantList[index].coverPhoto ==
+                          //             .popularRestaurantList[index]
+                          //             .coverPhoto ==
                           //         ''
                           //     ? Images.logopng
                           //     : restaurantController

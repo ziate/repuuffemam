@@ -20,7 +20,10 @@ class PoweredByWidget extends StatelessWidget {
             ),
           ),
           SizedBox(width: 23),
-          Image.asset("assets/image/joxx.png")
+          Image.asset(
+            "assets/image/joxx.png",
+            width: 50,
+          )
         ],
       ),
     );

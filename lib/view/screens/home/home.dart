@@ -49,6 +49,17 @@ class Home extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Container(
+                      //width: 100,
+                      child: Image(
+                        image: AssetImage(Images.logopng),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Expanded(
+                    child: Container(
                       //height: 100,
                       //  width: 100,
                       child: Stack(children: [
@@ -80,22 +91,11 @@ class Home extends StatelessWidget {
                       ]),
                     ),
                   ),
-                  SizedBox(
-                    width: 25,
-                  ),
-                  Expanded(
-                    child: Container(
-                      //width: 100,
-                      child: Image(
-                        image: AssetImage(Images.logopng),
-                      ),
-                    ),
-                  ),
                 ],
               ),
               Center(
                   child: Container(
-                height: 20,
+                height: 30,
                 width: Dimensions.WEB_MAX_WIDTH,
                 color: Colors.transparent,
                 // padding: EdgeInsets.symmetric(

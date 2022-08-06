@@ -86,40 +86,51 @@ class MyApp extends StatelessWidget {
       _route();
     }
 
-    return GetBuilder<ThemeController>(builder: (themeController) {
-      return GetBuilder<LocalizationController>(builder: (localizeController) {
-        return GetBuilder<SplashController>(builder: (splashController) {
-          return (GetPlatform.isWeb && splashController.configModel == null)
-              ? SizedBox()
-              : GetMaterialApp(
-                  localizationsDelegates: [
-                    GlobalMaterialLocalizations.delegate
-                  ],
-                  supportedLocales: [const Locale('en'), const Locale('ar')],
-                  title: AppConstants.APP_NAME,
-                  debugShowCheckedModeBanner: false,
-                  navigatorKey: Get.key,
-                  scrollBehavior: MaterialScrollBehavior().copyWith(
-                    dragDevices: {
-                      PointerDeviceKind.mouse,
-                      PointerDeviceKind.touch
-                    },
-                  ),
-                  theme: themeController.darkTheme ? dark : dark,
-                  locale: localizeController.locale,
-                  translations: Messages(languages: languages),
-                  fallbackLocale: Locale(AppConstants.languages[0].languageCode,
-                      AppConstants.languages[0].countryCode),
-                  initialRoute: GetPlatform.isWeb
-                      ? RouteHelper.getInitialRoute()
-                      : RouteHelper.getSplashRoute(orderID),
-                  getPages: RouteHelper.routes,
-                  defaultTransition: Transition.topLevel,
-                  transitionDuration: Duration(milliseconds: 500),
-                );
-        });
-      });
-    });
+    return GetBuilder<ThemeController>(
+      builder: (themeController) {
+        return GetBuilder<LocalizationController>(
+          builder: (localizeController) {
+            return GetBuilder<SplashController>(
+              builder: (splashController) {
+                return (GetPlatform.isWeb &&
+                        splashController.configModel == null)
+                    ? SizedBox()
+                    : GetMaterialApp(
+                        localizationsDelegates: [
+                          GlobalMaterialLocalizations.delegate
+                        ],
+                        supportedLocales: [
+                          const Locale('en'),
+                          const Locale('ar')
+                        ],
+                        title: AppConstants.APP_NAME,
+                        debugShowCheckedModeBanner: false,
+                        navigatorKey: Get.key,
+                        scrollBehavior: MaterialScrollBehavior().copyWith(
+                          dragDevices: {
+                            PointerDeviceKind.mouse,
+                            PointerDeviceKind.touch
+                          },
+                        ),
+                        theme: themeController.darkTheme ? dark : dark,
+                        locale: localizeController.locale,
+                        translations: Messages(languages: languages),
+                        fallbackLocale: Locale(
+                            AppConstants.languages[0].languageCode,
+                            AppConstants.languages[0].countryCode),
+                        initialRoute: GetPlatform.isWeb
+                            ? RouteHelper.getInitialRoute()
+                            : RouteHelper.getSplashRoute(orderID),
+                        getPages: RouteHelper.routes,
+                        defaultTransition: Transition.topLevel,
+                        transitionDuration: Duration(milliseconds: 500),
+                      );
+              },
+            );
+          },
+        );
+      },
+    );
   }
 }
 

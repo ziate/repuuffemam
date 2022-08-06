@@ -431,6 +431,7 @@
   "remove_all":"احذف الكل",
   "order_summary":"ملخص الطلبات",
   "Do_you_have_any_discount_code":"هل لديك كوبون خصم؟",
-  "total_price":"السعر الكلي"
+  "total_price":"السعر الكلي",
+  "login_using_email_user_name_or_phone_number":"كلمة المرور او اسم المستخدم او رقم الهاتف"
   
 }

@@ -120,15 +120,18 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       key: _globalKey,
       body: Center(
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            SvgPicture.asset("assets/image/re.svg"),
-            Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: SvgPicture.asset("assets/image/Puff.svg"),
-            ),
-          ],
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.50,
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              SvgPicture.asset("assets/image/re.svg"),
+              Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: SvgPicture.asset("assets/image/Puff.svg"),
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: PoweredByWidget(),

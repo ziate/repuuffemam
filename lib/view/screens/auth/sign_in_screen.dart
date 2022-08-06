@@ -126,7 +126,7 @@ class _SignInScreenState extends State<SignInScreen> {
               child: CustomTextField(
                 border: AppConstants.decorationSignInScreen,
                 focusBorder: AppConstants.decorationSignInScreen,
-                hintText: 'email'.tr,
+                hintText: 'login_using_email_user_name_or_phone_number'.tr,
                 controller: _phoneController,
                 focusNode: _phoneFocus,
                 nextFocus: _passwordFocus,

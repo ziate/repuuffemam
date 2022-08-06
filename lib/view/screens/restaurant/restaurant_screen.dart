@@ -247,7 +247,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                             child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            height: 20,
+                            height: 30,
                             width: Dimensions.WEB_MAX_WIDTH,
                             color: Colors.transparent,
                             // padding: EdgeInsets.symmetric(

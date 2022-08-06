@@ -89,12 +89,15 @@ class ProductView extends StatelessWidget {
                     );
                   },
                 )
-              : NoDataScreen(
-                  text: noDataText != null
-                      ? noDataText
-                      : isRestaurant
-                          ? 'no_restaurant_available'.tr
-                          : 'no_food_available'.tr,
+              : Container(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  child: NoDataScreen(
+                    text: noDataText != null
+                        ? noDataText
+                        : isRestaurant
+                            ? 'no_restaurant_available'.tr
+                            : 'no_food_available'.tr,
+                  ),
                 )
           : GridView.builder(
               key: UniqueKey(),

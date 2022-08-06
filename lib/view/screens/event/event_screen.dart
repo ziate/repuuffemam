@@ -64,7 +64,7 @@ class EventScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 15),
                     child: Container(
-                      height: 40,
+                      height: 30,
                       width: Dimensions.WEB_MAX_WIDTH,
                       color: Colors.transparent,
                       padding: EdgeInsets.symmetric(

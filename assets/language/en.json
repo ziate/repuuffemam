@@ -431,7 +431,11 @@
   "remove_all":"Remove All",
   "order_summary":"Order Summary",
   "Do_you_have_any_discount_code":"Do you have any discount code?",
-  "total_price":"Total Price"
+  "total_price":"Total Price",
+  "search_food_or_restaurant":"Search food or restaurant ",
+  "food":"Food",
+  "restaurants":"Restaurants",
+  "login_using_email_user_name_or_phone_number":"email, username or phone number"
 
 
 

@@ -184,7 +184,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen>
                     children: [
                       Center(
                         child: Container(
-                          height: 20,
+                          height: 30,
                           width: Dimensions.WEB_MAX_WIDTH,
                           color: Colors.transparent,
                           // padding: EdgeInsets.symmetric(
