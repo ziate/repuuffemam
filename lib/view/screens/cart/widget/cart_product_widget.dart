@@ -151,7 +151,7 @@ class CartProductWidget extends StatelessWidget {
                                 cart.product.name,
                                 style: robotoMedium.copyWith(
                                     fontSize: Dimensions.fontSizeExtraLarge,
-                                    color: Color(0xff727c8e)),
+                                    color: Colors.white), // Color(0xff727c8e)),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -231,11 +231,12 @@ class CartProductWidget extends StatelessWidget {
                                   ),
                                 ]),
                                 Text(
-                                  "${PriceConverter.convertPrice(cart.discountedPrice + cart.discountAmount)} egp",
-                                  style: robotoMedium.copyWith(
+                                    "${PriceConverter.convertPrice(cart.discountedPrice + cart.discountAmount)} egp",
+                                    style: robotoMedium.copyWith(
                                       fontSize: Dimensions.fontSizeDefault,
-                                      color: Color(0xff727c8e)),
-                                ),
+                                      color: Colors.white,
+                                    ) //Color(0xff727c8e)),
+                                    ),
                               ],
                             ),
                           ]),
@@ -254,10 +255,9 @@ class CartProductWidget extends StatelessWidget {
                           : SizedBox(),
                       IconButton(
                           onPressed: () {},
-                          icon: Icon(
-                            Icons.delete,
-                            color: Color(0xff727c8e),
-                          ))
+                          icon: Icon(Icons.delete,
+                              color: Colors.white // Color(0xff727c8e),
+                              ))
                     ]),
                     _addOnText.isNotEmpty
                         ? Padding(

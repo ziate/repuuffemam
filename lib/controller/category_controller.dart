@@ -1,18 +1,24 @@
+import 'dart:developer';
+
+import 'package:efood_multivendor/data/api/api.dart';
 import 'package:efood_multivendor/data/api/api_checker.dart';
+import 'package:efood_multivendor/data/model/body/brand_model.dart';
 import 'package:efood_multivendor/data/model/response/category_model.dart';
 import 'package:efood_multivendor/data/model/response/product_model.dart';
 import 'package:efood_multivendor/data/model/response/restaurant_model.dart';
 import 'package:efood_multivendor/data/repository/category_repo.dart';
+import 'package:efood_multivendor/util/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CategoryController extends GetxController implements GetxService {
   final CategoryRepo categoryRepo;
-  CategoryController({@required this.categoryRepo});
+  final BuildContext context;
+  CategoryController({@required this.categoryRepo, @required this.context});
 
   List<CategoryModel> _categoryList;
   List<CategoryModel> _subCategoryList;
-  List<Product> _categoryProductList;
+  List<Product> _categoryProductList = [];
   List<Restaurant> _categoryRestList;
   List<Product> _searchProductList = [];
   List<Restaurant> _searchRestList = [];
@@ -29,6 +35,7 @@ class CategoryController extends GetxController implements GetxService {
   String _prodResultText = '';
   int _offset = 1;
   String shopId;
+  List<Brand> _brands = [];
 
   List<CategoryModel> get categoryList => _categoryList;
   List<CategoryModel> get subCategoryList => _subCategoryList;
@@ -46,6 +53,7 @@ class CategoryController extends GetxController implements GetxService {
   bool get isRestaurant => _isRestaurant;
   String get searchText => _searchText;
   int get offset => _offset;
+  List<Brand> get brands => _brands;
 
   Future<void> getCategoryList(bool reload) async {
     if (_categoryList == null || reload) {
@@ -64,7 +72,37 @@ class CategoryController extends GetxController implements GetxService {
     }
   }
 
-  void getSubCategoryList(String categoryID, String shopId) async {
+// ------------------------------------------- TODO ----------------------------------
+  void getBrans() async {
+    //------------------------ TODO --------------------------------------------------
+    try {
+      Map dataReturned = await API()
+          .getRequest(url: AppConstants.BRANDS_URI, context: context);
+      List listOfBrandsJson = dataReturned['data'];
+      print("-----------------------------------------------------");
+      log(listOfBrandsJson.toString());
+      for (int i = 0; i < listOfBrandsJson.length; i++) {
+        _brands.add(
+          Brand(
+            id: listOfBrandsJson[i]['id'],
+            name: listOfBrandsJson[i]['name'],
+            image: listOfBrandsJson[i]['img'],
+          ),
+        );
+      }
+      update();
+    } catch (e, t) {
+      log("Error in getBrands in category controller $e");
+      print(t);
+      // Scaffold.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('Error, try again later'),
+      //   ),
+      // );
+    }
+  }
+
+  void getSubCategoryList(String categoryID, String shopId, int brandId) async {
     _subCategoryIndex = 0;
     _subCategoryList = null;
     _categoryProductList = null;
@@ -75,7 +113,7 @@ class CategoryController extends GetxController implements GetxService {
           .add(CategoryModel(id: int.parse(categoryID), name: 'all'.tr));
       response.body.forEach(
           (category) => _subCategoryList.add(CategoryModel.fromJson(category)));
-      getCategoryProductList(categoryID, shopId, 1, 'all', false);
+      getCategoryProductList(categoryID, shopId, 1, 'all', false, brandId);
     } else {
       ApiChecker.checkApi(response);
     }
@@ -99,12 +137,13 @@ class CategoryController extends GetxController implements GetxService {
           shopId,
           1,
           _type,
-          true);
+          true,
+          _brands[index].id);
     }
   }
 
   void getCategoryProductList(String categoryID, String shopId, int offset,
-      String type, bool notify) async {
+      String type, bool notify, int brandId) async {
     _offset = offset;
     if (offset == 1) {
       if (_type == type) {
@@ -117,7 +156,7 @@ class CategoryController extends GetxController implements GetxService {
       _categoryProductList = null;
     }
     Response response = await categoryRepo.getCategoryProductList(
-        categoryID, shopId, offset, type);
+        categoryID, shopId, offset, type, brandId);
     if (response.statusCode == 200) {
       if (offset == 1) {
         _categoryProductList = [];

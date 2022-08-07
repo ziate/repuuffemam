@@ -15,12 +15,12 @@ class CategoryRepo {
     return await apiClient.getData('${AppConstants.SUB_CATEGORY_URI}$parentID');
   }
 
-  Future<Response> getCategoryProductList(
-      String categoryID, String shopId, int offset, String type) async {
+  Future<Response> getCategoryProductList(String categoryID, String shopId,
+      int offset, String type, int brandId) async {
     print("حصصصصصصصصصصصصصصصصصصصل");
     print("shopId:  ${shopId}");
     return await apiClient.getData(
-        '${AppConstants.CATEGORY_PRODUCT_URI}$categoryID?limit=10&offset=$offset&shop_id=$shopId&type=$type');
+        '${AppConstants.CATEGORY_PRODUCT_URI}$categoryID?limit=10&offset=$offset&shop_id=$shopId&type=$type&brand_id=$brandId');
   }
 
   Future<Response> getCategoryRestaurantList(

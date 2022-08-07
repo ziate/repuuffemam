@@ -80,6 +80,8 @@ class AppConstants {
   static const String SOCIAL_LOGIN_URL = '/api/v1/auth/social-login';
   static const String SOCIAL_REGISTER_URL = '/api/v1/auth/social-register';
   static const String UPDATE_ZONE_URL = '/api/v1/customer/update-zone';
+  static const String BRANDS_URI = "https://repuffapp.com/api/v1/brands";
+  static const String EVENTS_URI = "https://repuffapp.com/api/v1/events";
 
   // Shared Key
   static const String THEME = 'theme';

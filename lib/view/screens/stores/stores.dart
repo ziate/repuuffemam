@@ -158,10 +158,14 @@ class Stores extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          Get.to(CategoryScreen(
-                            name: restaurantController
-                                .popularRestaurantList[index].name,
-                          ));
+                          Get.to(
+                            CategoryScreen(
+                              name: restaurantController
+                                  .popularRestaurantList[index].name,
+                              shopId: restaurantController
+                                  .popularRestaurantList[index].id,
+                            ),
+                          );
                         },
                         child: StoreItemBuilder(
                           imageUrl: Images.eventsSvg,

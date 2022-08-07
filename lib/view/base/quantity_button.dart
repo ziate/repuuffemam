@@ -11,18 +11,19 @@ class QuantityButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 22,
-        width: 22,
-        margin: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          // border: Border.all(width: 1, color: isIncrement ? Theme.of(context).primaryColor : Theme.of(context).disabledColor),
-          color: Color(0xff20242A),
-        ),
-        alignment: Alignment.center,
-        child: Icon(isIncrement ? Icons.add : Icons.remove,
-            size: 15, color: Color(0xff727c8e)),
-      ),
+          height: 22,
+          width: 22,
+          margin:
+              EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            // border: Border.all(width: 1, color: isIncrement ? Theme.of(context).primaryColor : Theme.of(context).disabledColor),
+            color: Color(0xff20242A),
+          ),
+          alignment: Alignment.center,
+          child: Icon(isIncrement ? Icons.add : Icons.remove,
+              size: 15, color: Colors.white) // Color(0xff727c8e)),
+          ),
     );
   }
 }

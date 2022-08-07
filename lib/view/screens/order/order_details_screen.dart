@@ -154,7 +154,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                     Icon(
                                       Icons.watch_later,
                                       size: 17,
-                                      color: kTextColor,
+                                      color: Colors.white,
                                     ),
                                     SizedBox(
                                         width: Dimensions

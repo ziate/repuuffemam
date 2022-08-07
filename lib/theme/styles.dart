@@ -27,7 +27,7 @@ const Color kIconColor = const Color(0xff727C8E);
 //Text Styles
 
 //First: Regular styles
-const kTextStyleReg12 = TextStyle(fontSize: 12, color: kTextColor);
+const kTextStyleReg12 = TextStyle(fontSize: 12, color: Colors.white);
 const kTextStyleReg13 = TextStyle(fontSize: 13, color: kTextColor);
 const kTextStyleReg14 = TextStyle(fontSize: 14, color: kTextColor);
 const kTextStyleReg16 = TextStyle(fontSize: 16, color: kTextColor);

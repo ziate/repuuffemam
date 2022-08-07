@@ -92,10 +92,10 @@ class CartScreen extends StatelessWidget {
                                         children: [
                                           Row(
                                             children: [
-                                              Icon(
-                                                Icons.shopping_cart,
-                                                color: Color(0xff727c8e),
-                                              ),
+                                              Icon(Icons.shopping_cart,
+                                                  color: Colors
+                                                      .white // Color(0xff727c8e),
+                                                  ),
                                               SizedBox(
                                                 width: 5,
                                               ),
@@ -116,7 +116,8 @@ class CartScreen extends StatelessWidget {
                                           child: Text(
                                             'remove_all'.tr,
                                             style: TextStyle(
-                                                color: Color(0xff727c8e),
+                                                color: Colors
+                                                    .white, // Color(0xff727c8e),
                                                 fontSize: 12),
                                           ))
                                     ],
@@ -156,13 +157,15 @@ class CartScreen extends StatelessWidget {
                                       children: [
                                         Text('subtotal'.tr,
                                             style: TextStyle(
-                                              color: Color(0xff727c8e),
+                                              color: Colors
+                                                  .white, // Color(0xff727c8e),
                                             )),
                                         Text(
                                             PriceConverter.convertPrice(
                                                 _subTotal),
                                             style: TextStyle(
-                                              color: Color(0xff727c8e),
+                                              color: Colors
+                                                  .white, // Color(0xff727c8e),
                                             )),
                                       ]),
                                   SizedBox(height: 10),
@@ -173,13 +176,15 @@ class CartScreen extends StatelessWidget {
                                       children: [
                                         Text('delivery_charge'.tr,
                                             style: TextStyle(
-                                              color: Color(0xff727c8e),
-                                            )),
+                                                color: Colors
+                                                    .white //Color(0xff727c8e),
+                                                )),
                                         Text(
                                             '(+) ${PriceConverter.convertPrice(_delivery)}',
                                             style: TextStyle(
-                                              color: Color(0xff727c8e),
-                                            )),
+                                                color: Colors
+                                                    .white //Color(0xff727c8e),
+                                                )),
                                       ]),
                                   SizedBox(height: 10),
 
@@ -189,7 +194,8 @@ class CartScreen extends StatelessWidget {
                                       children: [
                                         Text('total_price'.tr,
                                             style: TextStyle(
-                                                color: Color(0xff727c8e),
+                                                color: Colors
+                                                    .white, // Color(0xff727c8e),
                                                 fontSize: 15)),
                                         Text(
                                           ' ${PriceConverter.convertPrice(_total)}',

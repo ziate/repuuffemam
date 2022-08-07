@@ -1,3 +1,4 @@
+import 'package:efood_multivendor/data/model/body/brand_model.dart';
 import 'package:efood_multivendor/data/model/response/product_model.dart';
 import 'package:efood_multivendor/data/model/response/restaurant_model.dart';
 import 'package:efood_multivendor/helper/responsive_helper.dart';
@@ -11,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CategoryView extends StatelessWidget {
-  final List<Product> products;
+  final List<Product> products; // List<Product>
   final List<Restaurant> restaurants;
   final bool isRestaurant;
   final EdgeInsetsGeometry padding;
@@ -22,19 +23,24 @@ class CategoryView extends StatelessWidget {
   final bool inRestaurantPage;
   final String type;
   final Function(String type) onVegFilterTap;
+  // final List<Brand> brands;
+  // final bool isBrand;
 
-  CategoryView(
-      {@required this.restaurants,
-      @required this.products,
-      @required this.isRestaurant,
-      this.isScrollable = false,
-      this.shimmerLength = 20,
-      this.padding = const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-      this.noDataText,
-      this.isCampaign = false,
-      this.inRestaurantPage = false,
-      this.type,
-      this.onVegFilterTap});
+  CategoryView({
+    @required this.restaurants,
+    @required this.products,
+    @required this.isRestaurant,
+    this.isScrollable = false,
+    this.shimmerLength = 20,
+    this.padding = const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+    this.noDataText,
+    this.isCampaign = false,
+    this.inRestaurantPage = false,
+    this.type,
+    this.onVegFilterTap,
+    // @required this.brands,
+    // @required this.isBrand,
+  });
 
   @override
   Widget build(BuildContext context) {

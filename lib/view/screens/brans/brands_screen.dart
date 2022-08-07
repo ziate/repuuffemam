@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:efood_multivendor/controller/banner_controller.dart';
 import 'package:efood_multivendor/controller/category_controller.dart';
 import 'package:efood_multivendor/controller/splash_controller.dart';
+import 'package:efood_multivendor/data/model/body/brand_model.dart';
 import 'package:efood_multivendor/helper/responsive_helper.dart';
 import 'package:efood_multivendor/helper/route_helper.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
@@ -11,26 +12,51 @@ import 'package:efood_multivendor/util/styles.dart';
 import 'package:efood_multivendor/view/base/custom_app_bar.dart';
 import 'package:efood_multivendor/view/base/custom_image.dart';
 import 'package:efood_multivendor/view/base/no_data_screen.dart';
-import 'package:efood_multivendor/view/screens/brans/brands_screen.dart';
+import 'package:efood_multivendor/view/screens/category/category_product_screen.dart';
 import 'package:efood_multivendor/view/screens/home/widget/banner_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CategoryScreen extends StatelessWidget {
+class BrandsScreen extends StatefulWidget {
   final String name;
+  final int categoryId;
   final int shopId;
 
-  const CategoryScreen({Key key, this.name, this.shopId}) : super(key: key);
+  const BrandsScreen(
+      {Key key,
+      @required this.name,
+      @required this.categoryId,
+      @required this.shopId})
+      : super(key: key);
+
+  @override
+  State<BrandsScreen> createState() => _BrandsScreenState();
+}
+
+class _BrandsScreenState extends State<BrandsScreen> {
+  List<Brand> _brands = [];
+  @override
+  void initState() {
+    log("shop id from brand screen = ${widget.shopId}");
+    if (Get.find<CategoryController>().brands == null ||
+        Get.find<CategoryController>().brands.length == 0) {
+      Get.find<CategoryController>().getBrans();
+    }
+    // _brands.addAll(Get.find<CategoryController>().brands);
+    // Get.find<CategoryController>().brands == null
+    //     ? _brands = null
+    //     : _brands.addAll(Get.find<CategoryController>().brands);
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Get.find<CategoryController>().getCategoryList(false);
-
     return Scaffold(
         appBar: CustomAppBar(
           title: '',
           titleWidget: Text(
-            name,
+            widget.name,
             style: TextStyle(color: Colors.white),
           ),
           isSmallAppBar: true,
@@ -40,50 +66,50 @@ class CategoryScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: Container(
-                    height: 30,
-                    width: Dimensions.WEB_MAX_WIDTH,
-                    color: Colors.transparent,
-                    // padding: EdgeInsets.symmetric(
-                    //     horizontal: Dimensions.PADDING_SIZE_SMALL),
-                    child: InkWell(
-                      onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.PADDING_SIZE_SMALL),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.circular(
-                              Dimensions.RADIUS_EXTRA_LARGE),
-                        ),
-                        child: Row(
-                          children: [
-                            Image(
-                              height: 15,
-                              image: AssetImage(Images.search_icon),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Center(
-                              child: Text(
-                                'search_food_or_restaurant'.tr,
-                                style: robotoRegular.copyWith(
-                                  fontSize: Dimensions.fontSizeSmall,
-                                  color: Theme.of(context).hintColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // Center(
+                //   child: Container(
+                //     height: 30,
+                //     width: Dimensions.WEB_MAX_WIDTH,
+                //     color: Colors.transparent,
+                //     // padding: EdgeInsets.symmetric(
+                //     //     horizontal: Dimensions.PADDING_SIZE_SMALL),
+                //     child: InkWell(
+                //       onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
+                //       child: Container(
+                //         padding: EdgeInsets.symmetric(
+                //             horizontal: Dimensions.PADDING_SIZE_SMALL),
+                //         decoration: BoxDecoration(
+                //           color: Theme.of(context).cardColor,
+                //           borderRadius: BorderRadius.circular(
+                //               Dimensions.RADIUS_EXTRA_LARGE),
+                //         ),
+                //         child: Row(
+                //           children: [
+                //             Image(
+                //               height: 15,
+                //               image: AssetImage(Images.search_icon),
+                //             ),
+                //             SizedBox(
+                //               width: 10,
+                //             ),
+                //             Center(
+                //               child: Text(
+                //                 'search_food_or_restaurant'.tr,
+                //                 style: robotoRegular.copyWith(
+                //                   fontSize: Dimensions.fontSizeSmall,
+                //                   color: Theme.of(context).hintColor,
+                //                 ),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 //-------------------------------------------------------------------------------
                 Center(
                   child: SizedBox(
@@ -107,8 +133,12 @@ class CategoryScreen extends StatelessWidget {
                 ),
                 //--------------------------------------------------------------------------
                 GetBuilder<CategoryController>(builder: (catController) {
-                  return catController.categoryList != null
-                      ? catController.categoryList.length > 0
+                  //  catController.getBrans();
+                  catController.brands != null
+                      ? _brands.addAll(catController.brands)
+                      : _brands = null;
+                  return catController.brands != null
+                      ? catController.brands.length > 0
                           ? GridView.builder(
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
@@ -126,26 +156,30 @@ class CategoryScreen extends StatelessWidget {
                               ),
                               padding:
                                   EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                              itemCount: catController.categoryList.length,
+                              itemCount: catController.brands.length,
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    log('shop id = $shopId');
+                                    log("shop id fucken again : ${widget.shopId}");
                                     Get.to(
-                                      BrandsScreen(
-                                        name: catController
-                                            .categoryList[index].name,
-                                        categoryId: catController
-                                            .categoryList[index].id,
-                                        shopId: shopId,
-                                      ),
+                                      CategoryProductScreen(
+                                          categoryID: catController
+                                              .categoryList[index].id
+                                              .toString(),
+                                          categoryName: catController
+                                              .categoryList[index].name,
+                                          brandId: _brands[index].id,
+                                          shopId: widget.shopId),
                                     );
                                   },
                                   //  Get.toNamed(
-                                  //     RouteHelper.getCategoryProductRoute(
-                                  //   catController.categoryList[index].id,
-                                  //   catController.categoryList[index].name,
-                                  // )),
+                                  //   RouteHelper.getCategoryProductRoute(
+                                  //       catController.categoryList[index].id,
+                                  //       catController.categoryList[index].name,
+                                  //       catController.brands[index].id,
+
+                                  //       ),
+                                  // ),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       //   color: Theme.of(context).cardColor,
@@ -168,19 +202,19 @@ class CategoryScreen extends StatelessWidget {
                                             borderRadius: BorderRadius.circular(
                                                 Dimensions.RADIUS_SMALL),
                                             child: CustomImage(
-                                              height: 50,
-                                              width: 50,
-                                              fit: BoxFit.cover,
-                                              image:
-                                                  '${Get.find<SplashController>().configModel.baseUrls.categoryImageUrl}/${catController.categoryList[index].image}',
-                                            ),
+                                                height: 50,
+                                                width: 50,
+                                                fit: BoxFit.cover,
+                                                image:
+                                                    'https://repuffapp.com/storage/app/public/brands/${_brands[index].image}'
+                                                //   '${Get.find<SplashController>().configModel.baseUrls.categoryImageUrl}/${_brands[index].image}',
+                                                ),
                                           ),
                                           SizedBox(
                                               height: Dimensions
                                                   .PADDING_SIZE_EXTRA_SMALL),
                                           Text(
-                                            catController
-                                                .categoryList[index].name,
+                                            _brands[index].name,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.white,
@@ -193,7 +227,7 @@ class CategoryScreen extends StatelessWidget {
                                 );
                               },
                             )
-                          : NoDataScreen(text: 'no_category_found'.tr)
+                          : NoDataScreen(text: 'no_brands_found'.tr)
                       : Center(child: CircularProgressIndicator());
                 })
                 //
