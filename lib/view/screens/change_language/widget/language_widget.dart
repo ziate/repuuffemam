@@ -39,11 +39,18 @@ class ChangeLanguageWidget extends StatelessWidget {
                     fontSize: 18,
                   )),
             ),
-            Checkbox(
-              value: languageModel.languageCode == Get.locale.languageCode,
-              onChanged: (value) {},
+            Radio(
+              value: languageModel.languageCode,
+              groupValue: Get.locale.languageCode,
+              onChanged: (value) {
+                localizationController.setLanguage(Locale(
+                  AppConstants.languages[index].languageCode,
+                  AppConstants.languages[index].countryCode,
+                ));
+                localizationController.setSelectIndex(index);
+              },
               activeColor: Colors.grey[200],
-              checkColor: Colors.red,
+              // checkColor: Colors.red,
             ),
             // Expanded(child: SizedBox())
           ],

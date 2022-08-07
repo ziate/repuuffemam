@@ -57,6 +57,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String dropdownvalue = 'male'.tr;
   String dateBirth;
 
+  String selectTime;
+  int check = 0;
+
+  final dateTime = DateTime.now().obs;
+
   // List of items in our dropdown menu
   var items = [
     'male'.tr,
@@ -71,8 +76,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Get.find<SplashController>().configModel.country)
         .dialCode;
   }
-
-  final dateTime = DateTime.now().obs;
 
   Future<DateTime> showCalender({BuildContext context}) async =>
       await showDatePicker(
@@ -268,21 +271,86 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                         ),
                       ),
-                      CustomTextField(
-                        border: AppConstants.decorationSignUpScreen,
-                        focusBorder: AppConstants.decorationSignUpScreen,
-                        hintText: authController.birtDate.value.isEmpty
-                            ? 'date_birth'.tr
-                            : authController.birtDate.value,
+                      InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          final date = await showCalender(context: Get.context);
+                          if (date == null) {
+                            return null;
+                          } else {
+                            print(date.toIso8601String());
+                            // DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+                            // Get.find<AuthController>()
+                            //     .birthDate(dateFormat.format(date));
 
-                        controller: _birthController,
-                        focusNode: _birthFocus,
-                        nextFocus: _passwordFocus,
-                        inputType: TextInputType.text,
-                        // prefixIcon: Images.lock,
-                        // isPassword: false,
-                        divider: true,
+                            selectTime =
+                                "${(dateTime.value.difference(date).inDays / 365).round()}";
+                            check = int.parse(selectTime);
+                            print('confirm $selectTime');
+                            print('confirm $check');
+                          }
+
+                          if (check <= 18) {
+                            Get.snackbar("Can't Login in",
+                                "You are less than 18 year old",
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Color(0xFFDB0013),
+                                colorText: Colors.white);
+                          } else {
+                            DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+                            Get.find<AuthController>()
+                                .birthDate(dateFormat.format(date));
+                            print("next");
+                            // Get.toNamed(RouteHelper.selectLogin);
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            top: 7,
+                            bottom: 15,
+                            left: 12,
+                            right: 12,
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 10,
+                            ),
+                            child: Obx(() {
+                              return Text(
+                                authController.birtDate.value.isEmpty
+                                    ? 'date_birth'.tr
+                                    : authController.birtDate.value,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey[700],
+                                ),
+                              );
+                            }),
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
+                      // CustomTextField(
+                      //   border: AppConstants.decorationSignUpScreen,
+                      //   focusBorder: AppConstants.decorationSignUpScreen,
+                      //   hintText: authController.birtDate.value.isEmpty
+                      //       ? 'date_birth'.tr
+                      //       : authController.birtDate.value,
+
+                      //   controller: _birthController,
+                      //   focusNode: _birthFocus,
+                      //   nextFocus: _passwordFocus,
+                      //   inputType: TextInputType.text,
+                      //   // prefixIcon: Images.lock,
+                      //   // isPassword: false,
+                      //   divider: true,
+                      // ),
                       CustomTextField(
                         border: AppConstants.decorationSignUpScreen,
                         focusBorder: AppConstants.decorationSignUpScreen,
