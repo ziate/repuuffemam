@@ -55,7 +55,7 @@ import 'package:efood_multivendor/view/screens/stores/stores.dart';
 import 'package:efood_multivendor/view/screens/support/support_screen.dart';
 import 'package:efood_multivendor/view/screens/update/update_screen.dart';
 import 'package:efood_multivendor/view/screens/used_market/used_market.dart';
-import 'package:efood_multivendor/view/screens/used_market/used_market_screen.dart';
+import 'package:efood_multivendor/view/screens/used_market/add_to_used_market.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

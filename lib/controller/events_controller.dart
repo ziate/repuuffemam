@@ -29,7 +29,9 @@ class EventsController extends GetxController {
       Map dataReturned = await API().getRequest(
         url: AppConstants.EVENTS_URI,
       );
-      List listOfEventsJson = dataReturned['data'];
+      List listOfEventsJson = [];
+      listOfEventsJson = dataReturned['data'];
+      log(listOfEventsJson.toString());
       print("-----------------------------------------------------");
       log(listOfEventsJson.toString());
       for (int i = 0; i < listOfEventsJson.length; i++) {
