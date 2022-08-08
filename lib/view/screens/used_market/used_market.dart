@@ -56,7 +56,7 @@ class UsedMarket extends StatelessWidget {
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: GridView.builder(
-          physics: ClampingScrollPhysics(),
+            physics: ClampingScrollPhysics(),
             shrinkWrap: true,
             padding: EdgeInsets.all(10),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

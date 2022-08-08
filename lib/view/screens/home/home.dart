@@ -9,6 +9,7 @@ import 'package:efood_multivendor/view/screens/event/event_screen.dart';
 import 'package:efood_multivendor/view/screens/home/widget/banner_view.dart';
 import 'package:efood_multivendor/view/screens/home/widget/divider.dart';
 import 'package:efood_multivendor/view/screens/stores/stores.dart';
+import 'package:efood_multivendor/view/screens/used_market/add_to_used_market.dart';
 import 'package:efood_multivendor/view/screens/used_market/used_market_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +38,12 @@ class Home extends StatelessWidget {
       "used_markets".tr,
     ];
 
-    List screens = [Stores(), EventScreen(), UsedMarketScreen()];
+    List screens = [
+      Stores(),
+      EventScreen(),
+      UsedMarketMainScreen(name: 'Used Market'),
+      // UsedMarketScreen(),
+    ];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Scaffold(

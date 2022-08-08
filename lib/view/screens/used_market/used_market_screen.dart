@@ -1,214 +1,355 @@
-import 'dart:io';
-
-import 'package:efood_multivendor/controller/auth_controller.dart';
-import 'package:efood_multivendor/controller/used_market_controller.dart';
+import 'package:efood_multivendor/controller/banner_controller.dart';
+import 'package:efood_multivendor/controller/category_controller.dart';
 import 'package:efood_multivendor/helper/responsive_helper.dart';
+import 'package:efood_multivendor/helper/route_helper.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
 import 'package:efood_multivendor/util/images.dart';
+import 'package:efood_multivendor/util/styles.dart';
 import 'package:efood_multivendor/view/base/custom_app_bar.dart';
-import 'package:efood_multivendor/view/base/custom_button.dart';
 import 'package:efood_multivendor/view/base/custom_image.dart';
-import 'package:efood_multivendor/view/base/web_menu_bar.dart';
-import 'package:efood_multivendor/view/screens/change_password/widget/text_field.dart';
-import 'package:flutter/gestures.dart';
+import 'package:efood_multivendor/view/base/no_data_screen.dart';
+import 'package:efood_multivendor/view/screens/home/widget/banner_view.dart';
+import 'package:efood_multivendor/view/screens/used_market/add_to_used_market.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../../theme/styles.dart';
-
-class UsedMarketScreen extends StatefulWidget {
-  const UsedMarketScreen({Key key}) : super(key: key);
+class UsedMarketMainScreen extends StatefulWidget {
+  const UsedMarketMainScreen({Key key, this.name}) : super(key: key);
+  final String name;
 
   @override
-  State<UsedMarketScreen> createState() => _UsedMarketScreenState();
+  State<UsedMarketMainScreen> createState() => _UsedMarketMainScreenState();
 }
 
-class _UsedMarketScreenState extends State<UsedMarketScreen> {
-  @override
-  void initState() {
-    super.initState();
-
-    Get.find<UsedMarketController>().initData();
-  }
-
+class _UsedMarketMainScreenState extends State<UsedMarketMainScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      appBar: ResponsiveHelper.isDesktop(context)
-          ? WebMenuBar()
-          : CustomAppBar(
-              isSmallAppBar: true,
-              title: "add_product".tr,
-              titleWidget: Text(
-                'add_product'.tr,
-                style: kTextStyleBold18,
-              ),
-            ),
-      body: GetBuilder<UsedMarketController>(builder: (usedmarketcontroller) {
-        return SingleChildScrollView(
+    return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Icon(
+            Icons.shopping_cart,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Get.to(UsedMarketScreen());
+          },
+        ),
+        appBar: CustomAppBar(
+          title: '',
+          titleWidget: Text(
+            widget.name,
+            style: TextStyle(color: Colors.white),
+          ),
+          isSmallAppBar: true,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: SingleChildScrollView(
             child: Column(
-          children: [
-            SizedBox(height: 50),
-            Center(
-              child: Stack(children: [
-                Container(
-                    clipBehavior: Clip.antiAlias,
-                    width: 150,
-                    height: 150,
-                    decoration: BoxDecoration(shape: BoxShape.circle),
-                    child: usedmarketcontroller.pickedFile != null
-                        ? GetPlatform.isWeb
-                            ? Image.network(
-                                usedmarketcontroller.pickedFile.path,
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.file(
-                                File(usedmarketcontroller.pickedFile.path),
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              )
-                        : CustomImage(
-                            image:
-                                "https://booster.io/wp-content/uploads/product-add-to-cart-e1438362099361.png",
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          )),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
+              children: [
+                SizedBox(
+                  height: 15,
+                ),
+                Center(
+                    child: Container(
+                  height: 30,
+                  width: Dimensions.WEB_MAX_WIDTH,
+                  color: Colors.transparent,
+                  // padding: EdgeInsets.symmetric(
+                  //     horizontal: Dimensions.PADDING_SIZE_SMALL),
                   child: InkWell(
-                    onTap: () => usedmarketcontroller.pickImage(),
-                    child: Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
-                      size: 30,
+                    onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Dimensions.PADDING_SIZE_SMALL),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.RADIUS_EXTRA_LARGE),
+                      ),
+                      child: Row(
+                        children: [
+                          Image(
+                            height: 15,
+                            image: AssetImage(Images.search_icon),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Center(
+                            child: Text(
+                              'search_food_or_restaurant'.tr,
+                              style: robotoRegular.copyWith(
+                                fontSize: Dimensions.fontSizeSmall,
+                                color: Theme.of(context).hintColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )),
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // Center(
+                //   child: Container(
+                //     height: 30,
+                //     width: Dimensions.WEB_MAX_WIDTH,
+                //     color: Colors.transparent,
+                //     // padding: EdgeInsets.symmetric(
+                //     //     horizontal: Dimensions.PADDING_SIZE_SMALL),
+                //     child: InkWell(
+                //       onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
+                //       child: Container(
+                //         padding: EdgeInsets.symmetric(
+                //             horizontal: Dimensions.PADDING_SIZE_SMALL),
+                //         decoration: BoxDecoration(
+                //           color: Theme.of(context).cardColor,
+                //           borderRadius: BorderRadius.circular(
+                //               Dimensions.RADIUS_EXTRA_LARGE),
+                //         ),
+                //         child: Row(
+                //           children: [
+                //             Image(
+                //               height: 15,
+                //               image: AssetImage(Images.search_icon),
+                //             ),
+                //             SizedBox(
+                //               width: 10,
+                //             ),
+                //             Center(
+                //               child: Text(
+                //                 'search_food_or_restaurant'.tr,
+                //                 style: robotoRegular.copyWith(
+                //                   fontSize: Dimensions.fontSizeSmall,
+                //                   color: Theme.of(context).hintColor,
+                //                 ),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                //-------------------------------------------------------------------------------
+                Center(
+                  child: SizedBox(
+                    width: Dimensions.WEB_MAX_WIDTH,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GetBuilder<BannerController>(
+                          builder: (bannerController) {
+                            return bannerController.bannerImageList == null
+                                ? BannerView(bannerController: bannerController)
+                                : bannerController.bannerImageList.length == 0
+                                    ? SizedBox()
+                                    : BannerView(
+                                        bannerController: bannerController);
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ]),
+                //--------------------------------------------------------------------------
+                GetBuilder<CategoryController>(builder: (catController) {
+                  //  catController.getBrans();
+
+                  return catController.brands != null
+                      ? catController.brands.length > 0
+                          ? GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount:
+                                    ResponsiveHelper.isDesktop(context)
+                                        ? 6
+                                        : ResponsiveHelper.isTab(context)
+                                            ? 4
+                                            : 3,
+                                childAspectRatio: (1 / 1),
+                                mainAxisSpacing: Dimensions.PADDING_SIZE_SMALL,
+                                crossAxisSpacing: Dimensions.PADDING_SIZE_SMALL,
+                              ),
+                              padding:
+                                  EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                              itemCount: catController.brands.length,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    // log("shop id fucken again : ${widget.shopId}");
+                                    // Get.to(
+                                    //   CategoryProductScreen(
+                                    //       categoryID: catController
+                                    //           .categoryList[index].id
+                                    //           .toString(),
+                                    //       categoryName: catController
+                                    //           .categoryList[index].name,
+                                    //       brandId: _brands[index].id,
+                                    //       shopId: widget.shopId),
+                                    // );
+                                  },
+                                  //  Get.toNamed(
+                                  //   RouteHelper.getCategoryProductRoute(
+                                  //       catController.categoryList[index].id,
+                                  //       catController.categoryList[index].name,
+                                  //       catController.brands[index].id,
+
+                                  //       ),
+                                  // ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      //   color: Theme.of(context).cardColor,
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.RADIUS_SMALL),
+                                      // boxShadow: [
+                                      //   BoxShadow(
+                                      //       color: Colors.grey[
+                                      //           Get.isDarkMode ? 800 : 200],
+                                      //       blurRadius: 5,
+                                      //       spreadRadius: 1)
+                                      // ],
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                Dimensions.RADIUS_SMALL),
+                                            child: CustomImage(
+                                                height: 50,
+                                                width: 50,
+                                                fit: BoxFit.cover,
+                                                image: ''
+                                                // 'https://repuffapp.com/storage/app/public/brands/${_brands[index].image}'
+                                                //   '${Get.find<SplashController>().configModel.baseUrls.categoryImageUrl}/${_brands[index].image}',
+                                                ),
+                                          ),
+                                          SizedBox(
+                                              height: Dimensions
+                                                  .PADDING_SIZE_EXTRA_SMALL),
+                                          Text(
+                                            "ksfjgb",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ]),
+                                  ),
+                                );
+                              },
+                            )
+                          : NoDataScreen(text: 'no_brands_found'.tr)
+                      : Center(child: CircularProgressIndicator());
+                })
+                //
+              ],
             ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      "name_product".tr + ":",
-                      style: TextStyle(fontSize: 16, color: kTextColor),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: FixedTextField(
-                      onChanged: (v) {},
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      "description_product".tr + ":",
-                      style: TextStyle(fontSize: 16, color: kTextColor),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: FixedTextField(
-                      onChanged: (v) {},
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      "price_product".tr + ":",
-                      style: TextStyle(fontSize: 16, color: kTextColor),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: FixedTextField(
-                      onChanged: (v) {},
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      "address".tr + ":",
-                      style: TextStyle(fontSize: 16, color: kTextColor),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: FixedTextField(
-                      onChanged: (v) {},
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      "phone".tr + ":",
-                      style: TextStyle(fontSize: 16, color: kTextColor),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: FixedTextField(
-                      onChanged: (v) {},
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 50),
-            !usedmarketcontroller.isLoading
-                ? CustomButton(
-                    color: kPrimaryColor,
-                    width: MediaQuery.of(context).size.width - 100,
-                    radius: 25,
-                    onPressed: () {},
-                    // onPressed: () => _updateProfile(userController),
-                    margin: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                    buttonText: 'add_product'.tr,
-                  )
-                : Center(child: CircularProgressIndicator()),
-          ],
-        ));
-      }),
-    ));
+          ),
+        )
+
+        //  SafeArea(
+        //   child: Scrollbar(
+        //     child: SingleChildScrollView(
+        //       child: Center(
+        //         child: SizedBox(
+        //           width: Dimensions.WEB_MAX_WIDTH,
+        //           child: GetBuilder<CategoryController>(builder: (catController) {
+        //             return catController.categoryList != null
+        //                 ? catController.categoryList.length > 0
+        //                     ? GridView.builder(
+        //                         physics: NeverScrollableScrollPhysics(),
+        //                         shrinkWrap: true,
+        //                         gridDelegate:
+        //                             SliverGridDelegateWithFixedCrossAxisCount(
+        //                           crossAxisCount:
+        //                               ResponsiveHelper.isDesktop(context)
+        //                                   ? 6
+        //                                   : ResponsiveHelper.isTab(context)
+        //                                       ? 4
+        //                                       : 3,
+        //                           childAspectRatio: (1 / 1),
+        //                           mainAxisSpacing: Dimensions.PADDING_SIZE_SMALL,
+        //                           crossAxisSpacing: Dimensions.PADDING_SIZE_SMALL,
+        //                         ),
+        //                         padding:
+        //                             EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+        //                         itemCount: catController.categoryList.length,
+        //                         itemBuilder: (context, index) {
+        //                           return InkWell(
+        //                             onTap: () => Get.toNamed(
+        //                                 RouteHelper.getCategoryProductRoute(
+        //                               catController.categoryList[index].id,
+        //                               catController.categoryList[index].name,
+        //                             )),
+        //                             child: Container(
+        //                               decoration: BoxDecoration(
+        //                                 color: Theme.of(context).cardColor,
+        //                                 borderRadius: BorderRadius.circular(
+        //                                     Dimensions.RADIUS_SMALL),
+        //                                 boxShadow: [
+        //                                   BoxShadow(
+        //                                       color: Colors.grey[
+        //                                           Get.isDarkMode ? 800 : 200],
+        //                                       blurRadius: 5,
+        //                                       spreadRadius: 1)
+        //                                 ],
+        //                               ),
+        //                               alignment: Alignment.center,
+        //                               child: Column(
+        //                                   mainAxisAlignment:
+        //                                       MainAxisAlignment.center,
+        //                                   children: [
+        //                                     ClipRRect(
+        //                                       borderRadius: BorderRadius.circular(
+        //                                           Dimensions.RADIUS_SMALL),
+        //                                       child: CustomImage(
+        //                                         height: 50,
+        //                                         width: 50,
+        //                                         fit: BoxFit.cover,
+        //                                         image:
+        //                                             '${Get.find<SplashController>().configModel.baseUrls.categoryImageUrl}/${catController.categoryList[index].image}',
+        //                                       ),
+        //                                     ),
+        //                                     SizedBox(
+        //                                         height: Dimensions
+        //                                             .PADDING_SIZE_EXTRA_SMALL),
+        //                                     Text(
+        //                                       catController
+        //                                           .categoryList[index].name,
+        //                                       textAlign: TextAlign.center,
+        //                                       style: robotoMedium.copyWith(
+        //                                           fontSize:
+        //                                               Dimensions.fontSizeSmall),
+        //                                       maxLines: 2,
+        //                                       overflow: TextOverflow.ellipsis,
+        //                                     ),
+        //                                   ]),
+        //                             ),
+        //                           );
+        //                         },
+        //                       )
+        //                     : NoDataScreen(text: 'no_category_found'.tr)
+        //                 : Center(child: CircularProgressIndicator());
+        //           }),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        );
   }
 }
