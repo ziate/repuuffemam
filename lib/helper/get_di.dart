@@ -42,6 +42,7 @@ import 'package:efood_multivendor/data/model/response/language_model.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
+import 'package:universal_html/js.dart';
 
 Future<Map<String, Map<String, String>>> init() async {
   // Core
@@ -86,7 +87,8 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => LocationController(locationRepo: Get.find()));
   Get.lazyPut(() => UserController(userRepo: Get.find()));
   Get.lazyPut(() => BannerController(bannerRepo: Get.find()));
-  Get.lazyPut(() => CategoryController(categoryRepo: Get.find()));
+  Get.lazyPut(
+      () => CategoryController(context: Get.context, categoryRepo: Get.find()));
   Get.lazyPut(() => ProductController(productRepo: Get.find()));
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
   Get.lazyPut(() => RestaurantController(restaurantRepo: Get.find()));
