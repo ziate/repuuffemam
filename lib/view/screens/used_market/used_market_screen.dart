@@ -1,5 +1,8 @@
 import 'package:efood_multivendor/controller/banner_controller.dart';
 import 'package:efood_multivendor/controller/category_controller.dart';
+import 'package:efood_multivendor/controller/splash_controller.dart';
+import 'package:efood_multivendor/controller/used_market_controller.dart';
+import 'package:efood_multivendor/data/model/body/used_market_product_model.dart';
 import 'package:efood_multivendor/helper/responsive_helper.dart';
 import 'package:efood_multivendor/helper/route_helper.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
@@ -24,6 +27,19 @@ class UsedMarketMainScreen extends StatefulWidget {
 }
 
 class _UsedMarketMainScreenState extends State<UsedMarketMainScreen> {
+  List<UsedMarketProductModel> _products = [];
+  @override
+  void initState() {
+    Get.put(UsedMarketController());
+
+    if (Get.find<UsedMarketController>().products == null ||
+        Get.find<UsedMarketController>().products.length == 0) {
+      Get.find<UsedMarketController>().getUsedMarketProducts();
+    }
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +69,9 @@ class _UsedMarketMainScreenState extends State<UsedMarketMainScreen> {
                 SizedBox(
                   height: 15,
                 ),
+                //----------------------------------------------------------------------------------
+                //----------------------------- Search ---------------------------------------------
+                //----------------------------------------------------------------------------------
                 Center(
                     child: Container(
                   height: 30,
@@ -93,50 +112,9 @@ class _UsedMarketMainScreenState extends State<UsedMarketMainScreen> {
                     ),
                   ),
                 )),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // Center(
-                //   child: Container(
-                //     height: 30,
-                //     width: Dimensions.WEB_MAX_WIDTH,
-                //     color: Colors.transparent,
-                //     // padding: EdgeInsets.symmetric(
-                //     //     horizontal: Dimensions.PADDING_SIZE_SMALL),
-                //     child: InkWell(
-                //       onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
-                //       child: Container(
-                //         padding: EdgeInsets.symmetric(
-                //             horizontal: Dimensions.PADDING_SIZE_SMALL),
-                //         decoration: BoxDecoration(
-                //           color: Theme.of(context).cardColor,
-                //           borderRadius: BorderRadius.circular(
-                //               Dimensions.RADIUS_EXTRA_LARGE),
-                //         ),
-                //         child: Row(
-                //           children: [
-                //             Image(
-                //               height: 15,
-                //               image: AssetImage(Images.search_icon),
-                //             ),
-                //             SizedBox(
-                //               width: 10,
-                //             ),
-                //             Center(
-                //               child: Text(
-                //                 'search_food_or_restaurant'.tr,
-                //                 style: robotoRegular.copyWith(
-                //                   fontSize: Dimensions.fontSizeSmall,
-                //                   color: Theme.of(context).hintColor,
-                //                 ),
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
+
+                //-------------------------------------------------------------------------------
+                //--------------------------- Banner --------------------------------------------
                 //-------------------------------------------------------------------------------
                 Center(
                   child: SizedBox(
@@ -158,103 +136,114 @@ class _UsedMarketMainScreenState extends State<UsedMarketMainScreen> {
                     ),
                   ),
                 ),
-                //--------------------------------------------------------------------------
-                GetBuilder<CategoryController>(builder: (catController) {
-                  //  catController.getBrans();
+                //-----------------------------------------------------------------------------
+                //------------------------- Body ----------------------------------------------
+                //-----------------------------------------------------------------------------
 
-                  return catController.brands != null
-                      ? catController.brands.length > 0
-                          ? GridView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount:
-                                    ResponsiveHelper.isDesktop(context)
-                                        ? 6
-                                        : ResponsiveHelper.isTab(context)
-                                            ? 4
-                                            : 3,
-                                childAspectRatio: (1 / 1),
-                                mainAxisSpacing: Dimensions.PADDING_SIZE_SMALL,
-                                crossAxisSpacing: Dimensions.PADDING_SIZE_SMALL,
-                              ),
-                              padding:
-                                  EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                              itemCount: catController.brands.length,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    // log("shop id fucken again : ${widget.shopId}");
-                                    // Get.to(
-                                    //   CategoryProductScreen(
-                                    //       categoryID: catController
-                                    //           .categoryList[index].id
-                                    //           .toString(),
-                                    //       categoryName: catController
-                                    //           .categoryList[index].name,
-                                    //       brandId: _brands[index].id,
-                                    //       shopId: widget.shopId),
-                                    // );
-                                  },
-                                  //  Get.toNamed(
-                                  //   RouteHelper.getCategoryProductRoute(
-                                  //       catController.categoryList[index].id,
-                                  //       catController.categoryList[index].name,
-                                  //       catController.brands[index].id,
+                GetBuilder<UsedMarketController>(
+                    init: UsedMarketController(),
+                    builder: (controller) {
+                      //  catController.getBrans();
+                      // controller.getUsedMarketProducts();
 
-                                  //       ),
-                                  // ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      //   color: Theme.of(context).cardColor,
-                                      borderRadius: BorderRadius.circular(
-                                          Dimensions.RADIUS_SMALL),
-                                      // boxShadow: [
-                                      //   BoxShadow(
-                                      //       color: Colors.grey[
-                                      //           Get.isDarkMode ? 800 : 200],
-                                      //       blurRadius: 5,
-                                      //       spreadRadius: 1)
-                                      // ],
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                                Dimensions.RADIUS_SMALL),
-                                            child: CustomImage(
-                                                height: 50,
-                                                width: 50,
-                                                fit: BoxFit.cover,
-                                                image: ''
-                                                // 'https://repuffapp.com/storage/app/public/brands/${_brands[index].image}'
-                                                //   '${Get.find<SplashController>().configModel.baseUrls.categoryImageUrl}/${_brands[index].image}',
-                                                ),
-                                          ),
-                                          SizedBox(
-                                              height: Dimensions
-                                                  .PADDING_SIZE_EXTRA_SMALL),
-                                          Text(
-                                            "ksfjgb",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ]),
+                      return controller.products != null
+                          ? controller.products.length > 0
+                              ? GridView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount:
+                                        ResponsiveHelper.isDesktop(context)
+                                            ? 6
+                                            : ResponsiveHelper.isTab(context)
+                                                ? 4
+                                                : 3,
+                                    childAspectRatio: (1 / 1),
+                                    mainAxisSpacing:
+                                        Dimensions.PADDING_SIZE_SMALL,
+                                    crossAxisSpacing:
+                                        Dimensions.PADDING_SIZE_SMALL,
                                   ),
-                                );
-                              },
-                            )
-                          : NoDataScreen(text: 'no_brands_found'.tr)
-                      : Center(child: CircularProgressIndicator());
-                })
+                                  padding: EdgeInsets.all(
+                                      Dimensions.PADDING_SIZE_SMALL),
+                                  itemCount: controller.products.length,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        // log("shop id fucken again : ${widget.shopId}");
+                                        // Get.to(
+                                        //   CategoryProductScreen(
+                                        //       categoryID: catController
+                                        //           .categoryList[index].id
+                                        //           .toString(),
+                                        //       categoryName: catController
+                                        //           .categoryList[index].name,
+                                        //       brandId: _brands[index].id,
+                                        //       shopId: widget.shopId),
+                                        // );
+                                      },
+                                      //  Get.toNamed(
+                                      //   RouteHelper.getCategoryProductRoute(
+                                      //       catController.categoryList[index].id,
+                                      //       catController.categoryList[index].name,
+                                      //       catController.brands[index].id,
+
+                                      //       ),
+                                      // ),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          //   color: Theme.of(context).cardColor,
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.RADIUS_SMALL),
+                                          // boxShadow: [
+                                          //   BoxShadow(
+                                          //       color: Colors.grey[
+                                          //           Get.isDarkMode ? 800 : 200],
+                                          //       blurRadius: 5,
+                                          //       spreadRadius: 1)
+                                          // ],
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions
+                                                            .RADIUS_SMALL),
+                                                child: CustomImage(
+                                                    height: 50,
+                                                    width: 50,
+                                                    fit: BoxFit.cover,
+                                                    image:
+                                                        'https://repuffapp.com/storage/app/public/brands/${_products[index].image}'
+                                                    //  '${Get.find<SplashController>().configModel.baseUrls.categoryImageUrl}/${_brands[index].image}',
+                                                    ),
+                                              ),
+                                              SizedBox(
+                                                  height: Dimensions
+                                                      .PADDING_SIZE_EXTRA_SMALL),
+                                              Text(
+                                                "ksfjgb",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ]),
+                                      ),
+                                    );
+                                  },
+                                )
+                              : NoDataScreen(text: 'no_brands_found'.tr)
+                          : Center(child: CircularProgressIndicator());
+                    })
                 //
               ],
             ),

@@ -9,7 +9,11 @@ class API {
       {@required String url,
       Map<String, String> headers,
       BuildContext context}) async {
-    http.Response response = await http.get(Uri.parse(url), headers: headers);
+    http.Response response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization':
+          'Bearer mVrEBwrjkddqvLs7xeLbE28Mt9keS62w3lacBbrHnC2sszjitJ84tuqrsMAato90UcRlYTN6n2g0DyQl2IC7eL5nK4N68JFjdvqyxvNZ5SxDhFpIlUhM2hx7'
+    });
     log(response.body);
     print(response.statusCode.toString());
     if (response.statusCode == 200) {

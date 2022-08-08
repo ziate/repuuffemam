@@ -82,6 +82,8 @@ class AppConstants {
   static const String UPDATE_ZONE_URL = '/api/v1/customer/update-zone';
   static const String BRANDS_URI = "https://repuffapp.com/api/v1/brands";
   static const String EVENTS_URI = "https://repuffapp.com/api/v1/events";
+  static const String USED_MARKET_PRODUCTS_URI =
+      'https://repuffapp.com/api/v1/vendor/used-market';
 
   // Shared Key
   static const String THEME = 'theme';
