@@ -72,437 +72,460 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         bottom: MediaQuery.of(context).viewInsets.bottom + 8,
       ),
       child: FractionallySizedBox(
-        heightFactor: 0.7,
-        child: GetBuilder<UserController>(
-          builder: (userController) {
-            if (userController.userInfoModel != null &&
-                _phoneController.text.isEmpty) {
-              dateOfBirth = userController.userInfoModel.date_of_birth ?? "";
-              _userNameController.text = userController.userInfoModel.user_name;
-              userName = userController.userInfoModel.user_name;
-              _firstNameController.text =
-                  userController.userInfoModel.fName ?? '';
-              _lastNameController.text =
-                  userController.userInfoModel.lName ?? '';
-              _phoneController.text = userController.userInfoModel.phone ?? '';
-              _emailController.text = userController.userInfoModel.email ?? '';
-              _dateOfBirth.text =
-                  userController.userInfoModel.date_of_birth ?? '';
-              _addressController.text =
-                  userController.userInfoModel.address ?? '';
-              _countryController.text =
-                  userController.userInfoModel.country ?? '';
-              _cityController.text = userController.userInfoModel.city ?? '';
-              _facebookController.text =
-                  userController.userInfoModel.facebook ?? '';
-              gender = userController.userInfoModel.gender;
-            }
+        heightFactor: 0.8,
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Container(
+                  color: Colors.transparent,
+                  height: 80,
+                ),
+                Expanded(
+                  child: Container(
+                    color: kPrimaryColor,
+                    width: double.infinity,
+                  ),
+                )
+              ],
+            ),
+            GetBuilder<UserController>(
+              builder: (userController) {
+                if (userController.userInfoModel != null &&
+                    _phoneController.text.isEmpty) {
+                  dateOfBirth =
+                      userController.userInfoModel.date_of_birth ?? "";
+                  _userNameController.text =
+                      userController.userInfoModel.user_name;
+                  userName = userController.userInfoModel.user_name;
+                  _firstNameController.text =
+                      userController.userInfoModel.fName ?? '';
+                  _lastNameController.text =
+                      userController.userInfoModel.lName ?? '';
+                  _phoneController.text =
+                      userController.userInfoModel.phone ?? '';
+                  _emailController.text =
+                      userController.userInfoModel.email ?? '';
+                  _dateOfBirth.text =
+                      userController.userInfoModel.date_of_birth ?? '';
+                  _addressController.text =
+                      userController.userInfoModel.address ?? '';
+                  _countryController.text =
+                      userController.userInfoModel.country ?? '';
+                  _cityController.text =
+                      userController.userInfoModel.city ?? '';
+                  _facebookController.text =
+                      userController.userInfoModel.facebook ?? '';
+                  gender = userController.userInfoModel.gender;
+                }
 
-            return _isLoggedIn
-                ? userController.userInfoModel != null
-                    ? SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SizedBox(height: 30),
-                            Center(
-                              child: Stack(children: [
-                                ClipOval(
-                                    child: userController.pickedFile != null
-                                        ? GetPlatform.isWeb
-                                            ? Image.network(
-                                                userController.pickedFile.path,
-                                                width: 100,
-                                                height: 100,
-                                                fit: BoxFit.cover,
-                                              )
-                                            : Image.file(
-                                                File(
+                return _isLoggedIn
+                    ? userController.userInfoModel != null
+                        ? Column(
+                            children: [
+                              SizedBox(height: 30),
+                              Center(
+                                child: Stack(children: [
+                                  ClipOval(
+                                      child: userController.pickedFile != null
+                                          ? GetPlatform.isWeb
+                                              ? Image.network(
                                                   userController
                                                       .pickedFile.path,
-                                                ),
-                                                width: 100,
-                                                height: 100,
-                                                fit: BoxFit.cover,
-                                              )
-                                        : CustomImage(
-                                            image:
-                                                '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}/${userController.userInfoModel.image}',
-                                            height: 100,
-                                            width: 100,
-                                            fit: BoxFit.cover,
-                                          )),
-                                Positioned(
-                                  bottom: 0,
-                                  left: 0,
-                                  child: InkWell(
-                                    onTap: () => userController.pickImage(),
-                                    child: Icon(
-                                      Icons.camera_alt,
-                                      color: Colors.white,
-                                      size: 30,
-                                    ),
-                                  ),
-                                ),
-                              ]),
-                            ),
-                            SizedBox(height: 20),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 5),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "name".tr + " : ",
-                                      style: fontStyle,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 5,
-                                    child: FixedTextField(
-                                      controller: _firstNameController,
-                                      // onChanged: (v) {
-                                      //   _firstNameController.text = v;
-                                      // },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(
-                            //       horizontal: 15, vertical: 5),
-                            //   child: Row(
-                            //     children: [
-                            //       Expanded(
-                            //         flex: 2,
-                            //         child: Text(
-                            //           "last_name".tr + " : ",
-                            //           style: fontStyle,
-                            //         ),
-                            //       ),
-                            //       Expanded(
-                            //         flex: 5,
-                            //         child: FixedTextField(
-                            //           controller: _lastNameController,
-                            //           // onChanged: (v) {
-                            //           //   _lastNameController.text = v;
-                            //           // },
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 5),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "user".tr + " : ",
-                                      style: fontStyle,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 5,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20.0),
-                                      child: Text(
-                                        userName == null ? "" : userName,
-                                        style: kTextStyleReg14,
+                                                  width: 100,
+                                                  height: 100,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : Image.file(
+                                                  File(
+                                                    userController
+                                                        .pickedFile.path,
+                                                  ),
+                                                  width: 100,
+                                                  height: 100,
+                                                  fit: BoxFit.cover,
+                                                )
+                                          : CustomImage(
+                                              image:
+                                                  '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}/${userController.userInfoModel.image}',
+                                              height: 100,
+                                              width: 100,
+                                              fit: BoxFit.cover,
+                                            )),
+                                  Positioned(
+                                    bottom: 0,
+                                    left: 0,
+                                    child: InkWell(
+                                      onTap: () => userController.pickImage(),
+                                      child: Icon(
+                                        Icons.camera_alt,
+                                        color: Colors.white,
+                                        size: 30,
                                       ),
                                     ),
-                                    //  FixedTextField(
-                                    //   controller: _userNameController,
-                                    //   // onChanged: (v) {
-                                    //   //   _userNameController.text = v;
-                                    //   // },
-                                    // ),
                                   ),
-                                ],
+                                ]),
                               ),
-                            ),
-                            //------------------------- date of birth ------------
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 5),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "date_birth".tr + " : ",
-                                      style: fontStyle,
+                              SizedBox(height: 20),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 5),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        "name".tr + " : ",
+                                        style: fontStyle,
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
+                                    Expanded(
+                                      flex: 5,
+                                      child: FixedTextField(
+                                        controller: _firstNameController,
+                                        // onChanged: (v) {
+                                        //   _firstNameController.text = v;
+                                        // },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 15, vertical: 5),
+                              //   child: Row(
+                              //     children: [
+                              //       Expanded(
+                              //         flex: 2,
+                              //         child: Text(
+                              //           "last_name".tr + " : ",
+                              //           style: fontStyle,
+                              //         ),
+                              //       ),
+                              //       Expanded(
+                              //         flex: 5,
+                              //         child: FixedTextField(
+                              //           controller: _lastNameController,
+                              //           // onChanged: (v) {
+                              //           //   _lastNameController.text = v;
+                              //           // },
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 5),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        "user".tr + " : ",
+                                        style: fontStyle,
+                                      ),
+                                    ),
+                                    Expanded(
                                       flex: 5,
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 20.0),
                                         child: Text(
-                                          dateOfBirth == null
-                                              ? ""
-                                              : dateOfBirth,
+                                          userName == null ? "" : userName,
                                           style: kTextStyleReg14,
                                         ),
-                                      )
+                                      ),
                                       //  FixedTextField(
-                                      //   controller: _dateOfBirth,
+                                      //   controller: _userNameController,
                                       //   // onChanged: (v) {
-                                      //   //   _dateOfBirth.text = v;
-                                      //   //   print(_dateOfBirth.text);
+                                      //   //   _userNameController.text = v;
                                       //   // },
                                       // ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              //------------------------- date of birth ------------
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 5),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        "date_birth".tr + " : ",
+                                        style: fontStyle,
                                       ),
-                                ],
+                                    ),
+                                    Expanded(
+                                        flex: 5,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20.0),
+                                          child: Text(
+                                            dateOfBirth == null
+                                                ? ""
+                                                : dateOfBirth,
+                                            style: kTextStyleReg14,
+                                          ),
+                                        )
+                                        //  FixedTextField(
+                                        //   controller: _dateOfBirth,
+                                        //   // onChanged: (v) {
+                                        //   //   _dateOfBirth.text = v;
+                                        //   //   print(_dateOfBirth.text);
+                                        //   // },
+                                        // ),
+                                        ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 5),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "email".tr + " : ",
-                                      style: fontStyle,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 5),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        "email".tr + " : ",
+                                        style: fontStyle,
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    flex: 5,
-                                    child: FixedTextField(
-                                      controller: _emailController,
-                                      // onChanged: (v) {
-                                      //   _emailController.text = v;
-                                      // },
+                                    Expanded(
+                                      flex: 5,
+                                      child: FixedTextField(
+                                        controller: _emailController,
+                                        // onChanged: (v) {
+                                        //   _emailController.text = v;
+                                        // },
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 5),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "phone".tr + " : ",
-                                      style: fontStyle,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 5),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        "phone".tr + " : ",
+                                        style: fontStyle,
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    flex: 5,
-                                    child: FixedTextField(
-                                      controller: _phoneController,
-                                      // onChanged: (v) {
-                                      //   _phoneController.text = v;
-                                      // },
+                                    Expanded(
+                                      flex: 5,
+                                      child: FixedTextField(
+                                        controller: _phoneController,
+                                        // onChanged: (v) {
+                                        //   _phoneController.text = v;
+                                        // },
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            // Padding(
-                            //   padding:
-                            //       const EdgeInsets.symmetric(horizontal: 15),
-                            //   child: Row(
-                            //     children: [
-                            //       Expanded(
-                            //         flex: 2,
-                            //         child: Text(
-                            //           "gender".tr + " : ",
-                            //           style: fontStyle,
-                            //         ),
-                            //       ),
-                            //       Expanded(
-                            //         flex: 4,
-                            //         child: Container(
-                            //           margin: EdgeInsets.all(10.0),
-                            //           padding: EdgeInsets.all(5.0),
-                            //           height: 50,
-                            //           decoration: BoxDecoration(
-                            //               color: Color(0xFFE1E1E1),
-                            //               border: Border.all(
-                            //                   color: Theme.of(context)
-                            //                       .primaryColor,
-                            //                   width: 1),
-                            //               borderRadius: BorderRadius.all(
-                            //                 Radius.circular(10),
-                            //               )),
-                            //           child: Center(
-                            //             child: DropdownButton(
-                            //               // style: fontStyle,
-                            //               underline: Container(
-                            //                   color: Colors.transparent),
-                            //               iconDisabledColor: Color(0xFF0F4F80),
-                            //               iconSize: 35,
-                            //               iconEnabledColor: Color(0xFF0F4F80),
-                            //               isExpanded: true,
+                              // Padding(
+                              //   padding:
+                              //       const EdgeInsets.symmetric(horizontal: 15),
+                              //   child: Row(
+                              //     children: [
+                              //       Expanded(
+                              //         flex: 2,
+                              //         child: Text(
+                              //           "gender".tr + " : ",
+                              //           style: fontStyle,
+                              //         ),
+                              //       ),
+                              //       Expanded(
+                              //         flex: 4,
+                              //         child: Container(
+                              //           margin: EdgeInsets.all(10.0),
+                              //           padding: EdgeInsets.all(5.0),
+                              //           height: 50,
+                              //           decoration: BoxDecoration(
+                              //               color: Color(0xFFE1E1E1),
+                              //               border: Border.all(
+                              //                   color: Theme.of(context)
+                              //                       .primaryColor,
+                              //                   width: 1),
+                              //               borderRadius: BorderRadius.all(
+                              //                 Radius.circular(10),
+                              //               )),
+                              //           child: Center(
+                              //             child: DropdownButton(
+                              //               // style: fontStyle,
+                              //               underline: Container(
+                              //                   color: Colors.transparent),
+                              //               iconDisabledColor: Color(0xFF0F4F80),
+                              //               iconSize: 35,
+                              //               iconEnabledColor: Color(0xFF0F4F80),
+                              //               isExpanded: true,
 
-                            //               borderRadius:
-                            //                   BorderRadius.circular(15),
-                            //               // Initial Value
-                            //               value: dropdownvalue,
+                              //               borderRadius:
+                              //                   BorderRadius.circular(15),
+                              //               // Initial Value
+                              //               value: dropdownvalue,
 
-                            //               // Down Arrow Icon
-                            //               icon: const Icon(
-                            //                   Icons.keyboard_arrow_down),
+                              //               // Down Arrow Icon
+                              //               icon: const Icon(
+                              //                   Icons.keyboard_arrow_down),
 
-                            //               // Array list of items
-                            //               items: items.map((String items) {
-                            //                 return DropdownMenuItem(
-                            //                   value: items,
-                            //                   child: Text(items),
-                            //                 );
-                            //               }).toList(),
-                            //               // After selecting the desired option,it will
-                            //               // change button value to selected value
-                            //               onChanged: (newValue) {
-                            //                 setState(() {
-                            //                   dropdownvalue = newValue;
-                            //                   if (dropdownvalue == 'Male') {
-                            //                     gender = 0;
-                            //                     print(gender);
-                            //                   } else {
-                            //                     gender = 1;
-                            //                     print(gender);
-                            //                   }
-                            //                 });
-                            //               },
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       ),
-                            //       SizedBox(width: 10),
-                            //     ],
-                            //   ),
-                            // ),
+                              //               // Array list of items
+                              //               items: items.map((String items) {
+                              //                 return DropdownMenuItem(
+                              //                   value: items,
+                              //                   child: Text(items),
+                              //                 );
+                              //               }).toList(),
+                              //               // After selecting the desired option,it will
+                              //               // change button value to selected value
+                              //               onChanged: (newValue) {
+                              //                 setState(() {
+                              //                   dropdownvalue = newValue;
+                              //                   if (dropdownvalue == 'Male') {
+                              //                     gender = 0;
+                              //                     print(gender);
+                              //                   } else {
+                              //                     gender = 1;
+                              //                     print(gender);
+                              //                   }
+                              //                 });
+                              //               },
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       ),
+                              //       SizedBox(width: 10),
+                              //     ],
+                              //   ),
+                              // ),
 
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(
-                            //       horizontal: 15, vertical: 5),
-                            //   child: Row(
-                            //     children: [
-                            //       Expanded(
-                            //         flex: 2,
-                            //         child: Text(
-                            //           "address".tr + " : ",
-                            //           style: fontStyle,
-                            //         ),
-                            //       ),
-                            //       Expanded(
-                            //         flex: 5,
-                            //         child: FixedTextField(
-                            //           controller: _addressController,
-                            //           // onChanged: (v) {
-                            //           //   _addressController.text = v;
-                            //           // },
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(
-                            //       horizontal: 15, vertical: 5),
-                            //   child: Row(
-                            //     children: [
-                            //       Expanded(
-                            //         flex: 2,
-                            //         child: Text(
-                            //           "country".tr + " : ",
-                            //           style: fontStyle,
-                            //         ),
-                            //       ),
-                            //       Expanded(
-                            //         flex: 5,
-                            //         child: FixedTextField(
-                            //           controller: _countryController,
-                            //           // onChanged: (v) {
-                            //           //   _countryController.text = v;
-                            //           // },
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(
-                            //       horizontal: 15, vertical: 5),
-                            //   child: Row(
-                            //     children: [
-                            //       Expanded(
-                            //         flex: 2,
-                            //         child: Text(
-                            //           "city".tr + " : ",
-                            //           style: fontStyle,
-                            //         ),
-                            //       ),
-                            //       Expanded(
-                            //         flex: 5,
-                            //         child: FixedTextField(
-                            //           controller: _cityController,
-                            //           // onChanged: (v) {
-                            //           //   _cityController.text = v;
-                            //           // },
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(
-                            //       horizontal: 15, vertical: 5),
-                            //   child: Row(
-                            //     children: [
-                            //       Expanded(
-                            //         flex: 2,
-                            //         child: Text(
-                            //           "facebook".tr + " : ",
-                            //           style: fontStyle,
-                            //         ),
-                            //       ),
-                            //       Expanded(
-                            //         flex: 5,
-                            //         child: FixedTextField(
-                            //           controller: _facebookController,
-                            //           // onChanged: (v) {
-                            //           //   _facebookController.text = v;
-                            //           // },
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                            SizedBox(height: 10),
-                            !userController.isLoading
-                                ? CustomButton(
-                                    color: Color(0xff20242A),
-                                    width:
-                                        MediaQuery.of(context).size.width - 100,
-                                    radius: 25,
-                                    onPressed: () =>
-                                        _updateProfile(userController),
-                                    margin: EdgeInsets.all(
-                                        Dimensions.PADDING_SIZE_SMALL),
-                                    buttonText: 'save'.tr,
-                                  )
-                                : Center(child: CircularProgressIndicator()),
-                            SizedBox(height: 10),
-                          ],
-                        ),
-                      )
-                    : Center(child: CircularProgressIndicator())
-                : NotLoggedInScreen();
-          },
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 15, vertical: 5),
+                              //   child: Row(
+                              //     children: [
+                              //       Expanded(
+                              //         flex: 2,
+                              //         child: Text(
+                              //           "address".tr + " : ",
+                              //           style: fontStyle,
+                              //         ),
+                              //       ),
+                              //       Expanded(
+                              //         flex: 5,
+                              //         child: FixedTextField(
+                              //           controller: _addressController,
+                              //           // onChanged: (v) {
+                              //           //   _addressController.text = v;
+                              //           // },
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 15, vertical: 5),
+                              //   child: Row(
+                              //     children: [
+                              //       Expanded(
+                              //         flex: 2,
+                              //         child: Text(
+                              //           "country".tr + " : ",
+                              //           style: fontStyle,
+                              //         ),
+                              //       ),
+                              //       Expanded(
+                              //         flex: 5,
+                              //         child: FixedTextField(
+                              //           controller: _countryController,
+                              //           // onChanged: (v) {
+                              //           //   _countryController.text = v;
+                              //           // },
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 15, vertical: 5),
+                              //   child: Row(
+                              //     children: [
+                              //       Expanded(
+                              //         flex: 2,
+                              //         child: Text(
+                              //           "city".tr + " : ",
+                              //           style: fontStyle,
+                              //         ),
+                              //       ),
+                              //       Expanded(
+                              //         flex: 5,
+                              //         child: FixedTextField(
+                              //           controller: _cityController,
+                              //           // onChanged: (v) {
+                              //           //   _cityController.text = v;
+                              //           // },
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 15, vertical: 5),
+                              //   child: Row(
+                              //     children: [
+                              //       Expanded(
+                              //         flex: 2,
+                              //         child: Text(
+                              //           "facebook".tr + " : ",
+                              //           style: fontStyle,
+                              //         ),
+                              //       ),
+                              //       Expanded(
+                              //         flex: 5,
+                              //         child: FixedTextField(
+                              //           controller: _facebookController,
+                              //           // onChanged: (v) {
+                              //           //   _facebookController.text = v;
+                              //           // },
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              SizedBox(height: 10),
+                              Spacer(),
+                              !userController.isLoading
+                                  ? CustomButton(
+                                      color: Color(0xff20242A),
+                                      width: MediaQuery.of(context).size.width -
+                                          100,
+                                      radius: 25,
+                                      onPressed: () =>
+                                          _updateProfile(userController),
+                                      margin: EdgeInsets.all(
+                                          Dimensions.PADDING_SIZE_SMALL),
+                                      buttonText: 'save'.tr,
+                                    )
+                                  : Center(child: CircularProgressIndicator()),
+                              SizedBox(height: 10),
+                            ],
+                          )
+                        : Center(child: CircularProgressIndicator())
+                    : NotLoggedInScreen();
+              },
+            ),
+          ],
         ),
       ),
     );

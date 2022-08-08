@@ -14,6 +14,7 @@ import 'package:efood_multivendor/view/base/custom_image.dart';
 import 'package:efood_multivendor/view/base/web_menu_bar.dart';
 import 'package:efood_multivendor/view/screens/change_language/change_language.dart';
 import 'package:efood_multivendor/view/screens/order/order_screen.dart';
+import 'package:efood_multivendor/view/screens/points/points_screen.dart';
 import 'package:efood_multivendor/view/screens/profile/update_profile_screen.dart';
 import 'package:efood_multivendor/view/screens/select_login/select_login_screen.dart';
 import 'package:flutter/material.dart';
@@ -38,268 +39,383 @@ class ProfileScreen extends StatelessWidget {
     }
     final List<String> images = [
       Images.svgUser,
-      Images.SvgGlobe,
+      // Images.SvgGlobe,
       Images.SvgMarker,
-      Images.orderSvg,
-      Images.SvgSettings
+
+      // Images.orderSvg,
+      Images.cartSvg,
+      // Images.SvgSettings
     ];
     final List<String> titles = [
       "personal_information".tr,
-      "language".tr,
       "delivery_address".tr,
-      "my_orders".tr,
-      "settings".tr,
-    ];
-    final List<String> subTitles = [
-      "design_profile".tr,
-      "select_language".tr,
-      "add_address".tr,
-      "view_orders".tr,
-      "design_profile".tr,
-    ];
 
-    return Scaffold(
-      // backgroundColor: Theme.of(context).cardColor,
-      body: SafeArea(
-        child: GetBuilder<UserController>(builder: (userController) {
-          return (_isLoggedIn && userController.userInfoModel == null)
-              ? Center(child: CircularProgressIndicator())
-              : SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 20),
-                      Center(
-                        child: ClipOval(
-                            child: CustomImage(
-                          image:
-                              '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
-                              '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
-                          height: 100,
-                          width: 100,
-                          fit: BoxFit.cover,
-                        )),
+      // "saved_cards".tr,
+      "points".tr,
+      // "settings".tr,
+    ];
+    // final List<String> subTitles = [
+    //   "design_profile".tr,
+    //   "select_language".tr,
+    //   "add_address".tr,
+    //   "view_orders".tr,
+    //   "design_profile".tr,
+    // ];
+
+    return Stack(
+      children: [
+        Column(
+          children: [
+            Container(
+              color: Colors.transparent,
+              height: 200,
+            ),
+            Expanded(
+              child: Container(
+                color: kPrimaryColor,
+                width: double.infinity,
+              ),
+            )
+          ],
+        ),
+        GetBuilder<UserController>(builder: (userController) {
+          return Column(
+            children: [
+              SizedBox(height: 150),
+              Expanded(
+                child: (_isLoggedIn && userController.userInfoModel == null)
+                    ? Center(child: CircularProgressIndicator())
+                    : Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ClipOval(
+                                  child: CustomImage(
+                                image:
+                                    '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
+                                    '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
+                                height: 80,
+                                width: 80,
+                                fit: BoxFit.cover,
+                              )),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsetsDirectional.only(start: 20),
+                                child: Text(
+                                  'Hi ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.fName : ''}',
+                                  style: kTextStyleBold24.copyWith(
+                                    fontSize: 30,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 30),
+                          // Container(
+                          //   width: context.width - 25,
+                          //   height: context.height * 0.3,
+                          //   decoration: BoxDecoration(
+                          //       color: Color(0xFFE1E1E1),
+                          //       borderRadius: BorderRadius.circular(10)),
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.all(8.0),
+                          //     child: Column(
+                          //       crossAxisAlignment: CrossAxisAlignment.start,
+                          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //       children: [
+                          //         Row(
+                          //           children: [
+                          //             Text("name".tr,
+                          //                 style: TextStyle(
+                          //                   color: Theme.of(context).primaryColor,
+                          //                   fontSize: Dimensions.fontSizeLarge,
+                          //                 )),
+                          //             Text(
+                          //               ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.fName : ''}' +
+                          //                   ' ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.lName : ''}',
+                          //             ),
+                          //           ],
+                          //         ),
+                          //         Row(
+                          //           children: [
+                          //             Text("email".tr,
+                          //                 style: TextStyle(
+                          //                   color: Theme.of(context).primaryColor,
+                          //                   fontSize: Dimensions.fontSizeLarge,
+                          //                 )),
+                          //             Text(
+                          //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.email : ''}'),
+                          //           ],
+                          //         ),
+                          //         Row(
+                          //           children: [
+                          //             Text("user".tr,
+                          //                 style: TextStyle(
+                          //                   color: Theme.of(context).primaryColor,
+                          //                   fontSize: Dimensions.fontSizeLarge,
+                          //                 )),
+                          //             Text(
+                          //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.user_name : ''}'),
+                          //           ],
+                          //         ),
+                          //         Row(
+                          //           children: [
+                          //             Text("phone".tr,
+                          //                 style: TextStyle(
+                          //                   color: Theme.of(context).primaryColor,
+                          //                   fontSize: Dimensions.fontSizeLarge,
+                          //                 )),
+                          //             Text(
+                          //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.phone : ''}'),
+                          //           ],
+                          //         ),
+                          //         Row(
+                          //           children: [
+                          //             Text("Country".tr,
+                          //                 style: TextStyle(
+                          //                   color: Theme.of(context).primaryColor,
+                          //                   fontSize: Dimensions.fontSizeLarge,
+                          //                 )),
+                          //             Flexible(
+                          //               child: Text(
+                          //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.country : ''}',
+                          //                 overflow: TextOverflow.ellipsis,
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //         Row(
+                          //           children: [
+                          //             Text("address".tr,
+                          //                 style: TextStyle(
+                          //                   color: Theme.of(context).primaryColor,
+                          //                   fontSize: Dimensions.fontSizeLarge,
+                          //                 )),
+                          //             Flexible(
+                          //               child: Text(
+                          //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.address : ''}',
+                          //                 overflow: TextOverflow.ellipsis,
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //         Row(
+                          //           children: [
+                          //             Text("City".tr,
+                          //                 style: TextStyle(
+                          //                   color: Theme.of(context).primaryColor,
+                          //                   fontSize: Dimensions.fontSizeLarge,
+                          //                 )),
+                          //             Flexible(
+                          //               child: Text(
+                          //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.city : ''}',
+                          //                 overflow: TextOverflow.ellipsis,
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //         Row(
+                          //           children: [
+                          //             Text("date_birth".tr,
+                          //                 style: TextStyle(
+                          //                   color: Theme.of(context).primaryColor,
+                          //                   fontSize: Dimensions.fontSizeLarge,
+                          //                 )),
+                          //             Flexible(
+                          //               child: Text(
+                          //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.date_of_birth : ''}',
+                          //                 overflow: TextOverflow.ellipsis,
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                          // SizedBox(height: 10),
+                          // Divider(
+                          //     color: Colors.grey,
+                          //     thickness: 1,
+                          //     endIndent: 20,
+                          //     indent: 20),
+                          // SizedBox(height: 10),
+                          SizedBox(
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: ClampingScrollPhysics(),
+                                itemCount: images.length,
+                                itemBuilder: (ctx, index) => Column(
+                                      children: [
+                                        ListTile(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                            if (index == 0) {
+                                              showModelSheet(
+                                                context,
+                                                UpdateProfileScreen(),
+                                                color: Colors.transparent,
+                                              );
+                                              // Get.toNamed(
+                                              //     RouteHelper.updateProfile);
+                                            }
+                                            // else if (index == 1) {
+                                            //   showModelSheet(
+                                            //     context,
+                                            //     ChangeLanguage(),
+                                            //   );
+                                            //   // Get.toNamed(
+                                            //   //     RouteHelper.changeLanguage);
+                                            // }
+                                            else if (index == 1) {
+                                              Get.toNamed(RouteHelper.address);
+                                            } else if (index == 2) {
+                                              showModelSheet(
+                                                context,
+                                                PointsScreen(
+                                                    '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
+                                                    '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}'),
+                                                color: Colors.transparent,
+                                              );
+                                              // Get.to(() => OrderScreen());
+                                            }
+                                            // else if (index == 3) {
+                                            //   Get.to(() => OrderScreen());
+                                            //   // Get.toNamed(RouteHelper.setting);
+                                            // }
+                                          },
+                                          leading: index == 2
+                                              ? Icon(
+                                                  Icons.attach_money_rounded,
+                                                  color: kTextColor,
+                                                  size: 28,
+                                                )
+                                              : SvgPicture.asset(
+                                                  images[index],
+                                                  color: kTextColor,
+                                                ),
+                                          // trailing: Icon(
+                                          //   Icons.arrow_forward_ios,
+                                          //   color: Colors.white,
+                                          // ),
+                                          title: Text(
+                                            titles[index].tr,
+                                            style: fontStyle,
+                                          ),
+                                          // subtitle: Text(
+                                          //   subTitles[index].tr,
+                                          //   style: desFontStyle,
+                                          // ),
+                                        ),
+                                        // Divider(
+                                        //     color: Colors.grey,
+                                        //     thickness: 1,
+                                        //     endIndent: 20,
+                                        //     indent: 20),
+                                      ],
+                                    )),
+                          ),
+                          Spacer(),
+                          Divider(
+                            color: Color(0xffE1003C),
+                            thickness: 1,
+                            endIndent: 20,
+                            indent: 20,
+                          ),
+                          ListTile(
+                            onTap: () {},
+                            leading: Icon(
+                              Icons.contact_support_outlined,
+                              color: Color(0xffE1003C),
+                              size: 28,
+                            ),
+                            title: Text(
+                              'contact_us'.tr,
+                              style: fontStyle,
+                            ),
+                          ),
+                          ListTile(
+                            onTap: () {
+                              if (Get.find<AuthController>().isLoggedIn()) {
+                                Get.dialog(
+                                    ConfirmationDialog(
+                                        icon: Images.support,
+                                        description:
+                                            'are_you_sure_to_logout'.tr,
+                                        isLogOut: true,
+                                        onYesPressed: () {
+                                          Get.find<AuthController>()
+                                              .birthDate("");
+                                          Get.find<AuthController>()
+                                              .clearSharedData();
+                                          Get.find<CartController>()
+                                              .clearCartList();
+                                          Get.find<WishListController>()
+                                              .removeWishes();
+                                          Get.offAll(SelectLogin());
+                                        }),
+                                    useSafeArea: false);
+                              } else {
+                                Get.find<WishListController>().removeWishes();
+                                Get.toNamed(RouteHelper.getSignInRoute(
+                                    RouteHelper.main));
+                              }
+                            },
+                            leading: Icon(
+                              Icons.logout_outlined,
+                              color: Color(0xffE1003C),
+                              size: 28,
+                            ),
+                            title: Text(
+                              _isLoggedIn ? 'logout'.tr : 'sign_in'.tr,
+                              style: fontStyle,
+                            ),
+                          ),
+
+                          // CustomButton(
+                          //     color: kPrimaryColor,
+                          //     radius: 25,
+                          //     width: MediaQuery.of(context).size.width - 80,
+                          //     buttonText: _isLoggedIn ? 'logout'.tr : 'sign_in'.tr,
+                          //     onPressed: () {
+                          //       if (Get.find<AuthController>().isLoggedIn()) {
+                          //         Get.dialog(
+                          //             ConfirmationDialog(
+                          //                 icon: Images.support,
+                          //                 description: 'are_you_sure_to_logout'.tr,
+                          //                 isLogOut: true,
+                          //                 onYesPressed: () {
+                          //                   Get.find<AuthController>()
+                          //                       .birthDate("");
+                          //                   Get.find<AuthController>()
+                          //                       .clearSharedData();
+                          //                   Get.find<CartController>()
+                          //                       .clearCartList();
+                          //                   Get.find<WishListController>()
+                          //                       .removeWishes();
+                          //                   Get.offAll(SelectLogin());
+                          //                 }),
+                          //             useSafeArea: false);
+                          //       } else {
+                          //         Get.find<WishListController>().removeWishes();
+                          //         Get.toNamed(
+                          //             RouteHelper.getSignInRoute(RouteHelper.main));
+                          //       }
+                          //     }),
+                          SizedBox(height: 40),
+                        ],
                       ),
-                      SizedBox(height: 10),
-                      // Container(
-                      //   width: context.width - 25,
-                      //   height: context.height * 0.3,
-                      //   decoration: BoxDecoration(
-                      //       color: Color(0xFFE1E1E1),
-                      //       borderRadius: BorderRadius.circular(10)),
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(8.0),
-                      //     child: Column(
-                      //       crossAxisAlignment: CrossAxisAlignment.start,
-                      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //       children: [
-                      //         Row(
-                      //           children: [
-                      //             Text("name".tr,
-                      //                 style: TextStyle(
-                      //                   color: Theme.of(context).primaryColor,
-                      //                   fontSize: Dimensions.fontSizeLarge,
-                      //                 )),
-                      //             Text(
-                      //               ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.fName : ''}' +
-                      //                   ' ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.lName : ''}',
-                      //             ),
-                      //           ],
-                      //         ),
-                      //         Row(
-                      //           children: [
-                      //             Text("email".tr,
-                      //                 style: TextStyle(
-                      //                   color: Theme.of(context).primaryColor,
-                      //                   fontSize: Dimensions.fontSizeLarge,
-                      //                 )),
-                      //             Text(
-                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.email : ''}'),
-                      //           ],
-                      //         ),
-                      //         Row(
-                      //           children: [
-                      //             Text("user".tr,
-                      //                 style: TextStyle(
-                      //                   color: Theme.of(context).primaryColor,
-                      //                   fontSize: Dimensions.fontSizeLarge,
-                      //                 )),
-                      //             Text(
-                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.user_name : ''}'),
-                      //           ],
-                      //         ),
-                      //         Row(
-                      //           children: [
-                      //             Text("phone".tr,
-                      //                 style: TextStyle(
-                      //                   color: Theme.of(context).primaryColor,
-                      //                   fontSize: Dimensions.fontSizeLarge,
-                      //                 )),
-                      //             Text(
-                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.phone : ''}'),
-                      //           ],
-                      //         ),
-                      //         Row(
-                      //           children: [
-                      //             Text("Country".tr,
-                      //                 style: TextStyle(
-                      //                   color: Theme.of(context).primaryColor,
-                      //                   fontSize: Dimensions.fontSizeLarge,
-                      //                 )),
-                      //             Flexible(
-                      //               child: Text(
-                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.country : ''}',
-                      //                 overflow: TextOverflow.ellipsis,
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //         Row(
-                      //           children: [
-                      //             Text("address".tr,
-                      //                 style: TextStyle(
-                      //                   color: Theme.of(context).primaryColor,
-                      //                   fontSize: Dimensions.fontSizeLarge,
-                      //                 )),
-                      //             Flexible(
-                      //               child: Text(
-                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.address : ''}',
-                      //                 overflow: TextOverflow.ellipsis,
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //         Row(
-                      //           children: [
-                      //             Text("City".tr,
-                      //                 style: TextStyle(
-                      //                   color: Theme.of(context).primaryColor,
-                      //                   fontSize: Dimensions.fontSizeLarge,
-                      //                 )),
-                      //             Flexible(
-                      //               child: Text(
-                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.city : ''}',
-                      //                 overflow: TextOverflow.ellipsis,
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //         Row(
-                      //           children: [
-                      //             Text("date_birth".tr,
-                      //                 style: TextStyle(
-                      //                   color: Theme.of(context).primaryColor,
-                      //                   fontSize: Dimensions.fontSizeLarge,
-                      //                 )),
-                      //             Flexible(
-                      //               child: Text(
-                      //                 ' : ${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.date_of_birth : ''}',
-                      //                 overflow: TextOverflow.ellipsis,
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                      SizedBox(height: 10),
-                      Divider(
-                          color: Colors.grey,
-                          thickness: 1,
-                          endIndent: 20,
-                          indent: 20),
-                      SizedBox(height: 10),
-                      SizedBox(
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: ClampingScrollPhysics(),
-                            itemCount: images.length,
-                            itemBuilder: (ctx, index) => Column(
-                                  children: [
-                                    ListTile(
-                                      onTap: () {
-                                        if (index == 0) {
-                                          showModelSheet(
-                                            context,
-                                            UpdateProfileScreen(),
-                                          );
-                                          // Get.toNamed(
-                                          //     RouteHelper.updateProfile);
-                                        } else if (index == 1) {
-                                          showModelSheet(
-                                            context,
-                                            ChangeLanguage(),
-                                          );
-                                          // Get.toNamed(
-                                          //     RouteHelper.changeLanguage);
-                                        } else if (index == 2) {
-                                          Get.toNamed(RouteHelper.address);
-                                        } else if (index == 3) {
-                                          Get.to(() => OrderScreen());
-                                        } else if (index == 4) {
-                                          Get.toNamed(RouteHelper.setting);
-                                        }
-                                      },
-                                      leading: SvgPicture.asset(
-                                        images[index],
-                                        color: kPrimaryColor,
-                                      ),
-                                      trailing: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.white,
-                                      ),
-                                      title: Text(
-                                        titles[index].tr,
-                                        style: fontStyle,
-                                      ),
-                                      subtitle: Text(
-                                        subTitles[index].tr,
-                                        style: desFontStyle,
-                                      ),
-                                    ),
-                                    Divider(
-                                        color: Colors.grey,
-                                        thickness: 1,
-                                        endIndent: 20,
-                                        indent: 20),
-                                  ],
-                                )),
-                      ),
-                      SizedBox(height: 20),
-                      CustomButton(
-                          color: kPrimaryColor,
-                          radius: 25,
-                          width: MediaQuery.of(context).size.width - 80,
-                          buttonText: _isLoggedIn ? 'logout'.tr : 'sign_in'.tr,
-                          onPressed: () {
-                            if (Get.find<AuthController>().isLoggedIn()) {
-                              Get.dialog(
-                                  ConfirmationDialog(
-                                      icon: Images.support,
-                                      description: 'are_you_sure_to_logout'.tr,
-                                      isLogOut: true,
-                                      onYesPressed: () {
-                                        Get.find<AuthController>()
-                                            .birthDate("");
-                                        Get.find<AuthController>()
-                                            .clearSharedData();
-                                        Get.find<CartController>()
-                                            .clearCartList();
-                                        Get.find<WishListController>()
-                                            .removeWishes();
-                                        Get.offAll(SelectLogin());
-                                      }),
-                                  useSafeArea: false);
-                            } else {
-                              Get.find<WishListController>().removeWishes();
-                              Get.toNamed(
-                                  RouteHelper.getSignInRoute(RouteHelper.main));
-                            }
-                          }),
-                      SizedBox(height: 20),
-                    ],
-                  ),
-                );
+              ),
+            ],
+          );
 
           // ProfileBgWidget(
           //   backButton: true,
@@ -370,13 +486,13 @@ class ProfileScreen extends StatelessWidget {
           //   ))),
           // );
         }),
-      ),
+      ],
     );
   }
 
-  void showModelSheet(BuildContext context, Widget content) {
+  void showModelSheet(BuildContext context, Widget content, {Color color}) {
     showModalBottomSheet(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: color ?? kPrimaryColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),

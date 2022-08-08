@@ -17,9 +17,12 @@ import 'package:efood_multivendor/view/screens/home/home.dart';
 import 'package:efood_multivendor/view/screens/home/home_screen.dart';
 import 'package:efood_multivendor/view/screens/order/order_screen.dart';
 import 'package:efood_multivendor/view/screens/profile/profile_screen.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import 'widget/app_drawer.dart';
 
 class DashboardScreen extends StatefulWidget {
   final int pageIndex;
@@ -102,6 +105,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       },
       child: SafeArea(
         child: Scaffold(
+          // drawerScrimColor: Colors.transparent,
+          drawer: AppDrawer(),
+          drawerScrimColor: Colors.transparent,
+
           key: _scaffoldKey,
           // floatingActionButton: ResponsiveHelper.isDesktop(context)
           //     ? null
@@ -208,46 +215,48 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                       ),
                     ),
-                    Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _pageIndex = 2;
-                          });
-                          ;
-                        },
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            GetBuilder<UserController>(
-                                builder: (userController) {
-                              return (_isLoggedIn &&
-                                      userController.userInfoModel == null)
-                                  ? Center(child: CircularProgressIndicator())
-                                  : Container(
-                                      decoration: BoxDecoration(
-                                        // border: Border.all(
-                                        //     width: 2,
-                                        //     color: Theme.of(context).cardColor),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: ClipOval(
-                                        child: CustomImage(
-                                          image:
-                                              '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
-                                              '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
-                                          height: 75,
-                                          width: 75,
-                                          fit: BoxFit.cover,
+                    Builder(builder: (context) {
+                      return Center(
+                        child: GestureDetector(
+                          onTap: () {
+                            Scaffold.of(context).openDrawer();
+                            // setState(() {
+                            //   _pageIndex = 2;
+                            // });
+                          },
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              GetBuilder<UserController>(
+                                  builder: (userController) {
+                                return (_isLoggedIn &&
+                                        userController.userInfoModel == null)
+                                    ? Center(child: CircularProgressIndicator())
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                          // border: Border.all(
+                                          //     width: 2,
+                                          //     color: Theme.of(context).cardColor),
+                                          shape: BoxShape.circle,
                                         ),
-                                      ),
-                                    );
-                            }),
-                          ],
+                                        alignment: Alignment.center,
+                                        child: ClipOval(
+                                          child: CustomImage(
+                                            image:
+                                                '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
+                                                '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
+                                            height: 75,
+                                            width: 75,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      );
+                              }),
+                            ],
+                          ),
                         ),
-                      ),
-                    )
+                      );
+                    })
                   ]),
                 ),
 
