@@ -432,7 +432,8 @@
   "order_summary":"ملخص الطلبات",
   "Do_you_have_any_discount_code":"هل لديك كوبون خصم؟",
   "total_price":"السعر الكلي",
-  "login_using_email_user_name_or_phone_number":"كلمة المرور او اسم المستخدم او رقم الهاتف",
-  "no_brands_found":"لا يوجد مركات محددة في هذا القسم"
+  "login_using_email_user_name_or_phone_number":"البريدالإلكتروني  او اسم المستخدم او رقم الهاتف",
+  "no_brands_found":"لا يوجد مركات محددة في هذا القسم",
+  "product_added_successfully":"تم اضافة المنتج بنجاح"
   
 }

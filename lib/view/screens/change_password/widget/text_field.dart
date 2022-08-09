@@ -13,6 +13,7 @@ class FixedTextField extends StatelessWidget {
       child: SizedBox(
         height: 45,
         child: TextField(
+          cursorColor: Theme.of(context).primaryColor,
           controller: controller,
           onChanged: onChanged,
           decoration: InputDecoration(
