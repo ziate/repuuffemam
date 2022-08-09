@@ -27,7 +27,7 @@ class UsedMarketMainScreen extends StatefulWidget {
 }
 
 class _UsedMarketMainScreenState extends State<UsedMarketMainScreen> {
-  List<UsedMarketProductModel> _products = [];
+  // List<UsedMarketProductModel> _products = [];
   @override
   void initState() {
     Get.put(UsedMarketController());
@@ -46,7 +46,7 @@ class _UsedMarketMainScreenState extends State<UsedMarketMainScreen> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColor,
           child: Icon(
-            Icons.shopping_cart,
+            Icons.add,
             color: Colors.white,
           ),
           onPressed: () {
@@ -215,19 +215,19 @@ class _UsedMarketMainScreenState extends State<UsedMarketMainScreen> {
                                                         Dimensions
                                                             .RADIUS_SMALL),
                                                 child: CustomImage(
-                                                    height: 50,
-                                                    width: 50,
+                                                    height: 70,
+                                                    width: 70,
                                                     fit: BoxFit.cover,
                                                     image:
-                                                        'https://repuffapp.com/storage/app/public/brands/${_products[index].image}'
-                                                    //  '${Get.find<SplashController>().configModel.baseUrls.categoryImageUrl}/${_brands[index].image}',
+                                                        'https://repuffapp.com/storage/app/public/product/${controller.products[index].image}'
+                                                    // '${Get.find<SplashController>().configModel.baseUrls.usedMarketProductUrl}/${controller.products[index].image}',
                                                     ),
                                               ),
                                               SizedBox(
                                                   height: Dimensions
                                                       .PADDING_SIZE_EXTRA_SMALL),
                                               Text(
-                                                "ksfjgb",
+                                                controller.products[index].name,
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: Colors.white,

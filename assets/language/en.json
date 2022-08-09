@@ -439,7 +439,8 @@
   "food":"Food",
   "restaurants":"Restaurants",
   "login_using_email_user_name_or_phone_number":"email, username or phone number",
-  "no_brands_found":"No Brands Found"
+  "no_brands_found":"No Brands Found",
+  "product_added_successfully":"Product Added Successfully"
 
 
 
