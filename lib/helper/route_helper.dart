@@ -59,6 +59,8 @@ import 'package:efood_multivendor/view/screens/used_market/add_to_used_market.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../view/screens/profile/update_profile_sheet.dart';
+
 class RouteHelper {
   static const String initial = '/';
   static const String splash = '/splash';

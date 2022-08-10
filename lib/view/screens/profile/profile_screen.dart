@@ -17,6 +17,7 @@ import 'package:efood_multivendor/view/screens/change_language/change_language.d
 import 'package:efood_multivendor/view/screens/order/order_screen.dart';
 import 'package:efood_multivendor/view/screens/points/points_screen.dart';
 import 'package:efood_multivendor/view/screens/profile/update_profile_screen.dart';
+import 'package:efood_multivendor/view/screens/profile/update_profile_sheet.dart';
 import 'package:efood_multivendor/view/screens/select_login/select_login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -263,7 +264,10 @@ class ProfileScreen extends StatelessWidget {
                                             if (index == 0) {
                                               showModelSheet(
                                                 context,
-                                                UpdateProfileScreen(),
+                                                UpdateProfileScreen(
+                                                    image:
+                                                        '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
+                                                        '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}'),
                                                 color: Colors.transparent,
                                               );
                                               // Get.toNamed(
