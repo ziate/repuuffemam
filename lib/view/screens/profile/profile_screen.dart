@@ -12,10 +12,12 @@ import 'package:efood_multivendor/view/base/confirmation_dialog.dart';
 import 'package:efood_multivendor/view/base/custom_button.dart';
 import 'package:efood_multivendor/view/base/custom_image.dart';
 import 'package:efood_multivendor/view/base/web_menu_bar.dart';
+import 'package:efood_multivendor/view/screens/address/address_screen%20copy.dart';
 import 'package:efood_multivendor/view/screens/change_language/change_language.dart';
 import 'package:efood_multivendor/view/screens/order/order_screen.dart';
 import 'package:efood_multivendor/view/screens/points/points_screen.dart';
 import 'package:efood_multivendor/view/screens/profile/update_profile_screen.dart';
+import 'package:efood_multivendor/view/screens/profile/update_profile_sheet.dart';
 import 'package:efood_multivendor/view/screens/select_login/select_login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -91,14 +93,15 @@ class ProfileScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               ClipOval(
-                                  child: CustomImage(
-                                image:
-                                    '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
-                                    '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
-                                height: 80,
-                                width: 80,
-                                fit: BoxFit.cover,
-                              )),
+                                child: CustomImage(
+                                  image:
+                                      '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
+                                      '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
+                                  height: 80,
+                                  width: 80,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(height: 10),
@@ -261,7 +264,10 @@ class ProfileScreen extends StatelessWidget {
                                             if (index == 0) {
                                               showModelSheet(
                                                 context,
-                                                UpdateProfileScreen(),
+                                                UpdateProfileScreen(
+                                                    image:
+                                                        '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
+                                                        '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}'),
                                                 color: Colors.transparent,
                                               );
                                               // Get.toNamed(
@@ -276,7 +282,16 @@ class ProfileScreen extends StatelessWidget {
                                             //   //     RouteHelper.changeLanguage);
                                             // }
                                             else if (index == 1) {
-                                              Get.toNamed(RouteHelper.address);
+                                              showModelSheet(
+                                                context,
+                                                AddressScreen(
+                                                  image:
+                                                      '${Get.find<SplashController>().configModel.baseUrls.customerImageUrl}'
+                                                      '/${(userController.userInfoModel != null && _isLoggedIn) ? userController.userInfoModel.image : ''}',
+                                                ),
+                                                color: Colors.transparent,
+                                              );
+                                              // Get.toNamed(RouteHelper.address);
                                             } else if (index == 2) {
                                               showModelSheet(
                                                 context,

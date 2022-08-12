@@ -7,7 +7,6 @@ import 'package:efood_multivendor/helper/route_helper.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
 import 'package:efood_multivendor/util/images.dart';
 import 'package:efood_multivendor/util/styles.dart';
-import 'package:efood_multivendor/view/base/custom_app_bar.dart';
 import 'package:efood_multivendor/view/base/custom_button.dart';
 import 'package:efood_multivendor/view/base/custom_snackbar.dart';
 import 'package:efood_multivendor/view/base/my_text_field.dart';
@@ -20,11 +19,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../../theme/styles.dart';
+import '../../base/custom_image.dart';
 
 class AddAddressScreen extends StatefulWidget {
   final bool fromCheckout;
   final AddressModel address;
-  AddAddressScreen({@required this.fromCheckout, this.address});
+  final String image;
+  AddAddressScreen({this.image, @required this.fromCheckout, this.address});
 
   @override
   State<AddAddressScreen> createState() => _AddAddressScreenState();
@@ -69,388 +70,518 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     }
   }
 
+  // appBar: CustomAppBar(
+  //   isSmallAppBar: true,
+  //   titleWidget: Text(
+  //     widget.address == null ? 'add_new_address'.tr : 'update_address'.tr,
+  //     style: kTextStyleBold18,
+  //   ),
+  //   title:
+  //       widget.address == null ? 'add_new_address'.tr : 'update_address'.tr,
+  // ),
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        isSmallAppBar: true,
-        titleWidget: Text(
-          widget.address == null ? 'add_new_address'.tr : 'update_address'.tr,
-          style: kTextStyleBold18,
-        ),
-        title:
-            widget.address == null ? 'add_new_address'.tr : 'update_address'.tr,
-      ),
-      body: _isLoggedIn
-          ? GetBuilder<UserController>(builder: (userController) {
-              if (widget.address != null) {
-                if (_contactPersonNameController.text.isEmpty) {
-                  _contactPersonNameController.text =
-                      widget.address.contactPersonName;
-                  _contactPersonNumberController.text =
-                      widget.address.contactPersonNumber;
-                }
-              } else if (userController.userInfoModel != null &&
-                  _contactPersonNameController.text.isEmpty) {
-                _contactPersonNameController.text =
-                    '${userController.userInfoModel.fName} ${userController.userInfoModel.lName}';
-                _contactPersonNumberController.text =
-                    userController.userInfoModel.phone;
-              }
+    return FractionallySizedBox(
+      heightFactor: 0.8,
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              Container(
+                color: Colors.transparent,
+                height: 50,
+              ),
+              Expanded(
+                child: Container(
+                  color: kPrimaryColor,
+                  width: double.infinity,
+                ),
+              )
+            ],
+          ),
+          Column(
+            children: [
+              ClipOval(
+                child: CustomImage(
+                  image: widget.image,
+                  height: 90,
+                  width: 90,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                widget.address == null
+                    ? 'add_new_address'.tr
+                    : 'update_address'.tr,
+                style: kTextStyleBold18.copyWith(color: Colors.white),
+              ),
+              SizedBox(height: 20),
+              Expanded(
+                child: _isLoggedIn
+                    ? GetBuilder<UserController>(builder: (userController) {
+                        if (widget.address != null) {
+                          if (_contactPersonNameController.text.isEmpty) {
+                            _contactPersonNameController.text =
+                                widget.address.contactPersonName;
+                            _contactPersonNumberController.text =
+                                widget.address.contactPersonNumber;
+                          }
+                        } else if (userController.userInfoModel != null &&
+                            _contactPersonNameController.text.isEmpty) {
+                          _contactPersonNameController.text =
+                              '${userController.userInfoModel.fName} ${userController.userInfoModel.lName}';
+                          _contactPersonNumberController.text =
+                              userController.userInfoModel.phone;
+                        }
 
-              return GetBuilder<LocationController>(
-                  builder: (locationController) {
-                _addressController.text = locationController.address;
+                        return GetBuilder<LocationController>(
+                            builder: (locationController) {
+                          _addressController.text = locationController.address;
 
-                return Column(children: [
-                  Expanded(
-                      child: Scrollbar(
-                          child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                    child: Center(
-                        child: SizedBox(
-                            width: Dimensions.WEB_MAX_WIDTH,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 140,
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          Dimensions.RADIUS_SMALL),
-                                      border: Border.all(
-                                          width: 2,
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          Dimensions.RADIUS_SMALL),
-                                      child: Stack(
-                                          clipBehavior: Clip.none,
+                          return Column(children: [
+                            Expanded(
+                                child: Scrollbar(
+                                    child: SingleChildScrollView(
+                              physics: BouncingScrollPhysics(),
+                              padding:
+                                  EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                              child: Center(
+                                  child: SizedBox(
+                                      width: Dimensions.WEB_MAX_WIDTH,
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            GoogleMap(
-                                              initialCameraPosition:
-                                                  CameraPosition(
-                                                      target: _initialPosition,
-                                                      zoom: 17),
-                                              onTap: (latLng) {
-                                                Get.toNamed(
-                                                  RouteHelper.getPickMapRoute(
-                                                      'add-address', false),
-                                                  arguments: PickMapScreen(
-                                                    fromAddAddress: true,
-                                                    fromSignUp: false,
-                                                    googleMapController:
-                                                        locationController
-                                                            .mapController,
-                                                    route: null,
-                                                    canRoute: false,
-                                                  ),
-                                                );
-                                              },
-                                              zoomControlsEnabled: false,
-                                              compassEnabled: false,
-                                              indoorViewEnabled: true,
-                                              mapToolbarEnabled: false,
-                                              onCameraIdle: () {
-                                                locationController
-                                                    .updatePosition(
-                                                        _cameraPosition, true);
-                                              },
-                                              onCameraMove: ((position) =>
-                                                  _cameraPosition = position),
-                                              onMapCreated: (GoogleMapController
-                                                  controller) {
-                                                locationController
-                                                    .setMapController(
-                                                        controller);
-                                                if (widget.address == null) {
-                                                  locationController
-                                                      .getCurrentLocation(true,
-                                                          mapController:
-                                                              controller);
-                                                }
-                                              },
-                                            ),
-                                            locationController.loading
-                                                ? Center(
-                                                    child:
-                                                        CircularProgressIndicator())
-                                                : SizedBox(),
-                                            Center(
-                                                child: !locationController
-                                                        .loading
-                                                    ? Image.asset(
-                                                        Images.pick_marker,
-                                                        height: 50,
-                                                        width: 50)
-                                                    : CircularProgressIndicator()),
-                                            Positioned(
-                                              bottom: 10,
-                                              right: 0,
-                                              child: InkWell(
-                                                onTap: () =>
-                                                    _checkPermission(() {
-                                                  locationController
-                                                      .getCurrentLocation(true,
-                                                          mapController:
-                                                              locationController
-                                                                  .mapController);
-                                                }),
-                                                child: Container(
-                                                  width: 30,
-                                                  height: 30,
-                                                  margin: EdgeInsets.only(
-                                                      right: Dimensions
-                                                          .PADDING_SIZE_LARGE),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius
-                                                          .circular(Dimensions
-                                                              .RADIUS_SMALL),
-                                                      color: Colors.white),
-                                                  child: Icon(Icons.my_location,
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      size: 20),
-                                                ),
+                                            Container(
+                                              height: 140,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions
+                                                            .RADIUS_SMALL),
+                                                border: Border.all(
+                                                    width: 2,
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
                                               ),
-                                            ),
-                                            Positioned(
-                                              top: 10,
-                                              right: 0,
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Get.toNamed(
-                                                    RouteHelper.getPickMapRoute(
-                                                        'add-address', false),
-                                                    arguments: PickMapScreen(
-                                                      fromAddAddress: true,
-                                                      fromSignUp: false,
-                                                      googleMapController:
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions
+                                                            .RADIUS_SMALL),
+                                                child: Stack(
+                                                    clipBehavior: Clip.none,
+                                                    children: [
+                                                      GoogleMap(
+                                                        initialCameraPosition:
+                                                            CameraPosition(
+                                                                target:
+                                                                    _initialPosition,
+                                                                zoom: 17),
+                                                        onTap: (latLng) {
+                                                          Get.toNamed(
+                                                            RouteHelper
+                                                                .getPickMapRoute(
+                                                              'add-address',
+                                                              false,
+                                                            ),
+                                                            arguments:
+                                                                PickMapScreen(
+                                                              fromAddAddress:
+                                                                  true,
+                                                              fromSignUp: false,
+                                                              googleMapController:
+                                                                  locationController
+                                                                      .mapController,
+                                                              route: null,
+                                                              canRoute: false,
+                                                            ),
+                                                          );
+                                                        },
+                                                        zoomControlsEnabled:
+                                                            false,
+                                                        compassEnabled: false,
+                                                        indoorViewEnabled: true,
+                                                        mapToolbarEnabled:
+                                                            false,
+                                                        onCameraIdle: () {
                                                           locationController
-                                                              .mapController,
-                                                      route: null,
-                                                      canRoute: false,
-                                                    ),
-                                                  );
-                                                },
-                                                child: Container(
-                                                  width: 30,
-                                                  height: 30,
-                                                  margin: EdgeInsets.only(
-                                                      right: Dimensions
-                                                          .PADDING_SIZE_LARGE),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius
-                                                          .circular(Dimensions
-                                                              .RADIUS_SMALL),
-                                                      color: Colors.white),
-                                                  child: Icon(Icons.fullscreen,
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      size: 20),
-                                                ),
+                                                              .updatePosition(
+                                                                  _cameraPosition,
+                                                                  true);
+                                                        },
+                                                        onCameraMove:
+                                                            ((position) =>
+                                                                _cameraPosition =
+                                                                    position),
+                                                        onMapCreated:
+                                                            (GoogleMapController
+                                                                controller) {
+                                                          locationController
+                                                              .setMapController(
+                                                                  controller);
+                                                          if (widget.address ==
+                                                              null) {
+                                                            locationController
+                                                                .getCurrentLocation(
+                                                                    true,
+                                                                    mapController:
+                                                                        controller);
+                                                          }
+                                                        },
+                                                      ),
+                                                      locationController.loading
+                                                          ? Center(
+                                                              child:
+                                                                  CircularProgressIndicator())
+                                                          : SizedBox(),
+                                                      Center(
+                                                          child: !locationController
+                                                                  .loading
+                                                              ? Image.asset(
+                                                                  Images
+                                                                      .pick_marker,
+                                                                  height: 50,
+                                                                  width: 50)
+                                                              : CircularProgressIndicator()),
+                                                      Positioned(
+                                                        bottom: 10,
+                                                        right: 0,
+                                                        child: InkWell(
+                                                          onTap: () =>
+                                                              _checkPermission(
+                                                                  () {
+                                                            locationController
+                                                                .getCurrentLocation(
+                                                                    true,
+                                                                    mapController:
+                                                                        locationController
+                                                                            .mapController);
+                                                          }),
+                                                          child: Container(
+                                                            width: 30,
+                                                            height: 30,
+                                                            margin: EdgeInsets.only(
+                                                                right: Dimensions
+                                                                    .PADDING_SIZE_LARGE),
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        Dimensions
+                                                                            .RADIUS_SMALL),
+                                                                color: Colors
+                                                                    .white),
+                                                            child: Icon(
+                                                                Icons
+                                                                    .my_location,
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                size: 20),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Positioned(
+                                                        top: 10,
+                                                        right: 0,
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            Get.toNamed(
+                                                              RouteHelper
+                                                                  .getPickMapRoute(
+                                                                      'add-address',
+                                                                      false),
+                                                              arguments:
+                                                                  PickMapScreen(
+                                                                fromAddAddress:
+                                                                    true,
+                                                                fromSignUp:
+                                                                    false,
+                                                                googleMapController:
+                                                                    locationController
+                                                                        .mapController,
+                                                                route: null,
+                                                                canRoute: false,
+                                                              ),
+                                                            );
+                                                          },
+                                                          child: Container(
+                                                            width: 30,
+                                                            height: 30,
+                                                            margin: EdgeInsets.only(
+                                                                right: Dimensions
+                                                                    .PADDING_SIZE_LARGE),
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        Dimensions
+                                                                            .RADIUS_SMALL),
+                                                                color: Colors
+                                                                    .white),
+                                                            child: Icon(
+                                                                Icons
+                                                                    .fullscreen,
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                size: 20),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ]),
                                               ),
                                             ),
-                                          ]),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_SMALL),
-                                  Center(
-                                      child: Text(
-                                    'add_the_location_correctly'.tr,
-                                    style: robotoRegular.copyWith(
-                                        color: kTextColor,
-                                        fontSize: Dimensions.fontSizeDefault),
-                                  )),
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_LARGE),
-                                  Text(
-                                    'delivery_address'.tr,
-                                    style: robotoRegular.copyWith(
-                                        fontSize: Dimensions.fontSizeDefault,
-                                        color: kTextColor),
-                                  ),
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_SMALL),
-                                  MyTextField(
-                                    hintText: 'delivery_address'.tr,
-                                    inputType: TextInputType.streetAddress,
-                                    focusNode: _addressNode,
-                                    nextFocus: _nameNode,
-                                    controller: _addressController,
-                                    onChanged: (text) =>
-                                        locationController.setPlaceMark(text),
-                                  ),
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_LARGE),
-                                  Text(
-                                    'contact_person_name'.tr,
-                                    style: robotoRegular.copyWith(
-                                        fontSize: Dimensions.fontSizeDefault,
-                                        color: kTextColor),
-                                  ),
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_SMALL),
-                                  MyTextField(
-                                    hintText: 'contact_person_name'.tr,
-                                    inputType: TextInputType.name,
-                                    controller: _contactPersonNameController,
-                                    focusNode: _nameNode,
-                                    nextFocus: _numberNode,
-                                    capitalization: TextCapitalization.words,
-                                  ),
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_LARGE),
-                                  Text(
-                                    'contact_person_number'.tr,
-                                    style: robotoRegular.copyWith(
-                                        fontSize: Dimensions.fontSizeDefault,
-                                        color: kTextColor),
-                                  ),
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_SMALL),
-                                  MyTextField(
-                                    hintText: 'contact_person_number'.tr,
-                                    inputType: TextInputType.phone,
-                                    inputAction: TextInputAction.done,
-                                    focusNode: _numberNode,
-                                    controller: _contactPersonNumberController,
-                                  ),
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_LARGE),
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_LARGE),
-                                  Text(
-                                    'label_as'.tr,
-                                    style: robotoRegular.copyWith(
-                                        fontSize: Dimensions.fontSizeDefault,
-                                        color: kTextColor),
-                                  ),
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_SMALL),
-                                  SizedBox(
-                                      height: 50,
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: locationController
-                                            .addressTypeList.length,
-                                        itemBuilder: (context, index) => Row(
-                                          children: [
-                                            Radio(
-                                              activeColor: kPrimaryColor,
-                                              focusColor: Colors.white,
-                                              // hoverColor: Colors.white,
-                                              onChanged: ((value) =>
+                                            SizedBox(
+                                                height: Dimensions
+                                                    .PADDING_SIZE_SMALL),
+                                            Center(
+                                                child: Text(
+                                              'add_the_location_correctly'.tr,
+                                              style: robotoRegular.copyWith(
+                                                  color: Colors.white,
+                                                  fontSize: Dimensions
+                                                      .fontSizeDefault),
+                                            )),
+                                            SizedBox(
+                                                height: Dimensions
+                                                    .PADDING_SIZE_LARGE),
+                                            Text(
+                                              'delivery_address'.tr,
+                                              style: robotoRegular.copyWith(
+                                                  fontSize: Dimensions
+                                                      .fontSizeDefault,
+                                                  color: Colors.white),
+                                            ),
+                                            SizedBox(
+                                                height: Dimensions
+                                                    .PADDING_SIZE_SMALL),
+                                            MyTextField(
+                                              hintText: 'delivery_address'.tr,
+                                              inputType:
+                                                  TextInputType.streetAddress,
+                                              focusNode: _addressNode,
+                                              nextFocus: _nameNode,
+                                              controller: _addressController,
+                                              onChanged: (text) =>
                                                   locationController
-                                                      .setAddressTypeIndex(
-                                                          value)),
-                                              value: index,
-                                              groupValue: locationController
-                                                  .addressTypeIndex,
+                                                      .setPlaceMark(text),
                                             ),
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () {
+                                            SizedBox(
+                                                height: Dimensions
+                                                    .PADDING_SIZE_LARGE),
+                                            Text(
+                                              'contact_person_name'.tr,
+                                              style: robotoRegular.copyWith(
+                                                  fontSize: Dimensions
+                                                      .fontSizeDefault,
+                                                  color: Colors.white),
+                                            ),
+                                            SizedBox(
+                                                height: Dimensions
+                                                    .PADDING_SIZE_SMALL),
+                                            MyTextField(
+                                              hintText:
+                                                  'contact_person_name'.tr,
+                                              inputType: TextInputType.name,
+                                              controller:
+                                                  _contactPersonNameController,
+                                              focusNode: _nameNode,
+                                              nextFocus: _numberNode,
+                                              capitalization:
+                                                  TextCapitalization.words,
+                                            ),
+                                            SizedBox(
+                                                height: Dimensions
+                                                    .PADDING_SIZE_LARGE),
+                                            Text(
+                                              'contact_person_number'.tr,
+                                              style: robotoRegular.copyWith(
+                                                  fontSize: Dimensions
+                                                      .fontSizeDefault,
+                                                  color: Colors.white),
+                                            ),
+                                            SizedBox(
+                                                height: Dimensions
+                                                    .PADDING_SIZE_SMALL),
+                                            MyTextField(
+                                              hintText:
+                                                  'contact_person_number'.tr,
+                                              inputType: TextInputType.phone,
+                                              inputAction: TextInputAction.done,
+                                              focusNode: _numberNode,
+                                              controller:
+                                                  _contactPersonNumberController,
+                                            ),
+                                            SizedBox(
+                                                height: Dimensions
+                                                    .PADDING_SIZE_LARGE),
+                                            SizedBox(
+                                                height: Dimensions
+                                                    .PADDING_SIZE_LARGE),
+                                            Text(
+                                              'label_as'.tr,
+                                              style: robotoRegular.copyWith(
+                                                  fontSize: Dimensions
+                                                      .fontSizeDefault,
+                                                  color: Colors.white),
+                                            ),
+                                            SizedBox(
+                                                height: Dimensions
+                                                    .PADDING_SIZE_SMALL),
+                                            SizedBox(
+                                                height: 50,
+                                                child: ListView.builder(
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemCount: locationController
+                                                      .addressTypeList.length,
+                                                  itemBuilder:
+                                                      (context, index) => Row(
+                                                    children: [
+                                                      Radio(
+                                                        fillColor:
+                                                            MaterialStateProperty
+                                                                .all(Colors
+                                                                    .white),
+                                                        // activeColor:
+                                                        //     kPrimaryColor,
+                                                        // focusColor:
+                                                        //     Colors.white,
+                                                        // hoverColor: Colors.white,
+                                                        onChanged: ((value) =>
+                                                            locationController
+                                                                .setAddressTypeIndex(
+                                                                    value)),
+                                                        value: index,
+                                                        groupValue:
+                                                            locationController
+                                                                .addressTypeIndex,
+                                                      ),
+                                                      InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: () {
+                                                          locationController
+                                                              .setAddressTypeIndex(
+                                                                  index);
+                                                        },
+                                                        child: Text(
+                                                          locationController
+                                                              .addressTypeList[
+                                                                  index]
+                                                              .tr,
+                                                          style: robotoRegular.copyWith(
+                                                              color: locationController
+                                                                          .addressTypeIndex ==
+                                                                      index
+                                                                  ? Colors.white
+                                                                  : Colors
+                                                                      .white),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                )),
+                                          ]))),
+                            ))),
+                            Container(
+                              width: Dimensions.WEB_MAX_WIDTH,
+                              padding:
+                                  EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                              child: !locationController.isLoading
+                                  ? CustomButton(
+                                      radius: 13,
+                                      color: Color(0xff20242A),
+                                      buttonText: widget.address == null
+                                          ? 'save_location'.tr
+                                          : 'update_address'.tr,
+                                      onPressed: locationController.loading
+                                          ? null
+                                          : () {
+                                              AddressModel _addressModel =
+                                                  AddressModel(
+                                                id: widget.address != null
+                                                    ? widget.address.id
+                                                    : null,
+                                                addressType: locationController
+                                                        .addressTypeList[
+                                                    locationController
+                                                        .addressTypeIndex],
+                                                contactPersonName:
+                                                    _contactPersonNameController
+                                                            .text ??
+                                                        '',
+                                                contactPersonNumber:
+                                                    _contactPersonNumberController
+                                                            .text ??
+                                                        '',
+                                                address:
+                                                    _addressController.text ??
+                                                        '',
+                                                latitude: locationController
+                                                        .position.latitude
+                                                        .toString() ??
+                                                    '',
+                                                longitude: locationController
+                                                        .position.longitude
+                                                        .toString() ??
+                                                    '',
+                                                zoneId:
+                                                    locationController.zoneID,
+                                              );
+                                              if (widget.address == null) {
                                                 locationController
-                                                    .setAddressTypeIndex(index);
-                                              },
-                                              child: Text(
+                                                    .addAddress(_addressModel,
+                                                        widget.fromCheckout)
+                                                    .then((response) {
+                                                  if (response.isSuccess) {
+                                                    Get.back();
+                                                    showCustomSnackBar(
+                                                        'new_address_added_successfully'
+                                                            .tr,
+                                                        isError: false);
+                                                  } else {
+                                                    showCustomSnackBar(
+                                                        response.message);
+                                                  }
+                                                });
+                                              } else {
                                                 locationController
-                                                    .addressTypeList[index].tr,
-                                                style: robotoRegular.copyWith(
-                                                    color: locationController
-                                                                .addressTypeIndex ==
-                                                            index
-                                                        ? Colors.white
-                                                        : kTextColor),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      )),
-                                ]))),
-                  ))),
-                  Container(
-                    width: Dimensions.WEB_MAX_WIDTH,
-                    padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                    child: !locationController.isLoading
-                        ? CustomButton(
-                            color: kPrimaryColor,
-                            buttonText: widget.address == null
-                                ? 'save_location'.tr
-                                : 'update_address'.tr,
-                            onPressed: locationController.loading
-                                ? null
-                                : () {
-                                    AddressModel _addressModel = AddressModel(
-                                      id: widget.address != null
-                                          ? widget.address.id
-                                          : null,
-                                      addressType: locationController
-                                              .addressTypeList[
-                                          locationController.addressTypeIndex],
-                                      contactPersonName:
-                                          _contactPersonNameController.text ??
-                                              '',
-                                      contactPersonNumber:
-                                          _contactPersonNumberController.text ??
-                                              '',
-                                      address: _addressController.text ?? '',
-                                      latitude: locationController
-                                              .position.latitude
-                                              .toString() ??
-                                          '',
-                                      longitude: locationController
-                                              .position.longitude
-                                              .toString() ??
-                                          '',
-                                      zoneId: locationController.zoneID,
-                                    );
-                                    if (widget.address == null) {
-                                      locationController
-                                          .addAddress(_addressModel,
-                                              widget.fromCheckout)
-                                          .then((response) {
-                                        if (response.isSuccess) {
-                                          Get.back();
-                                          showCustomSnackBar(
-                                              'new_address_added_successfully'
-                                                  .tr,
-                                              isError: false);
-                                        } else {
-                                          showCustomSnackBar(response.message);
-                                        }
-                                      });
-                                    } else {
-                                      locationController
-                                          .updateAddress(
-                                              _addressModel, widget.address.id)
-                                          .then((response) {
-                                        if (response.isSuccess) {
-                                          Get.back();
-                                          showCustomSnackBar(response.message,
-                                              isError: false);
-                                        } else {
-                                          showCustomSnackBar(response.message);
-                                        }
-                                      });
-                                    }
-                                  },
-                          )
-                        : Center(child: CircularProgressIndicator()),
-                  ),
-                ]);
-              });
-            })
-          : NotLoggedInScreen(),
+                                                    .updateAddress(
+                                                        _addressModel,
+                                                        widget.address.id)
+                                                    .then((response) {
+                                                  if (response.isSuccess) {
+                                                    Get.back();
+                                                    showCustomSnackBar(
+                                                        response.message,
+                                                        isError: false);
+                                                  } else {
+                                                    showCustomSnackBar(
+                                                        response.message);
+                                                  }
+                                                });
+                                              }
+                                            },
+                                    )
+                                  : Center(child: CircularProgressIndicator()),
+                            ),
+                          ]);
+                        });
+                      })
+                    : NotLoggedInScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
