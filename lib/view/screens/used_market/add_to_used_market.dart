@@ -240,12 +240,12 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
                                 phone: phone,
                                 price: price,
                               );
-                              isLoading = false;
+                              
 
                               // Get.to(DashboardScreen(pageIndex: 0));
                               // Get.snackbar('Product added successfully', '');
                             } else {
-                              isLoading = false;
+                             
                               Get.snackbar('Product not added',
                                   'make sure all fields are filled');
                             }
