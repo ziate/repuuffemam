@@ -126,9 +126,10 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
-              SvgPicture.asset("assets/image/re.svg"),
+              //SvgPicture.asset("assets/image/re.svg"),
+              Image.asset('assets/image/logo.gif'),
               Padding(
-                padding: const EdgeInsets.only(top: 50),
+                padding: const EdgeInsets.only(top: 70),
                 child: SvgPicture.asset("assets/image/Puff.svg"),
               ),
             ],

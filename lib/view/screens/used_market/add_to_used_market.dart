@@ -1,20 +1,15 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:efood_multivendor/controller/auth_controller.dart';
 import 'package:efood_multivendor/controller/used_market_controller.dart';
 import 'package:efood_multivendor/helper/responsive_helper.dart';
 import 'package:efood_multivendor/util/dimensions.dart';
-import 'package:efood_multivendor/util/images.dart';
 import 'package:efood_multivendor/view/base/custom_app_bar.dart';
 import 'package:efood_multivendor/view/base/custom_button.dart';
 import 'package:efood_multivendor/view/base/custom_image.dart';
 import 'package:efood_multivendor/view/base/web_menu_bar.dart';
 import 'package:efood_multivendor/view/screens/change_password/widget/text_field.dart';
-import 'package:efood_multivendor/view/screens/dashboard/dashboard_screen.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../theme/styles.dart';
@@ -240,12 +235,10 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
                                 phone: phone,
                                 price: price,
                               );
-                              
 
                               // Get.to(DashboardScreen(pageIndex: 0));
                               // Get.snackbar('Product added successfully', '');
                             } else {
-                             
                               Get.snackbar('Product not added',
                                   'make sure all fields are filled');
                             }
