@@ -8,6 +8,8 @@ class AppConstants {
   static const double APP_VERSION = 5.3;
   static const String BASE_URL = 'https://repuffapp.com';
   static const String CATEGORY_URI = '/api/v1/categories';
+  static const String CARTLIST_URI = '/api/v1/cart/list/';
+  static const String ADD_TO_CART_URI = '/api/v1/cart/store';
   static const String BANNER_URI = '/api/v1/banners';
   static const String RESTAURANT_PRODUCT_URI = '/api/v1/products/latest';
   static const String POPULAR_PRODUCT_URI = '/api/v1/products/popular';

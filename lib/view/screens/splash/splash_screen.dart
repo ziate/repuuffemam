@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     Get.find<SplashController>().initSharedData();
-    Get.find<CartController>().getCartData();
+    // Get.find<CartController>().getCartData();
     _route();
   }
 

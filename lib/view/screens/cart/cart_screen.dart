@@ -1,4 +1,5 @@
 import 'package:efood_multivendor/controller/cart_controller.dart';
+import 'package:efood_multivendor/controller/category_controller.dart';
 import 'package:efood_multivendor/controller/coupon_controller.dart';
 import 'package:efood_multivendor/data/model/response/product_model.dart';
 import 'package:efood_multivendor/helper/date_converter.dart';
@@ -17,9 +18,59 @@ import 'package:efood_multivendor/view/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   final fromNav;
-  CartScreen({@required this.fromNav});
+  final String shopId;
+  CartScreen({@required this.fromNav, this.shopId});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  List<List<AddOns>> _addOnsList = [];
+  List<bool> _availableList = [];
+  double _itemPrice = 0;
+  double _addOns = 0;
+  double _subTotal = 0;
+  double _delivery = 0;
+  double _total = 0;
+  @override
+  void initState() {
+    super.initState();
+    Get.find<CartController>()
+        .getCartData(
+      false,
+      widget.shopId,
+    )
+        .then((value) {
+      Get.find<CartController>().cartList.forEach((cartModel) {
+        List<AddOns> _addOnList = [];
+        cartModel.addOnIds.forEach((addOnId) {
+          for (AddOns addOns in cartModel.product.addOns) {
+            if (addOns.id == addOnId.id) {
+              _addOnList.add(addOns);
+              break;
+            }
+          }
+        });
+        _addOnsList.add(_addOnList);
+
+        _availableList.add(DateConverter.isAvailable(
+            cartModel.product.availableTimeStarts,
+            cartModel.product.availableTimeEnds));
+
+        for (int index = 0; index < _addOnList.length; index++) {
+          _addOns = _addOns +
+              (_addOnList[index].price * cartModel.addOnIds[index].quantity);
+        }
+        _itemPrice = _itemPrice + (cartModel.price * cartModel.quantity);
+      });
+      _subTotal = _itemPrice + _addOns;
+      _delivery = 10;
+      _total = _delivery + _subTotal;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +81,8 @@ class CartScreen extends StatelessWidget {
           "my_cart".tr,
           style: TextStyle(color: Colors.white),
         ),
-        isBackButtonExist: (ResponsiveHelper.isDesktop(context) || !fromNav),
+        isBackButtonExist:
+            (ResponsiveHelper.isDesktop(context) || !widget.fromNav),
         isSmallAppBar: true,
         onBackPressed: () {
           Get.to(DashboardScreen(pageIndex: 0));
@@ -38,37 +90,6 @@ class CartScreen extends StatelessWidget {
       ),
       body: GetBuilder<CartController>(
         builder: (cartController) {
-          List<List<AddOns>> _addOnsList = [];
-          List<bool> _availableList = [];
-          double _itemPrice = 0;
-          double _addOns = 0;
-          cartController.cartList.forEach((cartModel) {
-            List<AddOns> _addOnList = [];
-            cartModel.addOnIds.forEach((addOnId) {
-              for (AddOns addOns in cartModel.product.addOns) {
-                if (addOns.id == addOnId.id) {
-                  _addOnList.add(addOns);
-                  break;
-                }
-              }
-            });
-            _addOnsList.add(_addOnList);
-
-            _availableList.add(DateConverter.isAvailable(
-                cartModel.product.availableTimeStarts,
-                cartModel.product.availableTimeEnds));
-
-            for (int index = 0; index < _addOnList.length; index++) {
-              _addOns = _addOns +
-                  (_addOnList[index].price *
-                      cartModel.addOnIds[index].quantity);
-            }
-            _itemPrice = _itemPrice + (cartModel.price * cartModel.quantity);
-          });
-          double _subTotal = _itemPrice + _addOns;
-          double _delivery = 10;
-          double _total = _delivery + _subTotal;
-
           return cartController.cartList.length > 0
               ? Column(
                   children: [

@@ -16,6 +16,8 @@ import 'package:efood_multivendor/view/screens/home/widget/banner_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../cart/cart_screen.dart';
+
 class CategoryScreen extends StatelessWidget {
   final String name;
   final int shopId;
@@ -27,6 +29,13 @@ class CategoryScreen extends StatelessWidget {
     Get.find<CategoryController>().getCategoryList(false);
 
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Icon(Icons.shopping_cart),
+          onPressed: () {
+            Get.to(CartScreen(fromNav: false, shopId: shopId.toString()));
+          },
+        ),
         appBar: CustomAppBar(
           title: '',
           titleWidget: Text(

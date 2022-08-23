@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     if (GetPlatform.isWeb) {
       Get.find<SplashController>().initSharedData();
-      Get.find<CartController>().getCartData();
+      // Get.find<CartController>().getCartData();
       _route();
     }
 
