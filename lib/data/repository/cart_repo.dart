@@ -35,4 +35,20 @@ class CartRepo {
     // cartProductList.forEach((cartModel) => carts.add(jsonEncode(cartModel)));
     // sharedPreferences.setStringList(AppConstants.CART_LIST, carts);
   }
+
+  Future<Response> setQuantiy(CartModel cartModel, String storeId) async {
+    return await apiClient.postData(
+        "${AppConstants.CARTLIST_URI}$storeId", cartModel.toJson());
+    // List<String> carts = [];
+    // cartProductList.forEach((cartModel) => carts.add(jsonEncode(cartModel)));
+    // sharedPreferences.setStringList(AppConstants.CART_LIST, carts);
+  }
+
+  Future<Response> deleteFromCart(CartModel cartModel, String storeId) async {
+    return await apiClient.postData(
+        "${AppConstants.CARTLIST_URI}$storeId", cartModel.toJson());
+    // List<String> carts = [];
+    // cartProductList.forEach((cartModel) => carts.add(jsonEncode(cartModel)));
+    // sharedPreferences.setStringList(AppConstants.CART_LIST, carts);
+  }
 }

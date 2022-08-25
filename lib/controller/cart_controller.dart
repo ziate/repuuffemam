@@ -33,6 +33,7 @@ class CartController extends GetxController implements GetxService {
     }
     update();
   }
+
   // void getCartData() {
   //   _cartList = [];
   //   _cartList.addAll(cartRepo.getCartList());
@@ -54,19 +55,22 @@ class CartController extends GetxController implements GetxService {
     update();
   }
 
-  void setQuantity(bool isIncrement, CartModel cart, String shopId) {
-    int index = _cartList.indexOf(cart);
-    if (isIncrement) {
-      _cartList[index].quantity = _cartList[index].quantity + 1;
-      _amount = _amount + _cartList[index].discountedPrice;
-    } else {
-      _cartList[index].quantity = _cartList[index].quantity - 1;
-      _amount = _amount - _cartList[index].discountedPrice;
-    }
+  void setQuantity(bool isIncrement, String cartId) {
+    // int index = _cartList.indexOf(cart);
+    // if (isIncrement) {
+    //   _cartList[index].quantity = _cartList[index].quantity + 1;
+    //   _amount = _amount + _cartList[index].discountedPrice;
+    // } else {
+    //   _cartList[index].quantity = _cartList[index].quantity - 1;
+    //   _amount = _amount - _cartList[index].discountedPrice;
+    // }
+
     cartRepo.addToCartList(_cartList, shopId);
 
     update();
   }
+
+  Future<void> removeCart(int cartId) async {}
 
   void removeFromCart(int index) {
     _amount = _amount -

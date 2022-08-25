@@ -1,5 +1,6 @@
 import 'package:efood_multivendor/controller/auth_controller.dart';
 import 'package:efood_multivendor/controller/cart_controller.dart';
+import 'package:efood_multivendor/controller/category_controller.dart';
 import 'package:efood_multivendor/controller/product_controller.dart';
 import 'package:efood_multivendor/controller/splash_controller.dart';
 import 'package:efood_multivendor/controller/wishlist_controller.dart';
@@ -781,22 +782,26 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> {
                                         .existAnotherRestaurantProduct(
                                             _cartModel.product.restaurantId)) {
                                       Get.dialog(
-                                          ConfirmationDialog(
-                                            icon: Images.warning,
-                                            title: 'are_you_sure_to_reset'.tr,
-                                            description: 'if_you_continue'.tr,
-                                            onYesPressed: () {
-                                              Get.back();
-                                              Get.find<CartController>()
-                                                  .removeAllAndAddToCart(
-                                                      _cartModel);
-                                              _showCartSnackBar(context);
-                                            },
-                                          ),
-                                          barrierDismissible: false);
+                                        ConfirmationDialog(
+                                          icon: Images.warning,
+                                          title: 'are_you_sure_to_reset'.tr,
+                                          description: 'if_you_continue'.tr,
+                                          onYesPressed: () {
+                                            Get.back();
+                                            Get.find<CartController>()
+                                                .removeAllAndAddToCart(
+                                                    _cartModel);
+                                            _showCartSnackBar(context);
+                                          },
+                                        ),
+                                        barrierDismissible: false,
+                                      );
                                     } else {
                                       Get.find<CartController>().addToCart(
-                                          _cartModel, widget.cartIndex);
+                                        _cartModel,
+                                        Get.find<CategoryController>().shopId,
+                                        widget.cartIndex,
+                                      );
                                       _showCartSnackBar(context);
                                     }
                                   }
