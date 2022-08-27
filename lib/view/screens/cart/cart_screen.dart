@@ -150,10 +150,11 @@ class _CartScreenState extends State<CartScreen> {
                                     itemCount: cartController.cartList.length,
                                     itemBuilder: (context, index) {
                                       return CartProductWidget(
-                                          cart: cartController.cartList[index],
-                                          cartIndex: index,
-                                          addOns: _addOnsList[index],
-                                          isAvailable: _availableList[index]);
+                                        cart: cartController.cartList[index],
+                                        cartIndex: index,
+                                        addOns: _addOnsList[index],
+                                        isAvailable: _availableList[index],
+                                      );
                                     },
                                   ),
                                   SizedBox(

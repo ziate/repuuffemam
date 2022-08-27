@@ -802,6 +802,9 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> {
                                         Get.find<CategoryController>().shopId,
                                         widget.cartIndex,
                                       );
+                                      // _cartModel,
+                                      // widget.cartIndex,
+                                      // widget.cart.quantity);
                                       _showCartSnackBar(context);
                                     }
                                   }

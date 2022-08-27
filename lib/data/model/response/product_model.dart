@@ -65,30 +65,30 @@ class Product {
   int ratingCount;
   int veg;
 
-  Product(
-      {this.id,
-        this.name,
-        this.description,
-        this.image,
-        this.categoryId,
-        this.categoryIds,
-        this.variations,
-        this.addOns,
-        this.choiceOptions,
-        this.price,
-        this.tax,
-        this.discount,
-        this.discountType,
-        this.availableTimeStarts,
-        this.availableTimeEnds,
-        this.restaurantId,
-        this.restaurantName,
-        this.restaurantDiscount,
-        this.scheduleOrder,
-        this.avgRating,
-        this.ratingCount,
-        this.veg,
-      });
+  Product({
+    this.id,
+    this.name,
+    this.description,
+    this.image,
+    this.categoryId,
+    this.categoryIds,
+    this.variations,
+    this.addOns,
+    this.choiceOptions,
+    this.price,
+    this.tax,
+    this.discount,
+    this.discountType,
+    this.availableTimeStarts,
+    this.availableTimeEnds,
+    this.restaurantId,
+    this.restaurantName,
+    this.restaurantDiscount,
+    this.scheduleOrder,
+    this.avgRating,
+    this.ratingCount,
+    this.veg,
+  });
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -212,10 +212,7 @@ class AddOns {
   String name;
   double price;
 
-  AddOns(
-      {this.id,
-        this.name,
-        this.price});
+  AddOns({this.id, this.name, this.price});
 
   AddOns.fromJson(Map<String, dynamic> json) {
     id = json['id'];
