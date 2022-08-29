@@ -1130,9 +1130,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   void _callback(bool isSuccess, String message, String orderID) async {
     if (isSuccess) {
-      if (widget.fromCart) {
-        Get.find<CartController>().clearCartList();
-      }
+      // if (widget.fromCart) {
+      //   Get.find<CartController>().clearCartList();
+      // }
       Get.find<OrderController>().stopLoader();
       if (_isCashOnDeliveryActive &&
           Get.find<OrderController>().paymentMethodIndex == 0) {

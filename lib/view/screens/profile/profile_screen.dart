@@ -371,8 +371,14 @@ class ProfileScreen extends StatelessWidget {
                                               .birthDate("");
                                           Get.find<AuthController>()
                                               .clearSharedData();
-                                          Get.find<CartController>()
-                                              .clearCartList();
+                                          // -------------------------------------------------------------
+                                          // -------------------------------------------------------------
+                                          // --------------------- TODO ----------------------------------
+                                          //--------------------NOT EMPLEMENTED --------------------------
+                                          //--------------------------------------------------------------
+                                          //--------------------------------------------------------------
+                                          // Get.find<CartController>()
+                                          //     .clearCartList();
                                           Get.find<WishListController>()
                                               .removeWishes();
                                           Get.offAll(SelectLogin());

@@ -88,6 +88,9 @@ class AppConstants {
       'https://repuffapp.com/api/v1/customer/used-market';
   static const String ADD_USED_PRODUCT_URI =
       'https://repuffapp.com/api/v1/customer/used-market/store';
+  static const String SET_CART_QTY =
+      'https://repuffapp.com/api/v1/cart/update/';
+  static const String DELETE_CART = 'https://repuffapp.com/api/v1/cart/delete/';
 
   // Shared Key
   static const String THEME = 'theme';

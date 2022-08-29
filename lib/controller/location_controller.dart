@@ -357,7 +357,7 @@ class LocationController extends GetxController implements GetxService {
         .getZone(address.latitude, address.longitude, false)
         .then((response) async {
       if (response.isSuccess) {
-        Get.find<CartController>().clearCartList();
+        //Get.find<CartController>().clearCartList();
         address.zoneId = int.parse(response.message);
         autoNavigate(address, fromSignUp, route, canRoute);
       } else {

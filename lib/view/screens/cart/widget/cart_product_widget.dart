@@ -26,6 +26,7 @@ class CartProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('cart product screen');
     String _addOnText = '';
     int _index = 0;
     List<int> _ids = [];
@@ -85,8 +86,15 @@ class CartProductWidget extends StatelessWidget {
           child: Stack(children: [
             Dismissible(
               key: UniqueKey(),
-              onDismissed: (DismissDirection direction) =>
-                  Get.find<CartController>().removeFromCart(cartIndex),
+              onDismissed: (DismissDirection direction) {
+                // -------------------------------------------------------------
+                // -------------------------------------------------------------
+                // --------------------- TODO ----------------------------------
+                //--------------------NOT EMPLEMENTED --------------------------
+                //--------------------------------------------------------------
+                //--------------------------------------------------------------
+                // Get.find<CartController>().removeFromCart(cartIndex);
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(
                     vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -208,13 +216,19 @@ class CartProductWidget extends StatelessWidget {
                                 Row(children: [
                                   QuantityButton(
                                     onTap: () {
-                                      if (cart.quantity > 1) {
-                                        Get.find<CartController>()
-                                            .setQuantity(false, cart);
-                                      } else {
-                                        Get.find<CartController>()
-                                            .removeFromCart(cartIndex);
-                                      }
+                                      // -------------------------------------------------------------
+                                      // -------------------------------------------------------------
+                                      // --------------------- TODO ----------------------------------
+                                      //--------------------NOT EMPLEMENTED --------------------------
+                                      //--------------------------------------------------------------
+                                      //--------------------------------------------------------------
+                                      // if (cart.quantity > 1) {
+                                      //   Get.find<CartController>()
+                                      //       .setQuantity(false, cartI);
+                                      // } else {
+                                      //   Get.find<CartController>()
+                                      //       .removeFromCart(cartIndex);
+                                      // }
                                     },
                                     isIncrement: false,
                                   ),
@@ -225,8 +239,17 @@ class CartProductWidget extends StatelessWidget {
                                           color:
                                               Theme.of(context).primaryColor)),
                                   QuantityButton(
-                                    onTap: () => Get.find<CartController>()
-                                        .setQuantity(true, cart),
+                                    onTap: () {
+                                      // -------------------------------------------------------------
+                                      // -------------------------------------------------------------
+                                      // --------------------- TODO ----------------------------------
+                                      //--------------------NOT EMPLEMENTED --------------------------
+                                      //--------------------------------------------------------------
+                                      //--------------------------------------------------------------
+
+                                      //  Get.find<CartController>()
+                                      //   .setQuantity(true, cart),
+                                    },
                                     isIncrement: true,
                                   ),
                                 ]),
@@ -246,8 +269,15 @@ class CartProductWidget extends StatelessWidget {
                                   horizontal: Dimensions.PADDING_SIZE_SMALL),
                               child: IconButton(
                                 onPressed: () {
-                                  Get.find<CartController>()
-                                      .removeFromCart(cartIndex);
+                                  // -------------------------------------------------------------
+                                  // -------------------------------------------------------------
+                                  // --------------------- TODO ----------------------------------
+                                  //--------------------NOT EMPLEMENTED --------------------------
+                                  //--------------------------------------------------------------
+                                  //--------------------------------------------------------------
+
+                                  // Get.find<CartController>()
+                                  //     .removeFromCart(cartIndex);
                                 },
                                 icon: Icon(Icons.delete, color: Colors.red),
                               ),

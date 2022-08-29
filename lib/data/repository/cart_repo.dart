@@ -36,17 +36,16 @@ class CartRepo {
     // sharedPreferences.setStringList(AppConstants.CART_LIST, carts);
   }
 
-  Future<Response> setQuantiy(CartModel cartModel, String storeId) async {
+  Future<Response> setQuantiy(int cartId, bool isIncrease) async {
     return await apiClient.postData(
-        "${AppConstants.CARTLIST_URI}$storeId", cartModel.toJson());
+        "${AppConstants.SET_CART_QTY}$cartId", {'is_increase': isIncrease});
     // List<String> carts = [];
     // cartProductList.forEach((cartModel) => carts.add(jsonEncode(cartModel)));
     // sharedPreferences.setStringList(AppConstants.CART_LIST, carts);
   }
 
-  Future<Response> deleteFromCart(CartModel cartModel, String storeId) async {
-    return await apiClient.postData(
-        "${AppConstants.CARTLIST_URI}$storeId", cartModel.toJson());
+  Future<Response> deleteFromCart(int cartId) async {
+    return await apiClient.deleteData("${AppConstants.DELETE_CART}$cartId");
     // List<String> carts = [];
     // cartProductList.forEach((cartModel) => carts.add(jsonEncode(cartModel)));
     // sharedPreferences.setStringList(AppConstants.CART_LIST, carts);

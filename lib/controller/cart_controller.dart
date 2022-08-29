@@ -16,19 +16,24 @@ class CartController extends GetxController implements GetxService {
   double get amount => _amount;
 
   Future<void> getCartData(bool reload, String storeId) async {
-    _loading(true);
+    print('I am in get cart data');
+    // _loading(true);
     Response response = await cartRepo.getCartList(storeId);
+    print('Response = ${response.body}');
     if (response.statusCode == 200) {
       _cartList = [];
       // _interestSelectedList = [];
       var bodyList = response.body["data"] as List;
+      print(bodyList);
       bodyList.forEach((cart) {
         _cartList.add(CartModel.fromJson(cart));
         // _interestSelectedList.add(false);
       });
+      print('get cart data succeed');
       _loading(false);
     } else {
-      _loading(false);
+      print('get cart data from else');
+      // _loading(false);
       ApiChecker.checkApi(response);
     }
     update();
@@ -51,11 +56,12 @@ class CartController extends GetxController implements GetxService {
     //   _cartList.add(cartModel);
     // }
     // _amount = _amount + (cartModel.discountedPrice * cartModel.quantity);
+    print('Add to cart is called');
     cartRepo.addToCartList(cartModel, shopId);
     update();
   }
 
-  void setQuantity(bool isIncrement, String cartId) {
+  void setQuantity(bool isIncrement, int cartId) {
     // int index = _cartList.indexOf(cart);
     // if (isIncrement) {
     //   _cartList[index].quantity = _cartList[index].quantity + 1;
@@ -65,67 +71,70 @@ class CartController extends GetxController implements GetxService {
     //   _amount = _amount - _cartList[index].discountedPrice;
     // }
 
-    cartRepo.addToCartList(_cartList, shopId);
+    cartRepo.setQuantiy(cartId, isIncrement);
 
     update();
   }
 
-  Future<void> removeCart(int cartId) async {}
+  // Future<void> removeCart(int cartId) async {}
 
-  void removeFromCart(int index) {
-    _amount = _amount -
-        (_cartList[index].discountedPrice * _cartList[index].quantity);
-    _cartList.removeAt(index);
-    cartRepo.addToCartList(_cartList);
-    update();
-  }
+  // void removeFromCart(int index) {
+  //   _amount = _amount -
+  //       (_cartList[index].discountedPrice * _cartList[index].quantity);
+  //   _cartList.removeAt(index);
+  //   cartRepo.addToCartList(_cartList);
+  //   update();
+  // }
 
-  void removeAddOn(int index, int addOnIndex) {
-    _cartList[index].addOnIds.removeAt(addOnIndex);
-    cartRepo.addToCartList(_cartList);
-    update();
-  }
+  // void removeAddOn(int index, int addOnIndex) {
+  //   _cartList[index].addOnIds.removeAt(addOnIndex);
+  //   cartRepo.addToCartList(_cartList);
+  //   update();
+  // }
 
-  void clearCartList() {
+  void clearCartList(int cartId) {
+    //----------------------------------------
+    //----------------------------------------
+    //------------- TODO ----------------------
     _cartList = [];
     _amount = 0;
-    cartRepo.addToCartList(_cartList);
+    cartRepo.deleteFromCart(cartId);
     update();
   }
 
-  bool isExistInCart(CartModel cartModel, bool isUpdate, int cartIndex) {
-    for (int index = 0; index < _cartList.length; index++) {
-      if (_cartList[index].product.id == cartModel.product.id &&
-          (_cartList[index].variation.length > 0
-              ? _cartList[index].variation[0].type ==
-                  cartModel.variation[0].type
-              : true)) {
-        if ((isUpdate && index == cartIndex)) {
-          return false;
-        } else {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
+  // bool isExistInCart(CartModel cartModel, bool isUpdate, int cartIndex) {
+  //   for (int index = 0; index < _cartList.length; index++) {
+  //     if (_cartList[index].product.id == cartModel.product.id &&
+  //         (_cartList[index].variation.length > 0
+  //             ? _cartList[index].variation[0].type ==
+  //                 cartModel.variation[0].type
+  //             : true)) {
+  //       if ((isUpdate && index == cartIndex)) {
+  //         return false;
+  //       } else {
+  //         return true;
+  //       }
+  //     }
+  //   }
+  //   return false;
+  // }
 
-  bool existAnotherRestaurantProduct(int restaurantID) {
-    for (CartModel cartModel in _cartList) {
-      if (cartModel.product.restaurantId != restaurantID) {
-        return true;
-      }
-    }
-    return false;
-  }
+  // bool existAnotherRestaurantProduct(int restaurantID) {
+  //   for (CartModel cartModel in _cartList) {
+  //     if (cartModel.product.restaurantId != restaurantID) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 
-  void removeAllAndAddToCart(CartModel cartModel) {
-    _cartList = [];
-    _cartList.add(cartModel);
-    _amount = cartModel.discountedPrice * cartModel.quantity;
-    cartRepo.addToCartList(_cartList);
-    update();
-  }
+  // void removeAllAndAddToCart(CartModel cartModel) {
+  //   _cartList = [];
+  //   _cartList.add(cartModel);
+  //   _amount = cartModel.discountedPrice * cartModel.quantity;
+  //   cartRepo.addToCartList(_cartList);
+  //   update();
+  // }
 
   bool isLoading = false;
   void _loading(bool status) {

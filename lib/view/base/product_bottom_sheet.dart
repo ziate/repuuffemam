@@ -2,6 +2,7 @@ import 'package:efood_multivendor/controller/auth_controller.dart';
 import 'package:efood_multivendor/controller/cart_controller.dart';
 import 'package:efood_multivendor/controller/category_controller.dart';
 import 'package:efood_multivendor/controller/product_controller.dart';
+import 'package:efood_multivendor/controller/restaurant_controller.dart';
 import 'package:efood_multivendor/controller/splash_controller.dart';
 import 'package:efood_multivendor/controller/wishlist_controller.dart';
 import 'package:efood_multivendor/data/model/response/cart_model.dart';
@@ -768,46 +769,62 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> {
                                         ? 'update_in_cart'.tr
                                         : 'add_to_cart'.tr,
                                 onPressed: () {
-                                  Get.back();
                                   if (widget.isCampaign) {
                                     Get.toNamed(
-                                        RouteHelper.getCheckoutRoute(
-                                            'campaign'),
-                                        arguments: CheckoutScreen(
-                                          fromCart: false,
-                                          cartList: [_cartModel],
-                                        ));
-                                  } else {
-                                    if (Get.find<CartController>()
-                                        .existAnotherRestaurantProduct(
-                                            _cartModel.product.restaurantId)) {
-                                      Get.dialog(
-                                        ConfirmationDialog(
-                                          icon: Images.warning,
-                                          title: 'are_you_sure_to_reset'.tr,
-                                          description: 'if_you_continue'.tr,
-                                          onYesPressed: () {
-                                            Get.back();
-                                            Get.find<CartController>()
-                                                .removeAllAndAddToCart(
-                                                    _cartModel);
-                                            _showCartSnackBar(context);
-                                          },
-                                        ),
-                                        barrierDismissible: false,
-                                      );
-                                    } else {
-                                      Get.find<CartController>().addToCart(
-                                        _cartModel,
-                                        Get.find<CategoryController>().shopId,
-                                        widget.cartIndex,
-                                      );
-                                      // _cartModel,
-                                      // widget.cartIndex,
-                                      // widget.cart.quantity);
-                                      _showCartSnackBar(context);
-                                    }
+                                      RouteHelper.getCheckoutRoute('campaign'),
+                                      arguments: CheckoutScreen(
+                                        fromCart: false,
+                                        cartList: [_cartModel],
+                                      ),
+                                    );
                                   }
+                                  // print(widget.cart.price);
+                                  print(
+                                      'shop id ==  ${Get.find<RestaurantController>().shopId}');
+                                  print(productController.quantity);
+                                  print(
+                                      'cart model data = ${_cartModel.product.name}');
+                                  Get.find<CartController>().addToCart(
+                                      _cartModel,
+                                      // CartModel(price, discountedPrice, variation, discountAmount, quantity, addOnIds, addOns, isCampaign, product)
+                                      Get.find<RestaurantController>().shopId,
+                                      productController.quantity);
+                                  print('الزرار المفروض يكون شغال');
+
+                                  Get.back();
+
+                                  // Get.find<CartController>().addToCart(cartModel, shopId, amount)
+                                  // } else {
+                                  //   if (Get.find<CartController>()
+                                  //       .existAnotherRestaurantProduct(
+                                  //           _cartModel.product.restaurantId)) {
+                                  //     Get.dialog(
+                                  //       ConfirmationDialog(
+                                  //         icon: Images.warning,
+                                  //         title: 'are_you_sure_to_reset'.tr,
+                                  //         description: 'if_you_continue'.tr,
+                                  //         onYesPressed: () {
+                                  //           Get.back();
+                                  //           Get.find<CartController>()
+                                  //               .removeAllAndAddToCart(
+                                  //                   _cartModel);
+                                  //           _showCartSnackBar(context);
+                                  //         },
+                                  //       ),
+                                  //       barrierDismissible: false,
+                                  //     );
+                                  //   } else {
+                                  //     Get.find<CartController>().addToCart(
+                                  //       _cartModel,
+                                  //       Get.find<CategoryController>().shopId,
+                                  //       widget.cartIndex,
+                                  //     );
+                                  //     // _cartModel,
+                                  //     // widget.cartIndex,
+                                  //     // widget.cart.quantity);
+                                  //     _showCartSnackBar(context);
+                                  //   }
+                                  // }
                                 },
                                 /*onPressed: (!isExistInCart) ? () {
                       if (!isExistInCart) {

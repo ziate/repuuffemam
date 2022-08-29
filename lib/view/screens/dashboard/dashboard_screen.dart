@@ -106,13 +106,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       },
       child: SafeArea(
         child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Theme.of(context).primaryColor,
-            child: Icon(Icons.shopping_cart),
-            onPressed: () {
-              Get.to(CartScreen(fromNav: false));
-            },
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   backgroundColor: Theme.of(context).primaryColor,
+          //   child: Icon(Icons.shopping_cart),
+          //   onPressed: () {
+          //     Get.to(CartScreen(fromNav: false));
+          //   },
+          // ),
           // drawerScrimColor: Colors.transparent,
           drawer: AppDrawer(),
           drawerScrimColor: Colors.transparent,
